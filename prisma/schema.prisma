@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String       @id @default(uuid())
+  name       String
+  email      String       @unique
+  password   String
+  UserAccess UserAccess[]
+  store      Store[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
+
+model UserAccess {
+  id       String  @id @default(uuid())
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
+  Access   Access? @relation(fields: [accessId], references: [id])
+  accessId String?
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
+
+model Access {
+  id         String       @id @default(uuid())
+  name       String       @unique
+  UserAccess UserAccess[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  name       String
+  price      Decimal
+  amount     Int
+  Store      Store?   @relation(fields: [storeId], references: [id])
+  storeId    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Store {
+  id         String    @id @default(uuid())
+  name       String
+  Product    Product[]
+  User       User?     @relation(fields: [userId], references: [id])
+  userId     String?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
