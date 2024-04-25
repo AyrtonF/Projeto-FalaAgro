@@ -1,2 +1,3 @@
 # back-end-FalaAgro
-este é o projeto da residencia tecnologica em parceria com a FalaAgro
+ Projeto da residencia tecnologica em parceria com a FalaAgro do SQUAD 7- UNINASSAU
+ 
