@@ -38,17 +38,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.authMiddleware = void 0;
 var jsonwebtoken_1 = require("jsonwebtoken");
-function authMiddleware(permissos) {
+var prisma_1 = require("./../database/prisma");
+// Middleware de autenticação com suporte opcional a permissões
+function authMiddleware(permissions) {
     var _this = this;
     return function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-        var authHeader, token, MY_SECRET_KEY, decodedToken, user, userPermissions, hasPermissions, error_1;
+        var authHeader, token, MY_SECRET_KEY, decodedToken, user, userPermissions_1, hasPermissions, error_1;
         var _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     authHeader = req.headers.authorization;
                     if (!authHeader || !authHeader.startsWith("Bearer")) {
-                        res.status(403).json({ message: "Token não fornecido" });
+                        return [2 /*return*/, res.status(403).json({ message: "Token não fornecido" })];
                     }
                     token = authHeader.substring(7);
                     _b.label = 1;
@@ -59,9 +61,10 @@ function authMiddleware(permissos) {
                         throw new Error("Chave secreta não fornecida");
                     }
                     decodedToken = jsonwebtoken_1.verify(token, MY_SECRET_KEY);
+                    // Define o id do usuário decodificado no objeto de solicitação (req)
                     req.user = { id: decodedToken.userId };
-                    if (!permissos) return [3 /*break*/, 3];
-                    return [4 /*yield*/, prisma.user.findUnique({
+                    if (!permissions) return [3 /*break*/, 3];
+                    return [4 /*yield*/, prisma_1.prisma.user.findUnique({
                             where: {
                                 id: decodedToken.userId
                             },
@@ -79,13 +82,19 @@ function authMiddleware(permissos) {
                         })];
                 case 2:
                     user = _b.sent();
-                    userPermissions = (_a = user === null || user === void 0 ? void 0 : user.userAccess.map(function (na) { return na.Access.name; })) !== null && _a !== void 0 ? _a : [];
-                    hasPermissions = permissos.some();
+                    userPermissions_1 = (_a = user === null || user === void 0 ? void 0 : user.UserAccess.map(function (na) { return na.Access.name; })) !== null && _a !== void 0 ? _a : [];
+                    hasPermissions = permissions.some(function (p) { return userPermissions_1.includes(p); });
+                    if (!hasPermissions) {
+                        return [2 /*return*/, res.status(403).json({ message: "Permissão negada" })];
+                    }
                     _b.label = 3;
-                case 3: return [3 /*break*/, 5];
+                case 3: 
+                // Se tudo estiver correto, passa para o próximo middleware ou rota
+                return [2 /*return*/, next()];
                 case 4:
                     error_1 = _b.sent();
-                    return [3 /*break*/, 5];
+                    // Se ocorrer algum erro na verificação do token, retorna um erro de autenticação
+                    return [2 /*return*/, res.status(401).json(error_1.message)];
                 case 5: return [2 /*return*/];
             }
         });

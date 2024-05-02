@@ -36,16 +36,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.deleteUserMany = exports.getAllUser = exports.createUser = void 0;
+exports.deleteUserMany = exports.getUniqueUser = exports.getAllUser = exports.createUser = void 0;
 var bcryptjs_1 = require("bcryptjs");
 var prisma_1 = require("./../database/prisma");
 exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, email, password, accessName, isUniqueEmail, isAccessName, hashPassword, user;
+    var _a, name, email, password, accessName, isUniqueEmail, isAccessName, hashPassword, user, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
+                _b.trys.push([0, 5, , 6]);
                 _a = req.body, name = _a.name, email = _a.email, password = _a.password, accessName = _a.accessName;
                 return [4 /*yield*/, prisma_1.prisma.user.findUnique({
+                        //retorna o email igual ao requisitado ou null se não existir
                         where: {
                             email: email
                         }
@@ -53,16 +55,21 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
             case 1:
                 isUniqueEmail = _b.sent();
                 return [4 /*yield*/, prisma_1.prisma.access.findUnique({
+                        // armazena em isAccessName o acesso em access correspondente a accesssName se existir
                         where: {
                             name: accessName
                         }
                     })];
             case 2:
                 isAccessName = _b.sent();
-                if (!isAccessName) { //se acesso não existir ele retorna a mensagem de erro 
-                    return [2 /*return*/, res.status(400).json({ message: "Esse nível de acesso não existe" })];
+                if (!isAccessName) {
+                    //se acesso não existir ele retorna a mensagem de erro
+                    return [2 /*return*/, res
+                            .status(400)
+                            .json({ message: "Esse nível de acesso não existe" })];
                 }
-                if (isUniqueEmail) { //Se email existir ele retorna o erro falando que o email já existe
+                if (isUniqueEmail) {
+                    //Se email existir ele retorna o erro falando que o email já existe
                     return [2 /*return*/, res
                             .status(400)
                             .json({ message: "Já existe um usuário com esse email" })];
@@ -71,6 +78,7 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
             case 3:
                 hashPassword = _b.sent();
                 return [4 /*yield*/, prisma_1.prisma.user.create({
+                        //função que cria o registro com os parametros especificados
                         data: {
                             name: name,
                             email: email,
@@ -102,44 +110,115 @@ exports.createUser = function (req, res) { return __awaiter(void 0, void 0, void
                     })];
             case 4:
                 user = _b.sent();
-                return [2 /*return*/, res.json(user)]; // resposta retornarda
+                return [2 /*return*/, res.status(201).json(user)]; // resposta retornarda
+            case 5:
+                error_1 = _b.sent();
+                return [2 /*return*/, res.status(400).json(error_1.message)];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
 exports.getAllUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
+    var users, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma_1.prisma.user.findMany({
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                        UserAccess: {
-                            select: {
-                                Access: {
-                                    select: {
-                                        name: true
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, prisma_1.prisma.user.findMany({
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            UserAccess: {
+                                select: {
+                                    Access: {
+                                        select: {
+                                            name: true
+                                        }
                                     }
+                                }
+                            },
+                            store: {
+                                select: {
+                                    id: true,
+                                    name: true
                                 }
                             }
                         }
-                    }
-                })];
+                    })];
             case 1:
                 users = _a.sent();
-                return [2 /*return*/, res.json(users)];
+                if (!users) {
+                    return [2 /*return*/, res.status(204).json({ message: "not content" })];
+                }
+                return [2 /*return*/, res.status(200).json(users)];
+            case 2:
+                error_2 = _a.sent();
+                return [2 /*return*/, res.status.json(error_2.message)];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getUniqueUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, user, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                id = req.params.id;
+                return [4 /*yield*/, prisma_1.prisma.user.findUnique({
+                        where: {
+                            id: id
+                        },
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            UserAccess: {
+                                select: {
+                                    Access: {
+                                        select: {
+                                            name: true
+                                        }
+                                    }
+                                }
+                            },
+                            Store: {
+                                select: {
+                                    id: true,
+                                    name: true
+                                }
+                            }
+                        }
+                    })];
+            case 1:
+                user = _a.sent();
+                if (!user) {
+                    return [2 /*return*/, res.status(203).json({ message: "Usuario não está cadastrado" })];
+                }
+                res.status(200).json(user);
+                return [3 /*break*/, 3];
+            case 2:
+                error_3 = _a.sent();
+                return [2 /*return*/, res.status(400).json(error_3.message)];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 exports.deleteUserMany = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: //função para deletar um usuario
-            return [4 /*yield*/, prisma_1.prisma.user.deleteMany()];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, prisma_1.prisma.user.deleteMany()];
             case 1:
                 _a.sent();
-                return [2 /*return*/, res.json({ message: "Todos deletados" })];
+                return [2 /*return*/, res.status(200).son({ message: "Todos deletados" })];
+            case 2:
+                error_4 = _a.sent();
+                return [2 /*return*/, res.status(400).json(error_4.message)];
+            case 3: return [2 /*return*/];
         }
     });
 }); };

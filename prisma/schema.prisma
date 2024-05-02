@@ -14,24 +14,26 @@ datasource db {
 }
 
 model User {
-  id         String       @id @default(uuid())
-  name       String
-  email      String       @unique
-  password   String
-  UserAccess UserAccess[]
-  store      Store[]
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
+  id             String       @id @default(uuid())
+  name           String
+  email          String       @unique
+  password       String
+  sale_as_buyer  Sale[]       @relation("buyer")
+  sale_as_seller Sale[]       @relation("seller")
+  UserAccess     UserAccess[]
+  store          Store[]
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
 }
 
 model UserAccess {
-  id       String  @id @default(uuid())
-  User     User?   @relation(fields: [userId], references: [id])
-  userId   String?
-  Access   Access? @relation(fields: [accessId], references: [id])
-  accessId String?
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
+  id         String   @id @default(uuid())
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+  Access     Access?  @relation(fields: [accessId], references: [id])
+  accessId   String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Access {
@@ -43,14 +45,15 @@ model Access {
 }
 
 model Product {
-  id         String   @id @default(uuid())
-  name       String
-  price      Decimal
-  amount     Int
-  Store      Store?   @relation(fields: [storeId], references: [id])
-  storeId    String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id          String        @id @default(uuid())
+  name        String
+  price       Float
+  amount      Int
+  Store       Store?        @relation(fields: [storeId], references: [id])
+  storeId     String?
+  SaleProduct SaleProduct[]
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
 }
 
 model Store {
@@ -61,4 +64,27 @@ model Store {
   userId     String?
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
+}
+
+model Sale {
+  id          String        @id @default(uuid())
+  total_value Float
+  Buyer       User?         @relation("buyer", fields: [buyerId], references: [id])
+  buyerId     String?
+  Seller      User?         @relation("seller", fields: [sellerId], references: [id])
+  sellerId    String?
+  SaleProduct SaleProduct[]
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+}
+
+model SaleProduct {
+  id         String   @id @default(uuid())
+  quantify   Int
+  Sale       Sale     @relation(fields: [saleId], references: [id])
+  saleId     String
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }

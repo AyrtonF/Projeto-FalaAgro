@@ -36,72 +36,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getAllStore = exports.createStore = void 0;
+exports.signIn = void 0;
+var bcryptjs_1 = require("bcryptjs");
 var prisma_1 = require("./../database/prisma");
-exports.createStore = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var name, id, isUser, store, error_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+var jsonwebtoken_1 = require("jsonwebtoken");
+exports.signIn = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, email, password, user, isPasswordValid, MY_SECRET_KEY, token, error_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
-                name = req.body.name;
-                id = req.user.id;
+                _b.trys.push([0, 3, , 4]);
+                _a = req.body, email = _a.email, password = _a.password;
                 return [4 /*yield*/, prisma_1.prisma.user.findUnique({
                         where: {
-                            id: id
-                        }
-                    })];
-            case 1:
-                isUser = _a.sent();
-                if (!isUser) {
-                    return [2 /*return*/, res.status(400).json({ message: "não existe nenhum usuario associado ao id informado" })];
-                }
-                return [4 /*yield*/, prisma_1.prisma.store.create({
-                        data: {
-                            name: name,
-                            User: {
-                                connect: {
-                                    id: id
-                                }
-                            }
-                        }
-                    })];
-            case 2:
-                store = _a.sent();
-                return [2 /*return*/, res.json(store)];
-            case 3:
-                error_1 = _a.sent();
-                return [2 /*return*/, res.status(400).json(error_1.message)];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getAllStore = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var store;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma_1.prisma.store.findMany({
-                    select: {
-                        id: true,
-                        name: true,
-                        User: {
-                            select: {
-                                name: true
-                            }
+                            email: email
                         },
-                        Product: {
-                            select: {
-                                id: true,
-                                name: true,
-                                price: true,
-                                amount: true
-                            }
+                        include: {
+                            UserAccess: true
                         }
-                    }
-                })];
+                    })];
             case 1:
-                store = _a.sent();
-                return [2 /*return*/, res.json(store)];
+                user = _b.sent();
+                if (!user) {
+                    return [2 /*return*/, res.status(400).json({ message: "Usuário não encontrado" })];
+                }
+                return [4 /*yield*/, bcryptjs_1.compare(password, user.password)];
+            case 2:
+                isPasswordValid = _b.sent();
+                if (!isPasswordValid) {
+                    return [2 /*return*/, res.status(400).json({ message: "Senha incorreta" })];
+                }
+                MY_SECRET_KEY = process.env.MY_SECRET_KEY;
+                if (!MY_SECRET_KEY) {
+                    throw new Error("Chave secreta não fornecida");
+                }
+                token = jsonwebtoken_1.sign({
+                    userId: user.id,
+                    roles: user.UserAccess.map(function (ua) { var _a; return ((_a = ua.Access) === null || _a === void 0 ? void 0 : _a.name) || ''; })
+                }, MY_SECRET_KEY, {
+                    algorithm: "HS256",
+                    expiresIn: "1h"
+                });
+                res.status(200).json({ token: token });
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _b.sent();
+                return [2 /*return*/, res.status(400).json({ message: error_1.message })];
+            case 4: return [2 /*return*/];
         }
     });
 }); };

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.deleteAllProduct = exports.getAllProduct = exports.createProduct = void 0;
+exports.deleteAllProduct = exports.deleteUniqueProduct = exports.getAllProduct = exports.getUniqueProduct = exports.updateProduct = exports.createProduct = void 0;
 var prisma_1 = require("./../database/prisma");
 exports.createProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, name, price, amount, storeId, product;
@@ -63,6 +63,82 @@ exports.createProduct = function (req, res) { return __awaiter(void 0, void 0, v
         }
     });
 }); };
+exports.updateProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, name, price, amount, productId, id, isProduct, product, error_1;
+    var _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                _a = req.body, name = _a.name, price = _a.price, amount = _a.amount;
+                productId = req.params.productId;
+                id = req.user.id;
+                _c.label = 1;
+            case 1:
+                _c.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, prisma_1.prisma.product.findUnique({
+                        where: {
+                            id: productId
+                        },
+                        include: {
+                            Store: true
+                        }
+                    })];
+            case 2:
+                isProduct = _c.sent();
+                if (!isProduct) {
+                    return [2 /*return*/, res.status(404).json({ message: "Produto não existe" })];
+                }
+                if (id !== ((_b = isProduct === null || isProduct === void 0 ? void 0 : isProduct.Store) === null || _b === void 0 ? void 0 : _b.userId)) {
+                    return [2 /*return*/, res.status(404).json({ message: "Usuario não é dono do produto" })];
+                }
+                return [4 /*yield*/, prisma_1.prisma.product.update({
+                        where: {
+                            id: productId
+                        },
+                        data: {
+                            name: name,
+                            price: price,
+                            amount: amount
+                        }
+                    })];
+            case 3:
+                product = _c.sent();
+                return [2 /*return*/, res.status(200).json(product)];
+            case 4:
+                error_1 = _c.sent();
+                return [2 /*return*/, res.status(400).json(error_1.message)];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getUniqueProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var productId, id, product, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                productId = req.params.productId;
+                id = req.user.id;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma_1.prisma.product.findUnique({
+                        where: {
+                            id: productId
+                        }
+                    })];
+            case 2:
+                product = _a.sent();
+                if (!product) {
+                    return [2 /*return*/, res.status(404).json({ message: "Produto não existe" })];
+                }
+                return [2 /*return*/, res.status(200).json(product)];
+            case 3:
+                error_2 = _a.sent();
+                return [2 /*return*/, res.status(400).json(error_2.message)];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 exports.getAllProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var products;
     return __generator(this, function (_a) {
@@ -71,6 +147,49 @@ exports.getAllProduct = function (req, res) { return __awaiter(void 0, void 0, v
             case 1:
                 products = _a.sent();
                 return [2 /*return*/, res.json(products)];
+        }
+    });
+}); };
+exports.deleteUniqueProduct = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var productId, id, isProduct, error_3;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                productId = req.params.productId;
+                id = req.user.id;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, prisma_1.prisma.product.findUnique({
+                        where: {
+                            id: productId
+                        },
+                        include: {
+                            Store: true
+                        }
+                    })];
+            case 2:
+                isProduct = _b.sent();
+                if (!isProduct) {
+                    return [2 /*return*/, res.status(404).json({ message: "Produto não existe" })];
+                }
+                if (id !== ((_a = isProduct === null || isProduct === void 0 ? void 0 : isProduct.Store) === null || _a === void 0 ? void 0 : _a.userId)) {
+                    return [2 /*return*/, res.status(404).json({ message: "Usuario não é dono do produto" })];
+                }
+                return [4 /*yield*/, prisma_1.prisma.product.deleteMany({
+                        where: {
+                            id: productId
+                        }
+                    })];
+            case 3:
+                _b.sent();
+                res.status(200).json({ message: "Produto deletado com sucesso" });
+                return [3 /*break*/, 5];
+            case 4:
+                error_3 = _b.sent();
+                return [2 /*return*/, res.status(400).json(error_3.message)];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
