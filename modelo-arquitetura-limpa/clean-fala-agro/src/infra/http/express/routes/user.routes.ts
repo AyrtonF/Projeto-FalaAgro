@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { CreateUserUseCase } from '../../../../domain/useCases/user/createUser.useCase';
 import { UserRepositoryPrisma } from '../../../../data/repositoriesPrisma/user.repository.prisma';
 import { GetAllUserUseCase } from '../../../../domain/useCases/user/getAllUser.useCase';
-import { UserController } from '../../../../interface/controllers/user/user.controller';
+import { UserController } from '../../../../interface/controllers/user.controller';
 import { AccessRepositoryPrisma } from '../../../../data/repositoriesPrisma/access.repository.prisma';
 
 const userRouter = Router();

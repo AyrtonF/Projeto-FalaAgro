@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { CreateUserUseCase } from "../../../domain/useCases/user/createUser.useCase";
-import { GetAllUserUseCase } from "../../../domain/useCases/user/getAllUser.useCase";
-import {  DuplicateEmailError, AccessNameDoesNotExist } from '../../../errors/user.error';
+import { CreateUserUseCase } from "../../domain/useCases/user/createUser.useCase";
+import { GetAllUserUseCase } from "../../domain/useCases/user/getAllUser.useCase";
+import {  DuplicateEmailError, AccessNameDoesNotExist } from '../../errors/user.error';
 
 type userControllerInput = {
 
