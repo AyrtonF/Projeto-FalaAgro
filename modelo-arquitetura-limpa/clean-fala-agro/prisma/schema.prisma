@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String       @id @default(uuid())
+  name           String
+  email          String       @unique
+  password       String
+  cpf            String
+  cnpj           String?
+  cep            String
+  numberAddress  Int
+  AccessName     String[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  sale_as_buyer  Sale[]       @relation("buyer")
+  sale_as_seller Sale[]       @relation("seller")
+  UserAccess     UserAccess[]
+  store          Store[]
+}
+
+
+model UserAccess {
+  id         String   @id @default(uuid())
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+  Access     Access?  @relation(fields: [accessId], references: [id])
+  accessId   String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Access {
+  id         String       @id @default(uuid())
+  name       String       @unique
+  UserAccess UserAccess[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+model Product {
+  id          String        @id @default(uuid())
+  name        String
+  price       Float
+  amount      Int
+  Store       Store?        @relation(fields: [storeId], references: [id])
+  storeId     String?
+  SaleProduct SaleProduct[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model Store {
+  id         String    @id @default(uuid())
+  name       String
+  Product    Product[]
+  User       User?     @relation(fields: [userId], references: [id])
+  userId     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Sale {
+  id          String        @id @default(uuid())
+  total_value Float
+  Buyer       User?         @relation("buyer", fields: [buyerId], references: [id])
+  buyerId     String?
+  Seller      User?         @relation("seller", fields: [sellerId], references: [id])
+  sellerId    String?
+  SaleProduct SaleProduct[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model SaleProduct {
+  id         String   @id @default(uuid())
+  quantify   Int
+  Sale       Sale     @relation(fields: [saleId], references: [id])
+  saleId     String
+  Product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
