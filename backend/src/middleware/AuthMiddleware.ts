@@ -66,7 +66,7 @@ export function authMiddleware(permissions?: string[]) {
             return next();
         } catch (error) {
             // Se ocorrer algum erro na verificação do token, retorna um erro de autenticação
-            return res.status(401).json( error.message );
+            return res.status(401).json( {error: error.message} );
         }
     };
 }
