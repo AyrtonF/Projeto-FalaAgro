@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AccessRepositoryPrisma } from '../../../../data/repositoriesPrisma/access.repository.prisma';
-import { CreateAccessUseCase } from '../../../../domain/use-cases/access/createAccess.useCase';
+import { CreateAccessUseCase } from '../../../../domain/useCases/access/createAccess.useCase';
 import { AccessController } from '../../../../interface/controllers/access/access.controller';
 
 

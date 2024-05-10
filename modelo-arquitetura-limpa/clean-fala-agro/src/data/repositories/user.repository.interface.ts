@@ -7,7 +7,7 @@ export interface UserRepositoryInferface {
     findById(id: string): Promise<User | null>;
 
     isUniqueEmail(email:string):Promise<boolean>
-
+    
     findAll(): Promise<User[]>;
     
     update(user: User): Promise<User>;

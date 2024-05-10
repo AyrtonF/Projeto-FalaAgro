@@ -3,6 +3,15 @@ import { AccessRepositoryInferface } from "../repositories/access.repository.int
 import { prisma } from "../prisma";
 
 export class AccessRepositoryPrisma implements AccessRepositoryInferface {
+   async doesAccessExist(accessName: string[]): Promise<boolean> {
+        try {
+            const accessExists = await Promise.all(accessName.map(name => prisma.access.findUnique({ where: { name } })));
+            return accessExists.every(access => access !== null);
+        } catch (error) {
+            throw new Error("Error while finding access");
+        }
+      
+    }
     async insert(access: Access): Promise<Access> {
         try {
             const prismaAccess = await prisma.access.create({

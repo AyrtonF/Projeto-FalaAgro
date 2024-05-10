@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CreateAccessUseCase } from "../../../domain/use-cases/access/createAccess.useCase";
+import { CreateAccessUseCase } from "../../../domain/useCases/access/createAccess.useCase";
 
 
 
