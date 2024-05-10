@@ -4,6 +4,18 @@ import { UserRepositoryInferface } from "../repositories/user.repository.interfa
 import { hash } from "bcryptjs";
 
 export class UserRepositoryPrisma implements UserRepositoryInferface{
+    
+   async isUniqueEmail(email: string): Promise<boolean> {
+        try {
+            const valid = await (prisma.user.findUnique({where: {email: email,}})) == null ? true : false
+            return valid
+        } catch (error) {
+            
+            throw new Error("Erro interno durante a verificação do email");
+        }
+        
+    }
+
     async insert(user: User): Promise<User> {
      try {
          const prismaUser  = await prisma.user.create({
@@ -16,6 +28,8 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
                 cep: user.cep,
                 numberAddress: user.numberAddress,
                 AccessName: user.AccessName,
+                createdAt: user.createAt || null,
+                updatedAt: user.updateAt
             }
         })
 

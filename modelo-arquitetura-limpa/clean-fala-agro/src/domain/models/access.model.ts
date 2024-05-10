@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 export type AccessProps = {
     id?: string; 
     name: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export class Access {
@@ -14,6 +14,8 @@ export class Access {
         this.props = {
             ...props,
             id: props.id || uuidv4(),
+            createdAt:props.createdAt || new Date(),
+            updatedAt:props.updatedAt || new Date()
         };
     }
 

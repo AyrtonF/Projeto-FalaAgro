@@ -4,15 +4,23 @@ import { User } from "../../models/user.model"
 export class CreateUserUseCase {
     constructor(private userRepository:UserRepositoryInferface){}
 
-    async execute(input:CreateUserInput):Promise<CreateUserOutput>{
+    async execute(input:CreateUserInput):Promise<CreateUserOutput| any>{
         const userInput = new User(input)
-        const user = await this.userRepository.insert(userInput)
-        return user.toJSON()
+        const emailUnique = await this.userRepository.isUniqueEmail(userInput.email)
+        if(emailUnique){
+            const user = await this.userRepository.insert(userInput)
+            return user.toJSON()
+        }else{
+           return {message:"Email já existente"}
+        }
+            
+        
+        
     }
 }
 
 
-type CreateUserInput ={
+type CreateUserInput = {
     name:string
     email:string
     password:string
@@ -21,11 +29,11 @@ type CreateUserInput ={
     cep:string
     numberAddress:number
     AccessName:string[]
-    createdAt:Date
-    updatedAt:Date
+    createdAt?:Date
+    updatedAt?:Date
 }
 
-type CreateUserOutput ={
+type CreateUserOutput = {
     name:string
     email:string
     password:string
@@ -34,6 +42,6 @@ type CreateUserOutput ={
     cep:string
     numberAddress:number
     AccessName:string[]
-    createdAt:Date
-    updatedAt:Date
+    createdAt?:Date
+    updatedAt?:Date
 }

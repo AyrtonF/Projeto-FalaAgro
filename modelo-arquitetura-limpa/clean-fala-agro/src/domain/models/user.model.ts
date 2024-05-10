@@ -11,9 +11,10 @@ export type UserProps = {
     cep:string
     numberAddress:number
     AccessName:string[]
-    createdAt:Date
-    updatedAt:Date
+    createdAt?:Date
+    updatedAt?:Date
 }
+
 
 
 export class User{
@@ -21,8 +22,11 @@ export class User{
  constructor(props:UserProps){
    
     this.props = {
-        ...props,id:props.id ||  uuidv4(),
-        cnpj:props.cnpj || ''
+        ...props,
+        id:props.id ||  uuidv4(),
+        cnpj:props.cnpj || '',
+        createdAt:props.createdAt || new Date(),
+        updatedAt:props.updatedAt || new Date()
     }
  }
 

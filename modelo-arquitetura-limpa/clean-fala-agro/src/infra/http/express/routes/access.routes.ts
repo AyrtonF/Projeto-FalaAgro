@@ -1,15 +1,14 @@
 import { Router } from 'express';
-
 import { AccessRepositoryPrisma } from '../../../../data/repositoriesPrisma/access.repository.prisma';
 import { CreateAccessUseCase } from '../../../../domain/use-cases/access/createAccess.useCase';
-import { CreateAccessController } from '../../../../interface/controllers/access/createAccess.controller';
+import { AccessController } from '../../../../interface/controllers/access/access.controller';
 
 
 const accessRouter = Router();
 const accessRepository = new AccessRepositoryPrisma();
 const createAccessUseCase = new CreateAccessUseCase(accessRepository);
-const createAccessController = new CreateAccessController(createAccessUseCase);
+const accessController = new AccessController({createAccessUseCase});
 
-accessRouter.post('/access', (request, response) => createAccessController.handle(request, response));
+accessRouter.post('/access', (request, response) => accessController.createAccess(request, response));
 
 export {accessRouter };

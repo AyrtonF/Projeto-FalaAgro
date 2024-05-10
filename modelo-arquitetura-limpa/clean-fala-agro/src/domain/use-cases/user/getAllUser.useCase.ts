@@ -6,7 +6,7 @@ export class GetAllUserUseCase {
     async execute():Promise<GetUserUseCaseOutput>{
         
         const users = await this.userRepository.findAll()
-        return users.map(item => item.toJSON())
+        return users.map(user => user.toJSON())
     }
 }
 
