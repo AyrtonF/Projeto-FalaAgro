@@ -11,4 +11,4 @@ const accessController = new AccessController({createAccessUseCase});
 
 accessRouter.post('/access', (request, response) => accessController.createAccess(request, response));
 
-export {accessRouter };
+export {accessRouter};
