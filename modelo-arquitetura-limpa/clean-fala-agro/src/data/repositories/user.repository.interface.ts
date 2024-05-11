@@ -2,15 +2,17 @@ import { User } from "../../domain/models/user.model";
 
 export interface UserRepositoryInferface {
       
-    insert(user: User): Promise<User>;
+    insert(user: User): Promise<User>
    
-    findById(id: string): Promise<User | null>;
+    findById(id: string): Promise<User | null>
+
+    findByEmail(email:string):Promise<any>
 
     isUniqueEmail(email:string):Promise<boolean>
     
-    findAll(): Promise<User[]>;
+    findAll(): Promise<User[]>
     
-    update(user: User): Promise<User>;
+    update(user: User): Promise<User>
 
-    delete(id: string): Promise<void>;
+    delete(id: string): Promise<void>
 }
