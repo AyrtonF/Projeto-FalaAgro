@@ -24,4 +24,6 @@ export class AccessController {
             return response.status(500).json({ error: "Internal server error" });
         }
     }
+
+    
 }

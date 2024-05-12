@@ -2,12 +2,12 @@ import { Request, Response } from 'express'
 import { CreateUserUseCase } from "../../domain/useCases/user/createUser.useCase";
 import { GetAllUserUseCase } from "../../domain/useCases/user/getAllUser.useCase";
 import {  DuplicateEmailError, AccessNameDoesNotExist } from '../../errors/user.error';
-
+import { SignInUseCase } from '../../domain/useCases/user/signIn.useCase';
 type userControllerInput = {
 
     createUserUseCase: CreateUserUseCase
     getAllUserUseCase: GetAllUserUseCase
-
+    signInUseCase:SignInUseCase
 }
 
 export class UserController {
@@ -41,6 +41,15 @@ export class UserController {
                 console.error(error.message)
                 return response.status(500).json({ error: error.message });
             }
+        }
+    }
+    async signIn(request: Request, response: Response): Promise<Response> {
+        try {
+            const {email, password } = request.body;
+            const token = await this.input.signInUseCase.execute({email, password})
+            return response.status(200).json(token)
+        }catch(error){
+            return response.status(500).json({ error: error.message });
         }
     }
 

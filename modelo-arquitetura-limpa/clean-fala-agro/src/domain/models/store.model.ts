@@ -49,7 +49,7 @@ type Product = {
     reviews?: Review[];
 }
 
-
+// productsId: string[]
 export class Store{
     public props:Required<StoreProps>
     constructor(props:StoreProps){

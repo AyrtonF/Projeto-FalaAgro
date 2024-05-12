@@ -6,7 +6,13 @@ export interface UserRepositoryInferface {
    
     findById(id: string): Promise<User | null>
 
-    findByEmail(email:string):Promise<any>
+    getPasswordByEmail(email:string): Promise<string>
+    
+    getUserRolesByEmail(email:string):Promise<{ userId: string | null, roles: string[] }>
+    
+    doesUserExist(email:string):Promise<boolean>
+
+    
 
     isUniqueEmail(email:string):Promise<boolean>
     
