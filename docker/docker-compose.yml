@@ -10,9 +10,9 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: meu_usuario
-      POSTGRES_PASSWORD: minha_senha
-      POSTGRES_DB: meu_banco_de_dados
+      ###POSTGRES_USER: meu_usuario
+      ###POSTGRES_PASSWORD: minha_senha
+      ###POSTGRES_DB: meu_banco_de_dados
     volumes:
       - db_data:/var/lib/postgresql/data
 
