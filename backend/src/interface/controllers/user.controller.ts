@@ -2,11 +2,12 @@ import { Request, Response } from 'express'
 import { CreateUserUseCase } from "../../domain/useCases/user/createUser.useCase";
 import { GetAllUserUseCase } from "../../domain/useCases/user/getAllUser.useCase";
 import {  DuplicateEmailError, AccessNameDoesNotExist } from '../../errors/user.error';
-
+import { SignInUseCase } from '../../domain/useCases/user/signIn.useCase';
 type userControllerInput = {
 
     createUserUseCase: CreateUserUseCase
     getAllUserUseCase: GetAllUserUseCase
+    signInUseCase: SignInUseCase
 
 }
 
@@ -14,8 +15,17 @@ export class UserController {
 
     constructor(private input: userControllerInput) { }
 
+    async signInUseCase(request: Request, response: Response) {
+        const {email, password } = request.body;
+        try {
+            const token = await this.input.signInUseCase.execute({email,password});
+            return response.status(201).json(token);
+        } catch (error) {
+            return response.status(400).json({ error: "Erro no controlador" });
+        }
+    }
     async getAllUser(request: Request, response: Response) {
-        //const { name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt } = request.body;
+        
         try {
             const user = await this.input.getAllUserUseCase.execute();
             return response.status(201).json(user);
@@ -23,7 +33,6 @@ export class UserController {
             return response.status(400).json({ error: "Erro no controlador" });
         }
     }
-
     async createUser(request: Request, response: Response): Promise<Response> {
 
         try {

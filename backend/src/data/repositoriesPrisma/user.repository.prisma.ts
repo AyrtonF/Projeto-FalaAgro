@@ -172,7 +172,7 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
                     email: userFromPrisma.email,
                     password: userFromPrisma.password,
                     cpf: userFromPrisma.cpf,
-                    cnpj: userFromPrisma.cnpj || '', // Certifique-se de tratar valores nulos
+                    cnpj: userFromPrisma.cnpj || '', 
                     cep: userFromPrisma.cep,
                     numberAddress: userFromPrisma.numberAddress,
                     AccessName: userFromPrisma.AccessName,
@@ -197,21 +197,21 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
                     email: user.email,
                     password: user.password,
                     cpf: user.cpf,
-                    cnpj: user.cnpj || '', // Certifique-se de tratar valores nulos
+                    cnpj: user.cnpj || '', 
                     cep: user.cep,
                     numberAddress: user.numberAddress,
                     AccessName: user.AccessName,
                 },
             });
 
-            // Mapeie os dados do Prisma para a classe User
+           
             const updatedUser: User = new User({
                 id: updatedUserFromPrisma.id,
                 name: updatedUserFromPrisma.name,
                 email: updatedUserFromPrisma.email,
                 password: updatedUserFromPrisma.password,
                 cpf: updatedUserFromPrisma.cpf,
-                cnpj: updatedUserFromPrisma.cnpj || '', // Certifique-se de tratar valores nulos
+                cnpj: updatedUserFromPrisma.cnpj || '', 
                 cep: updatedUserFromPrisma.cep,
                 numberAddress: updatedUserFromPrisma.numberAddress,
                 AccessName: updatedUserFromPrisma.AccessName,
