@@ -112,7 +112,7 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
     async findAll(): Promise<User[]> {
         try {
             const usersFromPrisma = await prisma.user.findMany();
-
+    
             // Mapeie os dados do Prisma para a classe User
             const users: User[] = usersFromPrisma.map(userFromPrisma => {
                 return new User({
@@ -129,7 +129,7 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
                     updatedAt: userFromPrisma.updatedAt,
                 });
             });
-
+    
             return users;
         } catch (error) {
             throw new Error("Erro ao enviar todos os usuarios");
