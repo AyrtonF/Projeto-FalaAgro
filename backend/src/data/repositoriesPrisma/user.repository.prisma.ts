@@ -4,25 +4,76 @@ import { UserRepositoryInferface } from "../repositories/user.repository.interfa
 import { hash } from "bcryptjs";
 
 export class UserRepositoryPrisma implements UserRepositoryInferface{
-   async findByEmail(email: string): Promise<string> {
+   async doesUserExist(email: string): Promise<boolean> {
+        try {
+            const valid = (await prisma.user.findUnique({ where: { email } })) ? true:false
+            return valid
+        } catch (error) {
+            throw new Error("Erro interno durante a verificação do email");
+        }
+    }
+    getPasswordByEmail(email: string): Promise<string> {
+        throw new Error("Method not implemented.");
+    }
+    async getRolesUserByEmail(email: string): Promise<{ userId: string; roles: string[]; }> {
         try {
             const user = await prisma.user.findUnique({
-                where: {
-                    email: email,
-                },
-                select: {
-                    id: true,
-                    email: true,
-                    password: true,
-                    UserAccess: true
-                },
+                where: { email },
+                include: { 
+                    UserAccess: { 
+                        include: {
+                            Access: true 
+                        }
+                    } 
+                }
             });
-           
+            if (user) {
+                
+                const accessName = user.UserAccess?.map((ua) => ua.Access?.name || '');
+            }
+            if(!user){
+                throw new Error("Usuario não existe")
+            }
+        
               let payload = {
                 userId: user.id || '',
                 roles: user.UserAccess.map((ua) => ua.Access?.name || '')
             };
-            return "payload"
+
+            return payload
+
+        } catch (error) {
+            
+            throw new Error("Erro interno durante a verificação do email");
+        }
+    }
+   async findByEmail(email: string): Promise<User|null> {
+        try {
+            const userFromPrisma = await prisma.user.findUnique({
+                where: {
+                   email: email,
+                },
+            });
+
+            if (!userFromPrisma) {
+                return null;
+            }
+
+            const user: User = new User({
+                id: userFromPrisma.id,
+                name: userFromPrisma.name,
+                email: userFromPrisma.email,
+                password: userFromPrisma.password,
+                cpf: userFromPrisma.cpf,
+                cnpj: userFromPrisma.cnpj || '', 
+                cep: userFromPrisma.cep,
+                numberAddress: userFromPrisma.numberAddress,
+                AccessName: userFromPrisma.AccessName,
+                createdAt: userFromPrisma.createdAt,
+                updatedAt: userFromPrisma.updatedAt,
+            });
+
+            return user;
         } catch (error) {
             
             throw new Error("Erro interno durante a verificação do email");
@@ -62,7 +113,7 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
             email: prismaUser.email,
             password: prismaUser.password,
             cpf: prismaUser.cpf,
-            cnpj: prismaUser.cnpj ?? '', // Garantindo que cnpj seja uma string
+            cnpj: prismaUser.cnpj ?? '', 
             cep: prismaUser.cep,
             numberAddress: prismaUser.numberAddress,
             AccessName: prismaUser.AccessName,
@@ -74,7 +125,7 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
         return newUser 
 
      } catch (error) {
-        //console.error(error.message)
+        
         throw new Error("Erro na criação do novo usuario")
      }
     }

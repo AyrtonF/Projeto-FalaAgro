@@ -10,6 +10,13 @@ export interface UserRepositoryInferface {
 
     isUniqueEmail(email:string):Promise<boolean>
     
+
+    doesUserExist(email:string):Promise<boolean>
+
+    getPasswordByEmail(email:string):Promise<string>
+
+    getRolesUserByEmail(email:string):Promise<{userId:string,roles:string[]}>
+
     findAll(): Promise<User[]>
     
     update(user: User): Promise<User>
