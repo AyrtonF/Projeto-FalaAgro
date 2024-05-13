@@ -21,7 +21,7 @@ export class UserController {
             const token = await this.input.signInUseCase.execute({email,password});
             return response.status(201).json(token);
         } catch (error) {
-            return response.status(400).json({ error: "Erro no controlador" });
+            return response.status(400).json({ error: error.message });
         }
     }
     async getAllUser(request: Request, response: Response) {

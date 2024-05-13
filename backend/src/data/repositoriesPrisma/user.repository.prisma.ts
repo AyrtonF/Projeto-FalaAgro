@@ -6,14 +6,36 @@ import { hash } from "bcryptjs";
 export class UserRepositoryPrisma implements UserRepositoryInferface{
    async doesUserExist(email: string): Promise<boolean> {
         try {
-            const valid = (await prisma.user.findUnique({ where: { email } })) ? true:false
+            const valid = await (prisma.user.findUnique({where: {email: email,}})) ? true : false
+            console.log(valid ? "existe":"Não existe")
             return valid
         } catch (error) {
             throw new Error("Erro interno durante a verificação do email");
         }
     }
-    getPasswordByEmail(email: string): Promise<string> {
-        throw new Error("Method not implemented.");
+    async getPasswordByEmail(email: string): Promise<string> {
+        try {
+            const user = await prisma.user.findUnique({
+                where: { email },
+                select:{
+                    password:true
+                }
+            });
+            if(!user){
+                throw new Error("usuario não existe")
+            }
+            if(!user?.password == null){
+                throw new Error("Senha não existe")
+            }
+        
+              let passwordPrisma:string = user.password || ""
+            
+
+            return passwordPrisma
+
+        } catch (error) {
+            throw new Error("Erro interno durante a verificação do email");
+        }
     }
     async getRolesUserByEmail(email: string): Promise<{ userId: string; roles: string[]; }> {
         try {
