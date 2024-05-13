@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="chat.css">
+    <title>Mensagens</title>
+</head>
+<body>
+
+  <!-- Navegção da pagína. -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container" style="display: flex;margin-left: 1%;">
+      <img src="../Assets/logo.png" alt="LogofALAAGRO">
+    </div>
+ 
+  <div class="container" style="display: flex;align-items: center;justify-content:space-around;margin-left:1%;">
+      <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+          <div class="dropdown">
+          <button class="btn btn-segundary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                  <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                  <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button">PE</button></li>
+            <li><button class="dropdown-item" type="button">MG</button></li>
+            <li><button class="dropdown-item" type="button">SP</button></li>
+            <li><button class="dropdown-item" type="button">RJ</button></li>
+            <li><button class="dropdown-item" type="button">RS</button></li>
+            <li><button class="dropdown-item" typte="buton">RN</button></li>
+            <li><button class="dropdown-item" type="button">SC</button></li>
+            <li><button class="dropdown-item" type="button">AM</button></li>
+            <li><button class="dropdown-item" type="button">GO</button></li>
+            <li><button class="dropdown-item" type="button">CE</button></li>
+            <li><button class="dropdown-item" type="button">PB</button></li>
+          </ul>
+        </div>
+            <button class="btn btn-primeiro-success" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+      </button>   
+      </form>
+  </div>
+
+  <div class="container" style="display: flex;align-items: center;justify-content:flex-start;margin-left: -1%;"> 
+      <a class="navbar-brand" href="../Pagina Inicial (Codígo Deus)/Home.html"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+          <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+        </svg> Home!</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="../Pagina de Favoritos/favoritos.html">Favoritos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../Tela de Chat/chat.html">
+               Mensagens!</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
+              </svg></a>
+          </li>
+
+          <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notificações</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você tem 1 mensagem
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary">Entendido!</button>
+      </div>
+    </div>
+  </div>
+</div>
+          <li class="nav-item">
+            <a class="nav-link" href="../Tela Carrinho/pagamento.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+            </svg></a>
+          </li>
+        </ul>
+      </div>
+  </div>
+  <div class="container" style="display: flex;justify-content: space-evenly;">
+ <a class="textunderline" href="../Tela Perfil do Vendedor/TelaPerfil.html"> <button type="button" class="btn btn-entrar"><img class="imagemPerfil" src="../Assets/executivoPerfil.jpg" alt="Perfil"></button></a>
+  <a href="../Pagina de Anunciar final/Anuncios.html"><button type="button" class="btn btn-anunciar">Anunciar</button></a>
+
+  <a href="../index.html"><button type="button" class="btn btn-outline-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"/>
+    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+  </svg></button></a>
+
+</div>
+</nav>
+
+<!-- Mensagens da conta -->
+  
+        <div class="row">
+          <br>
+          <div class=" col-2 cor-de-fundo-2 bodar">
+            <div class="borda">
+                <div class="row">
+                  <img src="https://picsum.photos/id/237/200/300" alt="imagem vedendor" class="imagem-redonda">
+                  <p>Empresa Generica</p>
+                </div>
+                <p>Olá, Tudo bem?</p>
+
+                
+                
+              
+              
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="card">
+            <div class="chat-window cor-de-fundo" ;>
+              <div class="chat-header">Empresa Generica</div>
+              <ul class="message-list">Olá, tudo bem?</ul>
+            </div>
+            <div class="chat-input">
+                <input type="text" class="message-input" placeholder="Mensagem...">
+                <button class="send-button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+              </svg></button>
+            </div>
+          </div>
+          
+          </div>
+
+        </div>
+        <br><br><br><br><br>
+      
+        <div>
+          <!-- Footer da Pagina -->
+          <footer>
+
+            <div id="footer_content">
+              <div id="footer_contacts">
+                <h1>logo</h1>
+                <p>Do agro, para o agro, pelo agro</p>
+                <div id="footer_social_media">
+                  <a href="#" class="footer-link" id="instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                  </a>
+
+                  <a href="#" class="footer-link" id="facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                  </a>
+
+                  <a href="#" class="footer-link" id="linkdln">
+                    <i class="fa-brands fa-linkedin"></i>
+                  </a>
+                </div>
+              </div>
+
+              <ul class="footer-list">
+                <li>
+                  <h1>Fala agro</h1>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Home</a>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Login</a>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Categoria</a>
+                </li>
+              </ul>
+
+              <ul class="footer-list">
+                <li>
+                  <h1>Politica de privacidade</h1>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Termos de contrato</a>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Direitos reservados</a>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Algo aleatorio</a>
+                </li>
+              </ul>
+
+              <ul class="footer-list">
+                <li>
+                  <h1>Sobre Nós</h1>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Saiba sobre nós</a>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Nossas empresas</a>
+                </li>
+                <li>
+                  <a href="#" class="footer-link">Mulungu</a>
+                </li>
+              </ul>
+
+              <div id="footer_subscribe">
+                <h3>Receba Noticías</h3>
+
+                <p>
+                  Receba Noticías diretamente no seu email Fala Agro
+                </p>
+
+                <div id="input_group">
+
+                  <input type="email" id="email">
+                  <button>
+                    <i class="fa-regular fa-envelope"></i>
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="footer_copyright"></div>
+            &#169
+            Fala Agro - todos os direitos reservados
+          </footer>
+      </div>
+
+    
+</body>
+</html>

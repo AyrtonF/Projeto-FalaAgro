@@ -1,0 +1,146 @@
+
+.d-flex{
+  width: 25rem;
+}
+.container-fluid{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.container{
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100vw;
+  height: 3vw;
+}
+
+.btn-primeiro-success{
+  background-color:  rgb(177, 234, 65);
+}
+
+.btn-anunciar{
+  background-color: rgb(177, 234, 65) !important;
+  color: white !important;
+}
+
+  
+  .imagemPerfil{
+    width: 3.10rem;
+    height: 3.10rem;
+    border-radius: 50px;
+  }
+  
+  .btn-entrar:hover{
+    box-shadow:  2px 2px ,
+               -2px -2px 2px #ffffff;
+  }
+
+
+  a.nav-link {
+    margin-right: 10px;
+    row-gap: 1rem;
+ }
+
+
+.carousel{
+    width: 40%;
+    overflow: hidden;
+    height: 20%;
+    margin-left: 5%;
+   margin-top: 5%;
+  display: flex;
+  align-items: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    background-color: transparent;
+    border-radius: 15px;
+}
+
+
+.btn-favoritos{
+  background-color: rgb(177, 234, 65) !important;
+  color: white !important;
+}
+
+.accordion{
+  width: 42%;
+  height: 20%;
+}
+
+.btn-comprar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:rgb(177, 234, 65) !important ;
+  color: white !important;
+  margin-left: 47%;
+  width: 20%;
+margin-top: 11%;
+}
+
+.btn-carrinho{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:white !important ;
+  color:rgb(177, 234, 65) !important;
+  margin-left: 47%;
+  width: 20%;
+margin-top: 2%;
+}
+
+.form{
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3%;
+  margin-left: 49%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px;
+  max-width: 320px;
+}
+
+.stars {
+  display: flex;
+  grid-gap: 0.125rem;
+  gap: 0.125rem;
+  color: rgb(238, 203, 8);
+}
+
+.star {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.infos {
+  margin-top: 1rem;
+}
+
+.date-time {
+  color: rgba(7, 63, 216, 1);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.description {
+  margin-top: 0.4rem;
+  line-height: 1.625;
+  color: rgba(107, 114, 128, 1);
+}
+
+.author {
+  margin-top: 1.3rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: rgba(107, 114, 128, 1);
+}
