@@ -1,20 +1,22 @@
-version: '3'
-
 services:
-  web:
-    image: nginx:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ./meu_site:/usr/share/nginx/html
-  db:
-    image: postgres:latest
+  postgres:
+    image: postgres
+    container_name: docker
     environment:
-      ###POSTGRES_USER: meu_usuario
-      ###POSTGRES_PASSWORD: minha_senha
-      ###POSTGRES_DB: meu_banco_de_dados
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
 
 volumes:
-  db_data:
+  postgres:
