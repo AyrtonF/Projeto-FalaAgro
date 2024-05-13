@@ -1,0 +1,100 @@
+.d-flex{
+    width: 25rem;
+  }
+  .container-fluid{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .container{
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100vw;
+    height: 3vw;
+  }
+  
+  .btn-primeiro-success{
+    background-color:  rgb(177, 234, 65);
+  }
+  
+  .btn-anunciar{
+    background-color: rgb(177, 234, 65) !important;
+    color: white !important;
+  }
+  
+
+.imagemPerfil{
+  width: 3.10rem;
+  height: 3.0rem;
+  border-radius: 50px;
+}
+  
+  .btn-entrar:hover{
+    box-shadow:  2px 2px ,
+               -2px -2px 2px #ffffff;
+  }
+  
+  .container{
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100vw;
+    height: 3vw;
+  }
+
+  .rating {
+    display: inline-block;
+    opacity: 1;
+  }
+  
+  .rating input {
+    display: none;
+    opacity: 1;
+  }
+  
+  .rating label {
+    float: right;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .rating label:before {
+    content: '\2605';
+    font-size: 30px;
+    transition: color 0.3s;
+  }
+  
+  .rating input:checked ~ label,
+  .rating label:hover,
+  .rating label:hover ~ label {
+    color: #ffc300;
+    transform: scale(1.2);
+    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+    animation: bounce 0.5s ease-in-out alternate;
+  }
+  
+  @keyframes bounce {
+    to {
+      transform: scale(1.3);
+    }
+  }
+
+.btn-compreAgora{
+    background-color:  rgb(177, 234, 65);
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-top: 25%;
+    margin-left: 40%;
+}
+
+a.nav-link {
+  margin-right: 10px;
+  row-gap: 1rem;
+}

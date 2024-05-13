@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+    crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
+    crossorigin="anonymous"></script>
+   
+    <title>Home</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+
+<body>
+<!-- Navegção da pagína. -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container" style="display: flex;margin-left: 1%;">
+      <img src="../GabsFerr22.github.io/Assets/logo.png" alt="LogofALAAGRO">
+    </div>
+ 
+  <div class="container" style="display: flex;align-items: center;justify-content:space-around;margin-left:1%;">
+      <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+          <div class="dropdown">
+          <button class="btn btn-segundary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                  <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                  <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" type="button">PE</button></li>
+            <li><button class="dropdown-item" type="button">MG</button></li>
+            <li><button class="dropdown-item" type="button">SP</button></li>
+            <li><button class="dropdown-item" type="button">RJ</button></li>
+            <li><button class="dropdown-item" type="button">RS</button></li>
+            <li><button class="dropdown-item" typte="buton">RN</button></li>
+            <li><button class="dropdown-item" type="button">SC</button></li>
+            <li><button class="dropdown-item" type="button">AM</button></li>
+            <li><button class="dropdown-item" type="button">GO</button></li>
+            <li><button class="dropdown-item" type="button">CE</button></li>
+            <li><button class="dropdown-item" type="button">PB</button></li>
+          </ul>
+        </div>
+            <button class="btn btn-primeiro-success" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+      </button>   
+      </form>
+  </div>
+
+  <div class="container" style="display: flex;align-items: center;justify-content:flex-start;margin-left: -1%;"> 
+      <a class="navbar-brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+          <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+        </svg> Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Favoritos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+               Chat</a>
+          </li>
+          <!-- Button trigger modal -->
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
+              </svg></a>
+          </li>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notificações</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Faça o Login!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary">Entendido!</button>
+      </div>
+    </div>
+  </div>
+</div>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+            </svg></a>
+          </li>
+        </ul>
+      </div>
+  </div>
+  <div class="container" style="display: flex;justify-content: space-evenly;">
+ <a href="../GabsFerr22.github.io/Prototipo tela de login/LoginFalaAgro.html"><button type="button" class="btn btn-entrar">Entrar</button></a>
+  <a href="../GabsFerr22.github.io/Prototipo tela de login/LoginFalaAgro.html"></a><button type="button" class="btn btn-anunciar">Anunciar</button>
+</div>
+</nav>
+
+<!--Anunciar-->
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../GabsFerr22.github.io/Assets/ImagemCarroselHome2.png" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Anuncio em Destaque</h5>
+        <p>Informações do anuncio</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="../GabsFerr22.github.io/Assets/ImagemCarrosel2.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Anuncio em Destaque</h5>
+        <p>Informações do anuncio</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="../GabsFerr22.github.io/Assets/ImagemCarrosel3.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Anuncio em Destaque</h5>
+        <p>Informações do anuncio</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Proximo</span>
+  </button>
+</div>
+
+   <!--Botões de categoria-->
+  <div class="container" style="display: flex;align-items: center;justify-content: space-evenly;margin-top: 8%;">
+   <button type="button" class="btn btn-category"><picture><source media="(min-width: )" srcset="../GabsFerr22.github.io/Assets/icons8-trator-50.png"><img src="../GabsFerr22.github.io/Assets/icons8-trator-50.png" alt=""></picture></button>
+  <button type="button" class="btn btn-category2"><picture><source media="(min-width: )" srcset="../GabsFerr22.github.io/Assets/icons8-seed-64.png"><img src="../GabsFerr22.github.io/Assets/icons8-seed-64.png" alt="" ></picture></button>
+  <button type="button" class="btn btn-category3"><picture><source media="(min-width: )" srcset="../GabsFerr22.github.io/Assets/icons8-casa-50.png"><img src="../GabsFerr22.github.io/Assets/icons8-casa-50.png" alt=""></picture></button>
+  <button type="button" class="btn btn-category4"><picture><source media="(min-width: )" srcset="../GabsFerr22.github.io/Assets/icons8-seed-64 (1).png"><img src="../GabsFerr22.github.io/Assets/icons8-seed-64 (1).png" alt=""></picture></button>
+  <button type="button" class="btn btn-category5"><picture><source media="(min-width: )" srcset="../GabsFerr22.github.io/Assets/icons8-fruit-bag-80.png"><img src="../GabsFerr22.github.io/Assets/icons8-fruit-bag-80.png" alt=""></picture></button>
+  <button type="button" class="btn btn-category6"><picture><source media="(min-width: )" srcset="../GabsFerr22.github.io/Assets/icons8-gado-50.png"><img src="../GabsFerr22.github.io/Assets/icons8-gado-50.png" alt=""></picture></button>
+</div>
+  
+<div class="container" style="display: flex;align-items: center;justify-content: space-evenly;flex-wrap: wrap;margin-top: 3%;padding-right: 3%;font-weight: 500;">
+  <p style="top: 70px;left: 10rem;">Maquinario pesado</p>
+  <p style="top: 30px;left: 10rem;">Maquinario leve</p>
+  <p style="bottom: 10px;left: 0rem;">imoveis</p>
+  <p style="bottom: 50px;left: 0rem;">Produdos FalaAgro</p>
+  <p style="bottom :90px;left: 50rem;">Produtos Agricolas</p>
+  <p style="bottom:130px;left:0rem;">Animais</p>
+</div>
+  <!--Parte dos anuncios-->
+  
+  <div class="container" style="display: flex;align-items: center;justify-content:start;margin-top: 4%; flex-wrap: wrap;">
+<h3>Os Produtos Mais populares para você</h3>
+  </div>
+
+  <a class="textunderline3" href="../GabsFerr22.github.io/Tela de Produto/Produto.html"><div class="container" style="display: flex;align-items:center;justify-content:space-evenly;margin-top: 16%;padding-right: 10%;align-content: center;">
+  <div class="card" style="width: 18rem;">
+    <img src="../GabsFerr22.github.io/Assets/Drone.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5>Drone</h5>
+      <h5>R$ 150,00</h5>
+      <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+      </svg>Região</p>
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1"></label>
+      </div>
+    </div>
+  </div></a>
+
+  <div class="card" style="width: 18rem;">
+    <img src="../GabsFerr22.github.io/Assets/52f512f99b64f3c5d2ec9441cd7a3fd6.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5>R$</h5>
+      <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+      </svg>Região</p>
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1"></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <img src="../GabsFerr22.github.io/Assets/52f512f99b64f3c5d2ec9441cd7a3fd6.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5>R$</h5>
+      <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+      </svg>Região</p>
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1"></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="width: 18rem;">
+    <img src="../GabsFerr22.github.io/Assets/52f512f99b64f3c5d2ec9441cd7a3fd6.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5>R$</h5>
+      <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+      </svg>Região</p>
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1"></label>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<!--outra parte dos Anuncios-->
+  
+<div class="container" style="display: flex;align-items:stretch;justify-content:flex-start;flex-wrap: wrap;margin-top: 18%;">
+  <h3 style="font-weight: 500;"> Produtos FalaAgro</h3>
+</div>
+
+<div class="container" style="display: flex;align-items:center;justify-content:space-evenly;padding-right: 10%; margin-top: 16%;">
+<div class="card" style="width: 18rem;">
+  <img src="../GabsFerr22.github.io/Assets/52f512f99b64f3c5d2ec9441cd7a3fd6.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5>R$</h5>
+    <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    </svg>Região</p>
+    <div class="rating">
+      <input type="radio" id="star5" name="rating" value="5">
+      <label for="star5"></label>
+      <input type="radio" id="star4" name="rating" value="4">
+      <label for="star4"></label>
+      <input type="radio" id="star3" name="rating" value="3">
+      <label for="star3"></label>
+      <input type="radio" id="star2" name="rating" value="2">
+      <label for="star2"></label>
+      <input type="radio" id="star1" name="rating" value="1">
+      <label for="star1"></label>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <img src="../GabsFerr22.github.io/Assets/52f512f99b64f3c5d2ec9441cd7a3fd6.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5>R$</h5>
+    <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    </svg>Região</p>
+    <div class="rating">
+      <input type="radio" id="star5" name="rating" value="5">
+      <label for="star5"></label>
+      <input type="radio" id="star4" name="rating" value="4">
+      <label for="star4"></label>
+      <input type="radio" id="star3" name="rating" value="3">
+      <label for="star3"></label>
+      <input type="radio" id="star2" name="rating" value="2">
+      <label for="star2"></label>
+      <input type="radio" id="star1" name="rating" value="1">
+      <label for="star1"></label>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <img src="../GabsFerr22.github.io/Assets/52f512f99b64f3c5d2ec9441cd7a3fd6.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5>R$</h5>
+    <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    </svg>Região</p>
+    <div class="rating">
+      <input type="radio" id="star5" name="rating" value="5">
+      <label for="star5"></label>
+      <input type="radio" id="star4" name="rating" value="4">
+      <label for="star4"></label>
+      <input type="radio" id="star3" name="rating" value="3">
+      <label for="star3"></label>
+      <input type="radio" id="star2" name="rating" value="2">
+      <label for="star2"></label>
+      <input type="radio" id="star1" name="rating" value="1">
+      <label for="star1"></label>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="width: 18rem;">
+  <img src="../GabsFerr22.github.io/Assets/52f512f99b64f3c5d2ec9441cd7a3fd6.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5>R$</h5>
+    <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+      <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    </svg>Região</p>
+    <div class="rating">
+      <input type="radio" id="star5" name="rating" value="5">
+      <label for="star5"></label>
+      <input type="radio" id="star4" name="rating" value="4">
+      <label for="star4"></label>
+      <input type="radio" id="star3" name="rating" value="3">
+      <label for="star3"></label>
+      <input type="radio" id="star2" name="rating" value="2">
+      <label for="star2"></label>
+      <input type="radio" id="star1" name="rating" value="1">
+      <label for="star1"></label>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+  
+
+
+</body>
+</html>

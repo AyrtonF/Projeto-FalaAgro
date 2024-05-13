@@ -1,0 +1,207 @@
+
+body{
+    margin: 0%!important;
+    display: block;
+}
+
+.carousel{
+    width: 85%;
+    overflow: hidden;
+    height: 20rem;
+    left: 7%;
+    top: 30px;
+  display: flex;
+  align-items: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    background-color: transparent;
+    border-radius: 15px;
+}
+
+
+
+.d-flex{
+  width: 25rem;
+}
+.container-fluid{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.container{
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100vw;
+  height: 3vw;
+}
+
+.btn-primeiro-success{
+  background-color:  rgb(177, 234, 65);
+}
+
+.btn-anunciar{
+  background-color: rgb(177, 234, 65) !important;
+  color: white !important;
+}
+.btn-entrar{
+background-color:white !important;
+color: rgb(177, 234, 65) !important ;
+width: 3.20rem;
+padding: 0;
+transition: .4s;
+border-radius: 50px;
+}
+
+.imagemPerfil{
+  width: 3.10rem;
+  height: 3.10rem;
+  border-radius: 50px;
+}
+
+.btn-entrar:hover{
+  box-shadow:  2px 2px ,
+             -2px -2px 2px #ffffff;
+}
+
+
+
+
+
+.btn-category{
+    height: 90px;
+    width: 100px;
+    background-color: greenyellow;
+    border-radius: 40%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+}
+.btn-category2{
+    height: 90px;
+    width: 100px;
+    background-color:greenyellow;
+    border-radius: 40%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+
+}
+.btn-category3{
+   
+    height: 90px;
+    width: 100px;
+    background-color: greenyellow;
+    border-radius: 40%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    
+
+} 
+.btn-category4{
+    height: 90px;
+    width: 100px;
+    background-color: greenyellow;
+    border-radius: 40%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+
+}
+.btn-category5{
+    height: 90px;
+    width: 100px;
+    background-color: greenyellow;
+    border-radius: 40%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+}
+.btn-category6{
+
+    height: 90px;
+    width: 100px;
+    background-color: greenyellow;
+    border-radius: 40%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+   
+}
+
+.rating {
+    display: inline-block;
+    opacity: 1;
+  }
+  
+  .rating input {
+    display: none;
+    opacity: 1;
+  }
+  
+  .rating label {
+    float: right;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .rating label:before {
+    content: '\2605';
+    font-size: 30px;
+    transition: color 0.3s;
+  }
+  
+  .rating input:checked ~ label,
+  .rating label:hover,
+  .rating label:hover ~ label {
+    color: #ffc300;
+    transform: scale(1.2);
+    transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+    animation: bounce 0.5s ease-in-out alternate;
+  }
+  
+  @keyframes bounce {
+    to {
+      transform: scale(1.3);
+    }
+  }
+ 
+  .container{
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100vw;
+    height: 3vw;
+  }
+
+.navbar navbar-expand-lg bg-body-tertiary {
+    padding: 0px!important;
+    gap: 10px!important;
+ 
+}
+ a.nav-link {
+    margin-right: 10px;
+    row-gap: 1rem;
+ }
+
+.card{
+ display: grid;
+ gap: 40px;
+margin: 1rem;
+}

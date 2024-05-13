@@ -1,0 +1,309 @@
+.d-flex{
+    width: 25rem;
+  }
+  .container-fluid{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .container{
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100vw;
+    height: 3vw;
+  }
+  
+  .btn-primeiro-success{
+    background-color:  rgb(177, 234, 65);
+  }
+  
+  .btn-anunciar{
+    background-color: rgb(177, 234, 65) !important;
+    color: white !important;
+  }
+  
+
+.imagemPerfil{
+  width: 3.10rem;
+  height: 3.0rem;
+  border-radius: 50px;
+}
+  .btn-entrar:hover{
+    box-shadow:  2px 2px ,
+               -2px -2px 2px #ffffff;
+  }
+
+
+  a.nav-link {
+    margin-right: 10px;
+    row-gap: 1rem;
+ }
+  
+  .card {
+    width: 99%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    
+     padding-left: 1%;
+     padding-right: 1%;
+  }
+  
+  .chat-header {
+    background-color:  rgb(177, 234, 65);
+    color: #fff;
+    padding: 10px;
+    font-size: 18px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+  }
+  
+  .chat-window {
+    height: 39rem;
+    overflow-y: scroll;
+  }
+  
+  .message-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .message-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  .send-button {
+    border: none;
+    outline: none;
+    background-color: rgb(177, 234, 65);
+    color: #fff;
+    font-size: 14px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .send-button:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+  }
+  .container{
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100vw;
+    height: 3vw;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+ 
+
+  :root{
+    --color-primary: #F9FFD8;
+    --color-secondary: #3D221B;
+    --color-third: #A1D627;
+    --color-four: #fbfbfbf0;
+  }
+
+  *{
+    font-family: 'Sometype Mono', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    letter-spacing: 1px;
+  }
+  main{
+    height:80vh;
+  }
+
+  footer{
+    width: fit-content;
+    color: var(--color-secondary);
+  }
+
+  .footer-link{
+    text-decoration: none;
+  }
+
+  #footer_content{
+    background-color: var(--color-primary);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 3rem 3.5rem;
+  }
+
+  #footer_contacts h1{
+    margin-bottom: 0.75rem;
+  }
+
+  #footer_social_media{
+    display:flex ;
+    gap: 2rem ;
+    margin-top: 1.5rem;
+  }
+
+  #footer_social_media .footer-link{
+    height: 2.5rem;
+    width: 2.5rem;
+    color: var(--color-secondary);
+    border-radius: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s;
+  }
+
+  #footer_social_media .footer-link:hover{
+
+    background-color: #73981b;
+
+  }
+
+  #footer_social_media .footer-link i {
+
+    font-size: 1.5rem;
+
+  }
+
+  #instagram{
+    background-color: var(--color-third);
+  }
+
+  #facebook{
+    background-color: var(--color-third);
+  }
+
+  #linkdln{
+    background-color: var(--color-third);
+  }
+
+  .footer-list{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    list-style: none;
+
+  }
+
+  .footer-list .footer-link{
+    color: var(--color-secondary);
+  }
+
+  .footer-list .footer-link:hover{
+    color: var(--color-third);
+  }
+
+  #footer_subscribe{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  #footer_subscribe p{
+    color: var(--color-secondary);
+  }
+
+  #input_group{
+    display: flex;
+    align-items: center;
+    background-color: var(--color-four);
+    border-radius: 4px;
+  }
+
+  #input_group input{
+    all: unset;
+    padding: 0.75rem;
+    width: 100%;
+  }
+
+  
+
+  .container{
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100vw;
+    height: 3vw;
+  }
+
+.p-5 {
+  width: 450px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.col-5 {
+border-radius: 20px;
+}
+
+.material-symbols-outlined {
+  font-size: 170px!important;
+}
+
+#picture__input{
+  display: none;
+}
+
+.picture{
+  width: 450px;
+  height: 350px;
+  border-radius: 20px;
+  background-color: #a5a4a4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: color 400ms ease-in-out, background 300ms ease-in-out ;
+}
+
+.picture:hover{
+  background-color: #787878;
+  color: #EFF2F6;
+}
+
+.picture__img{
+  max-width: 100px;
+}
+.cor-de-fundo{
+  
+  background-image:url('C:\\Users\\55819\\Desktop\\ChatFalaAgro\\imageVerdeDeFundo.jpeg')
+;
+  
+}
+.cor-de-fundo-2{
+  background-color: #f1f3f4;
+
+}
+.imagem-redonda {
+  width: 100px; /* Defina a largura desejada */
+  height: 100px; /* Defina a altura desejada */
+  border-radius: 50%; /* Isso faz com que a borda tenha a forma de um círculo */
+  overflow: hidden; /* Garante que a imagem não ultrapasse os limites do círculo */
+}
+
+
+.borda {
+  border-bottom:  solid black; /* 2 pixels de largura, sólida e de cor vermelha (#ff0000) */
+}
+
+ 
+ 
