@@ -29,6 +29,9 @@ export class User{
         updatedAt:props.updatedAt || new Date()
     }
    
+    if(!this.isValidEmail(this.email)){
+      throw new Error("Email invalido")
+    }
     if(!this.isValidCPF(this.cpf)){
       
       throw new Error("CPF invalido")
@@ -45,6 +48,11 @@ export class User{
  toJSON(){
     return this.props
  }
+
+ isValidEmail(value: string): boolean {
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   return emailRegex.test(value);
+}
  isValidCNPJ(cnpj: string): boolean {
    // Remove todos os caracteres que não são números
    const cnpjClean = cnpj.replace(/\D/g, '');

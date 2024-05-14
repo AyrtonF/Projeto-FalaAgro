@@ -20,5 +20,5 @@ export interface UserRepositoryInferface {
     
     update(user: User): Promise<User>
 
-    delete(id: string): Promise<void>
+    delete(id: string): Promise<boolean>
 }

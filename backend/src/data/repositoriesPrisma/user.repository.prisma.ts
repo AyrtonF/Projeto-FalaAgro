@@ -246,13 +246,15 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
             throw new Error("Error na atualização do usuario");
         }
     }
-        async delete(id: string): Promise<void> {
+        async delete(id: string): Promise<boolean> {
             try {
                 await prisma.user.delete({
                     where: {
                         id: id,
                     },
                 });
+                const valid = await (prisma.user.findUnique({where: {id}})) ? true : false
+                return valid
             } catch (error) {
                 throw new Error("Error while deleting user");
             }
