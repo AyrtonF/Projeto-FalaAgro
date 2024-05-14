@@ -4,13 +4,21 @@ import { UserRepositoryInferface } from "../repositories/user.repository.interfa
 import { hash } from "bcryptjs";
 
 export class UserRepositoryPrisma implements UserRepositoryInferface{
-   async doesUserExist(email: string): Promise<boolean> {
+  
+    async doesUserExist(email?: string, id?: string): Promise<boolean> {
         try {
-            const valid = await (prisma.user.findUnique({where: {email: email,}})) ? true : false
-            console.log(valid ? "existe":"Não existe")
-            return valid
+            let user;
+            if (email) {
+                user = await prisma.user.findUnique({ where: { email } });
+            } else if (id) {
+                user = await prisma.user.findUnique({ where: { id } });
+            } else {
+                throw new Error("Email or ID must be provided");
+            }
+            
+            return !!user; 
         } catch (error) {
-            throw new Error("Erro interno durante a verificação do email");
+            throw new Error("Internal error during email verification");
         }
     }
     async getPasswordByEmail(email: string): Promise<string> {
@@ -205,7 +213,7 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
     
             return users;
         } catch (error) {
-            throw new Error("Erro ao enviar todos os usuarios");
+            throw new Error(error.message);
         }
     }
     async update(user: User): Promise<User> {
@@ -217,12 +225,12 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
                 data: {
                     name: user.name,
                     email: user.email,
+                    AccessName: user.AccessName,
                     password: user.password,
                     cpf: user.cpf,
                     cnpj: user.cnpj || '', 
                     cep: user.cep,
                     numberAddress: user.numberAddress,
-                    AccessName: user.AccessName,
                 },
             });
 
@@ -259,7 +267,13 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
                 throw new Error("Error while deleting user");
             }
         }
-    
+       async deleteAll(): Promise<any> {
+            try {
+                await prisma.user.deleteMany()
+            } catch (error) {
+                throw new Error("Erro no processo de deletar tudo")
+            }
+        }
 
 }
 

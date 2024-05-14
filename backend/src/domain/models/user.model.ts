@@ -36,7 +36,7 @@ export class User{
       
       throw new Error("CPF invalido")
     }
-    console.log(this.cnpj==""?"Sim":"Não")
+ 
     if(!(this.cnpj == "")){
       if (!this.isValidCNPJ(this.cnpj)) {
          throw new Error("CNPJ invalido")
@@ -146,36 +146,45 @@ export class User{
    return true;
 }
 
-private set name(value:string){
+public set name(value:string){
     this.props.name = value
 }
 
-private set email(value:string){
+public set email(value:string){
+    if(!this.isValidEmail){
+        throw new Error("Email invalido")
+    }
     this.props.email = value
 }
 
-private set password(value:string){
+public set password(value:string){
     this.props.password = value
 }
 
-private set cpf(value:string){
+public set cpf(value:string){
+    if(!this.isValidCPF){
+        throw new Error("CPF invalido")
+    }
     this.props.cpf = value
 }
 
-private set cnpj(value:string){
+public set cnpj(value:string){
+    if(!this.isValidCNPJ){
+        throw new Error("CNPJ invalido")
+    }
     this.props.cnpj = value
 }
 
-private set cep(value:string){
+public set cep(value:string){
     this.props.cep = value
 }
-private set numberAddress(value:number){
+public set numberAddress(value:number){
     this.props.numberAddress = value
 }
-private set AccessName(value:string[]){
+public set AccessName(value:string[]){
     this.props.AccessName = value
 }
-private set id (value:string){
+public set id (value:string){
    this.props.id = value
 }
 
