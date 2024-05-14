@@ -1,5 +1,5 @@
-import { userRouter } from './routes/user.routes';
-import { accessRouter } from './routes/access.routes';
+import { userRouter } from '../../../routes/user.routes';
+import { accessRouter } from '../../../routes/access.routes';
 import express, {json} from 'express'
 
 const app = express()

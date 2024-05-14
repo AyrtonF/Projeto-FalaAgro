@@ -9,7 +9,6 @@ export interface UserRepositoryInferface {
     findByEmail(email:string):Promise<any>
 
     isUniqueEmail(email:string):Promise<boolean>
-    
 
     doesUserExist(email:string):Promise<boolean>
 

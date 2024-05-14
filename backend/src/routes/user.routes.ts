@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { CreateUserUseCase } from '../../../../domain/useCases/user/createUser.useCase';
-import { UserRepositoryPrisma } from '../../../../data/repositoriesPrisma/user.repository.prisma';
-import { GetAllUserUseCase } from '../../../../domain/useCases/user/getAllUser.useCase';
-import { UserController } from '../../../../interface/controllers/user.controller';
-import { AccessRepositoryPrisma } from '../../../../data/repositoriesPrisma/access.repository.prisma';
-import { SignInUseCase } from '../../../../domain/useCases/user/signIn.useCase';
+import { CreateUserUseCase } from '../domain/useCases/user/createUser.useCase';
+import { UserRepositoryPrisma } from '../data/repositoriesPrisma/user.repository.prisma';
+import { GetAllUserUseCase } from '../domain/useCases/user/getAllUser.useCase';
+import { UserController } from '../interface/controllers/user.controller';
+import { AccessRepositoryPrisma } from '../data/repositoriesPrisma/access.repository.prisma';
+import { SignInUseCase } from '../domain/useCases/user/signIn.useCase';
 const userRouter = Router();
 const userRepository = new UserRepositoryPrisma();
 const accessRepository = new AccessRepositoryPrisma()
