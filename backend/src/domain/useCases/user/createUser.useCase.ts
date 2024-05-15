@@ -1,5 +1,5 @@
 import { UserRepositoryInferface } from "../../../data/repositories/user.repository.interface"
-import  { DuplicateEmailError,AccessNameDoesNotExist, UserError }  from "../../../errors/user.error"
+import  { UserErrors }  from "../../../errors/user.errors"
 import { AccessRepositoryInferface } from "../../../data/repositories/access.repository.interface";
 import { User } from "../../models/user.model"
 import { hash } from "bcryptjs";
@@ -13,10 +13,10 @@ export class CreateUserUseCase {
         const emailUnique = await this.userRepository.isUniqueEmail(userInput.email)
         const accessNameExists  = await this.accessRepository.doesAccessExist(userInput.AccessName)
         if (!emailUnique) {
-            throw new DuplicateEmailError()
+            throw UserErrors.duplicateEmailError
         }
         if(!accessNameExists){
-            throw new AccessNameDoesNotExist()
+            throw UserErrors.accessNameDoesNotExistError
         }
             const user = await this.userRepository.insert(userInput)
             return user.toJSON()

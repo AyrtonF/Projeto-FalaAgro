@@ -1,9 +1,10 @@
 import { Request, Response } from 'express'
 import { CreateUserUseCase } from "../../domain/useCases/user/createUser.useCase";
 import { GetAllUserUseCase } from "../../domain/useCases/user/getAllUser.useCase";
-import {  DuplicateEmailError, AccessNameDoesNotExist } from '../../errors/user.error';
+import {  DuplicateEmailError, AccessNameDoesNotExist,InvalidEmailError, InvalidCPFError,InvalidCNPJError } from '../../errors/user.errors';
 import { SignInUseCase } from '../../domain/useCases/user/signIn.useCase';
 import { DeleteAllUsersUseCase } from '../../domain/useCases/user/deleteAllUsers.useCase';
+import { handleErrors } from '../../errors/hadler.errors';
 type userControllerInput = {
     deleteAllUsersUseCase: DeleteAllUsersUseCase;
     createUserUseCase: CreateUserUseCase
@@ -15,7 +16,23 @@ type userControllerInput = {
 export class UserController {
 
     constructor(private input: userControllerInput) { }
+    
+    async createUser(request: Request, response: Response): Promise<Response> {
 
+        try {
+            const { name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt } = request.body;
+            const user = await this.input.createUserUseCase.execute({ name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt });
+            return response.status(201).json(user);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+               const errorResponse = handleErrors(error)
+               
+               return response.status(errorResponse.status).json(errorResponse.message)
+            }else{
+                return response.json({message:"Erro interno no servidor"}) 
+            }
+        }
+    }
     async signInUseCase(request: Request, response: Response) {
         const {email, password } = request.body;
         try {
@@ -33,25 +50,6 @@ export class UserController {
         } catch (error) {
             console.error(error.message)
             return response.status(500).json({ error: error.message });
-        }
-    }
-    async createUser(request: Request, response: Response): Promise<Response> {
-
-        try {
-            const { name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt } = request.body;
-            const user = await this.input.createUserUseCase.execute({ name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt });
-            return response.status(201).json(user);
-        } catch (error) {
-            if (error instanceof DuplicateEmailError) {
-                return response.status(error.status).json({ error: error.message });
-            }
-            else if(error instanceof AccessNameDoesNotExist){
-                return response.status(error.status).json({ error: error.message })
-            }
-            else {
-                console.error(error.message)
-                return response.status(500).json({ error: error.message });
-            }
         }
     }
 

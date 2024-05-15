@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-
+import { UserErrors } from '../../errors/user.errors';
 
 export type UserProps = {
     id?: string; 
@@ -30,16 +30,16 @@ export class User{
     }
    
     if(!this.isValidEmail(this.email)){
-      throw new Error("Email invalido")
+      throw UserErrors.invalidEmailError
     }
     if(!this.isValidCPF(this.cpf)){
-      
-      throw new Error("CPF invalido")
+     
+      throw UserErrors.invalidCPFError
     }
  
     if(!(this.cnpj == "")){
       if (!this.isValidCNPJ(this.cnpj)) {
-         throw new Error("CNPJ invalido")
+         throw UserErrors.invalidCNPJError
        }
     }
    
@@ -105,27 +105,27 @@ export class User{
  isValidCPF(value: string): boolean {
    // Remove todos os caracteres que não são números
    const cpfClean = value.replace(/\D/g, '');
-
    // Verifica se o CPF tem 11 dígitos
    if (cpfClean.length !== 11) {
        return false;
-   }
-
-   // Verifica se todos os dígitos são iguais
-   if (/^(\d)\1{10}$/.test(cpfClean)) {
-       return false;
-   }
-
-   // Calcula o primeiro dígito verificador
-   let sum = 0;
-   for (let i = 0; i < 9; i++) {
-       sum += parseInt(cpfClean.charAt(i)) * (10 - i);
-   }
-   let remainder = 11 - (sum % 11);
-   let digit1 = remainder >= 10 ? 0 : remainder;
-
-   // Verifica se o primeiro dígito verificador está correto
-   if (parseInt(cpfClean.charAt(9)) !== digit1) {
+    }
+    
+    // Verifica se todos os dígitos são iguais
+    if (/^(\d)\1{10}$/.test(cpfClean)) {
+        return false;
+    }
+    
+    // Calcula o primeiro dígito verificador
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+        sum += parseInt(cpfClean.charAt(i)) * (10 - i);
+    }
+    let remainder = 11 - (sum % 11);
+    let digit1 = remainder >= 10 ? 0 : remainder;
+    
+    // Verifica se o primeiro dígito verificador está correto
+    if (parseInt(cpfClean.charAt(9)) !== digit1) {
+        console.error("aqui")
        return false;
    }
 
