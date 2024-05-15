@@ -132,6 +132,8 @@ export class InternalServerErrorError extends Error {
         this.status = status || 500; 
     }
 }
+
+
 /* export const UserErrors = {
     INVALID_NAME: new UserError("Invalid name", 400),
     INVALID_EMAIL: new UserError("Invalid email", 400),

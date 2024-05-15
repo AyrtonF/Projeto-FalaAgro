@@ -1,9 +1,9 @@
 import { User } from "../../domain/models/user.model";
+import { MissingIdentifierError, UserNotFoundError } from "../../errors/user.errors";
 import { prisma } from "../prisma";
-import { UserRepositoryInferface } from "../repositories/user.repository.interface";
-import { hash } from "bcryptjs";
+import { UserRepositoryInterface } from "../repositories/user.repository.interface";
 
-export class UserRepositoryPrisma implements UserRepositoryInferface{
+export class UserRepositoryPrisma implements UserRepositoryInterface{
   
     async doesUserExist(email?: string, id?: string): Promise<boolean> {
         try {
@@ -13,12 +13,12 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
             } else if (id) {
                 user = await prisma.user.findUnique({ where: { id } });
             } else {
-                throw new Error("Email or ID must be provided");
+                throw new MissingIdentifierError(); 
             }
             
             return !!user; 
         } catch (error) {
-            throw new Error("Internal error during email verification");
+            throw new Error("Erro interno durante a verificação do id ou email");
         }
     }
     async getPasswordByEmail(email: string): Promise<string> {
@@ -162,33 +162,38 @@ export class UserRepositoryPrisma implements UserRepositoryInferface{
     async findById(id: string): Promise<User | null> {
         try {
             const userFromPrisma = await prisma.user.findUnique({
-                where: {
-                    id: id,
-                },
+                where: { id },
             });
 
             if (!userFromPrisma) {
-                return null;
+                return null
             }
 
-            const user: User = new User({
-                id: userFromPrisma.id,
-                name: userFromPrisma.name,
-                email: userFromPrisma.email,
-                password: userFromPrisma.password,
-                cpf: userFromPrisma.cpf,
-                cnpj: userFromPrisma.cnpj || '', 
-                cep: userFromPrisma.cep,
-                numberAddress: userFromPrisma.numberAddress,
-                AccessName: userFromPrisma.AccessName,
-                createdAt: userFromPrisma.createdAt,
-                updatedAt: userFromPrisma.updatedAt,
-            });
-
-            return user;
+            return this.mapPrismaUserToDomain(userFromPrisma);
         } catch (error) {
-            throw new Error("Error na busca do id");
+            if(error instanceof Error){
+                throw new Error(`Failed to find user by ID: ${error.message}`);
+            }
+            else{
+                throw new Error("Erro interno no servidor ao buscar um id") 
+            }  
         }
+    }
+
+    private mapPrismaUserToDomain(prismaUser:any): User {
+        return new User({
+            id: prismaUser.id,
+            name: prismaUser.name,
+            email: prismaUser.email,
+            password: prismaUser.password,
+            cpf: prismaUser.cpf,
+            cnpj: prismaUser.cnpj || '', 
+            cep: prismaUser.cep,
+            numberAddress: prismaUser.numberAddress,
+            AccessName: prismaUser.AccessName,
+            createdAt: prismaUser.createdAt,
+            updatedAt: prismaUser.updatedAt,
+        });
     }
     async findAll(): Promise<User[]> {
         try {

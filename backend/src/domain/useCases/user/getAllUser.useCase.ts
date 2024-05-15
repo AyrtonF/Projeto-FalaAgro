@@ -1,7 +1,7 @@
-import { UserRepositoryInferface } from "../../../data/repositories/user.repository.interface"
+import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface"
 
 export class GetAllUserUseCase {
-    constructor(private userRepository:UserRepositoryInferface){}
+    constructor(private userRepository:UserRepositoryInterface){}
 
     async execute():Promise<GetUserUseCaseOutput>{
         

@@ -130,7 +130,52 @@ export class InternalServerError extends Error {
         return {name:this.name, status:this.status, message:this.message}
     }
 }
+export class EmailNotFoundError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "E-mail não encontrado");
+        this.name = "EmailNotFoundError";
+        this.status = status || 404; // Not Found
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
 
+export class IncorrectPasswordError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Senha incorreta");
+        this.name = "IncorrectPasswordError";
+        this.status = status || 401; // Unauthorized
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
+export class SecretKeyNotProvidedError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Chave secreta não fornecida");
+        this.name = "SecretKeyNotProvidedError";
+        this.status = status || 500; // Internal Server Error
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+export class MissingIdentifierError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "E-mail ou ID deve ser fornecido");
+        this.name = "MissingIdentifierError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON(){
+        return {name:this.name, status:this.status, message:this.message}
+    }
+}
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
     accessNameDoesNotExistError: new AccessNameDoesNotExist(),
@@ -142,6 +187,10 @@ export const UserErrors = {
     unauthorizedError: new UnauthorizedError(),
     forbiddenError: new ForbiddenError(),
     userNotFoundError: new UserNotFoundError(),
-    internalServerError: new InternalServerError()
+    internalServerError: new InternalServerError(),
+    emailNotFoundError: new EmailNotFoundError(),
+    incorrectPasswordError: new IncorrectPasswordError(),
+    secretKeyNotProvidedError: new SecretKeyNotProvidedError(),
+    missingIdentifierError: new MissingIdentifierError(),
 };
 

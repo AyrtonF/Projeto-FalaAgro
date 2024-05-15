@@ -1,7 +1,7 @@
 import { Access } from "../../domain/models/access.model";
 
 
-export interface AccessRepositoryInferface {
+export interface AccessRepositoryInterface {
       
     insert(user: Access): Promise<Access>;
    

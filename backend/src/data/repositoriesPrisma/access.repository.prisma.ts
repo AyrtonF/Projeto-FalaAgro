@@ -1,8 +1,8 @@
 import { Access } from "../../domain/models/access.model";
-import { AccessRepositoryInferface } from "../repositories/access.repository.interface";
+import { AccessRepositoryInterface } from "../repositories/access.repository.interface";
 import { prisma } from "../prisma";
 
-export class AccessRepositoryPrisma implements AccessRepositoryInferface {
+export class AccessRepositoryPrisma implements AccessRepositoryInterface {
    async doesAccessExist(accessName: string[]): Promise<boolean> {
         try {
             const accessExists = await Promise.all(accessName.map(name => prisma.access.findUnique({ where: { name } })));

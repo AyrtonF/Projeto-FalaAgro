@@ -1,8 +1,8 @@
-import { AccessRepositoryInferface } from "../../../data/repositories/access.repository.interface";
+import { AccessRepositoryInterface } from "../../../data/repositories/access.repository.interface";
 import { Access } from "../../models/access.model";
 
 export class CreateAccessUseCase {
-    constructor(private accessRepository:AccessRepositoryInferface){}
+    constructor(private accessRepository:AccessRepositoryInterface){}
 
     async execute(input:CreateAccessInput):Promise<CreateAccessOutoput>{
         const accessInput = new Access(input)

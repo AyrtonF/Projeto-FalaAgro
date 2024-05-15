@@ -12,7 +12,11 @@ const errorMap: Record<string, UserError> = {
     UnauthorizedError: UserErrors.unauthorizedError,
     ForbiddenError: UserErrors.forbiddenError,
     UserNotFoundError: UserErrors.userNotFoundError,
-    InternalServerError: UserErrors.internalServerError
+    InternalServerError: UserErrors.internalServerError,
+    EmailNotFoundError:  UserErrors.emailNotFoundError,
+    IncorrectPasswordError: UserErrors.incorrectPasswordError,
+    SecretKeyNotProvidedError:  UserErrors.secretKeyNotProvidedError,
+    MissingIdentifierError: UserErrors.missingIdentifierError
 }
 
 

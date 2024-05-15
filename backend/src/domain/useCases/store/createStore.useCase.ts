@@ -1,10 +1,10 @@
 import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
-import { UserRepositoryInferface } from "../../../data/repositories/user.repository.interface";
+import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
 import { Store } from "../../models/store.model";
 
 
 export class CreateStoreUseCase  {
-    constructor(private storeRepository:StoreRepositoryInterface,private userRepository:UserRepositoryInferface){}
+    constructor(private storeRepository:StoreRepositoryInterface,private userRepository:UserRepositoryInterface){}
     async execute(input:CreateStoreInput):Promise<CreateStoreOutput>{
         const storeInput = new Store(input)
         const userExists = await this.userRepository.findById(storeInput.userId)

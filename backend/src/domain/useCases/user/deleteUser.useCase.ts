@@ -1,8 +1,8 @@
-import { UserRepositoryInferface } from "../../../data/repositories/user.repository.interface"
+import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface"
 
 
 export class deleteUserUseCase {
-    constructor(private userRepository:UserRepositoryInferface){}
+    constructor(private userRepository:UserRepositoryInterface){}
     async execute(userId:string):Promise<deleteUserOutput>{
         const existingUser  = await this.userRepository.findById(userId)
         if(!existingUser ){

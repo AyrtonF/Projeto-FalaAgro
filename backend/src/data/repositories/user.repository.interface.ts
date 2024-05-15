@@ -1,6 +1,6 @@
 import { User } from "../../domain/models/user.model";
 
-export interface UserRepositoryInferface {
+export interface UserRepositoryInterface {
       
     insert(user: User): Promise<User>
    
