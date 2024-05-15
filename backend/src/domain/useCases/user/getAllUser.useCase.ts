@@ -6,7 +6,7 @@ export class GetAllUserUseCase {
     async execute():Promise<GetUserUseCaseOutput>{
         
         const users = await this.userRepository.findAll()
-        return users.map(user => user.toJSON())
+        return users.map(user => user.toDTO())
     }
 }
 
@@ -14,14 +14,12 @@ export class GetAllUserUseCase {
 
 
 type GetUserUseCaseOutput ={
-    name:string
-    email:string
-    password:string
-    cpf:string
-    cnpj?:string
-    cep:string
-    numberAddress:number
-    AccessName:string[]
-    createdAt:Date
-    updatedAt:Date
+    id?: string;
+    name: string;
+    email: string;
+    cpf: string;
+    cnpj?: string;
+    cep: string;
+    numberAddress: number;
+    AccessName: string[];
 }[]

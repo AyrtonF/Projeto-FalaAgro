@@ -48,6 +48,16 @@ export class User{
  toJSON(){
     return this.props
  }
+ toDTO(){
+    
+    const { id, name, email, cpf, cnpj, cep, numberAddress, AccessName } = this.props;
+    if(cnpj !== ""){
+        return { id, name, email, cpf, cnpj, cep, numberAddress, AccessName }
+    }else{
+        return { id, name, email, cpf, cep, numberAddress, AccessName }
+    }
+    
+ }
 
  isValidEmail(value: string): boolean {
    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

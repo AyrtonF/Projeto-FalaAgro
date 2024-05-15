@@ -5,12 +5,15 @@ import { SignInUseCase } from '../../domain/useCases/user/signIn.useCase';
 import { DeleteAllUsersUseCase } from '../../domain/useCases/user/deleteAllUsers.useCase';
 import { handleErrors } from '../../errors/hadler.errors';
 import { GetUserByIdUseCase } from '../../domain/useCases/user/getUserById.useCase';
+import { InternalServerError } from '../../errors/user.errors';
+import { UpdateUserUseCase } from '../../domain/useCases/user/updateUser.useCase';
 type userControllerInput = {
     deleteAllUsersUseCase: DeleteAllUsersUseCase;
     createUserUseCase: CreateUserUseCase
     getAllUserUseCase: GetAllUserUseCase
     getUserByIdUseCase:GetUserByIdUseCase
     signInUseCase: SignInUseCase
+    updateUserUseCase: UpdateUserUseCase
 
 }
 
@@ -26,11 +29,10 @@ export class UserController {
             return response.status(201).json(user);
         } catch (error: unknown) {
             if (error instanceof Error) {
-               const errorResponse = handleErrors(error)
-               
-               return response.status(errorResponse.status).json(errorResponse.message)
-            }else{
-                return response.status(500).json({message:"Erro interno no servidor"}) 
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
             }
         }
     }
@@ -46,15 +48,15 @@ export class UserController {
             const user = await this.input.getUserByIdUseCase.execute(id);
             return response.status(200).json(user);
         } catch (error) {
-            if(error instanceof Error){
-              const errorResponse = handleErrors(error);
-              return response.status(errorResponse.status).json({ error: errorResponse.message });
-            }else{
-                return response.status(500).json({message:"Erro interno no servidor"}) 
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
             }
         }
     }
-    async signInUseCase(request: Request, response: Response) {
+    async signInUseCase(request: Request, response: Response): Promise<Response> {
         const { email, password } = request.body;
         try {
             const token = await this.input.signInUseCase.execute({ email, password });
@@ -64,7 +66,23 @@ export class UserController {
                 const errorResponse = handleErrors(error); 
                 return response.status(errorResponse.status).json(errorResponse.message); 
             } else {
-                return response.status(500).json({ error: 'Internal Server Error' }); 
+               throw new InternalServerError
+            }
+        }
+    }
+
+    async updateUser(request:Request, response:Response):Promise<Response>{
+        const {name, email, password, cpf, cnpj, cep, numberAddress} = request.body
+        const {id} = request.params
+        try {
+            const updatedUser = await this.input.updateUserUseCase.execute({id,name, email, password, cpf, cnpj, cep, numberAddress})
+            return response.status(200).json(updatedUser)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
             }
         }
     }
@@ -74,11 +92,16 @@ export class UserController {
         try {
             const user = await this.input.getAllUserUseCase.execute();
             return response.status(201).json(user);
-        } catch (error) {
-            console.error(error.message)
-            return response.status(500).json({ error: error.message });
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
         }
     }
+
 
     async deleteAll(request: Request, response: Response){
         await this.input.deleteAllUsersUseCase.execute()

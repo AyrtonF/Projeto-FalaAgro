@@ -27,7 +27,6 @@ export class SignInUseCase {
        
         const userRoles = await this.userRepository.getRolesUserByEmail(email);
 
-        
         const secretKey = process.env.MY_SECRET_KEY;
         if (!secretKey) {
             throw new SecretKeyNotProvidedError();

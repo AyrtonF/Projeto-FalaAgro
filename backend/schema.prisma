@@ -22,7 +22,6 @@ model User {
   cnpj           String?
   cep            String
   numberAddress  Int
-  AccessName     String[]
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   sale_as_buyer  Sale[]       @relation("buyer")

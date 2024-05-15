@@ -4,6 +4,7 @@ import { AccessRepositoryPrisma } from '../data/repositoriesPrisma/access.reposi
 import { CreateUserUseCase } from '../domain/useCases/user/createUser.useCase';
 import { GetAllUserUseCase } from '../domain/useCases/user/getAllUser.useCase';
 import { SignInUseCase } from '../domain/useCases/user/signIn.useCase';
+import { UpdateUserUseCase } from '../domain/useCases/user/updateUser.useCase';
 import { DeleteAllUsersUseCase } from '../domain/useCases/user/deleteAllUsers.useCase';
 import { GetUserByIdUseCase } from '../domain/useCases/user/getUserById.useCase';
 import { UserController } from '../interface/controllers/user.controller';
@@ -16,6 +17,7 @@ const accessRepository = new AccessRepositoryPrisma();
 const createUserUseCase = new CreateUserUseCase(userRepository, accessRepository);
 const getAllUserUseCase = new GetAllUserUseCase(userRepository);
 const signInUseCase = new SignInUseCase(userRepository);
+const updateUserUseCase = new UpdateUserUseCase(userRepository)
 const deleteAllUsersUseCase = new DeleteAllUsersUseCase(userRepository);
 const getUserByIdUseCase = new GetUserByIdUseCase(userRepository);
 
@@ -25,7 +27,8 @@ const userController = new UserController({
     getAllUserUseCase,
     signInUseCase,
     deleteAllUsersUseCase,
-    getUserByIdUseCase
+    getUserByIdUseCase,
+    updateUserUseCase
 });
 
 // Rotas
@@ -33,6 +36,7 @@ userRouter.post('/user', (request, response) => userController.createUser(reques
 userRouter.get('/user', (request, response) => userController.getAllUser(request, response));
 userRouter.get('/user/:id', (request, response) => userController.getUserById(request, response));
 userRouter.post('/sign-in', (request, response) => userController.signInUseCase(request, response));
+userRouter.put('/user/:id',(request, response) => userController.updateUser(request, response))
 userRouter.delete('/user-delete-all', (request, response) => userController.deleteAll(request, response));
 
 export { userRouter };

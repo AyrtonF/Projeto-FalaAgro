@@ -12,15 +12,12 @@ export class GetUserByIdUseCase {
             throw new UserNotFoundError()
         }
 
-        return user.toJSON()
+        return user.toDTO()
     }
 }
 
 
-type GetUserByIdOutput = Omit<UserDTO, "password">;
-
-
-interface UserDTO {
+type GetUserByIdOutput =  {
     id?: string;
     name: string;
     email: string;
@@ -29,6 +26,4 @@ interface UserDTO {
     cep: string;
     numberAddress: number;
     AccessName: string[];
-    createdAt?: Date;
-    updatedAt?: Date;
 }
