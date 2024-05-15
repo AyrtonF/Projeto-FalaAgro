@@ -9,9 +9,8 @@ export interface UserRepositoryInferface {
     findByEmail(email:string):Promise<any>
 
     isUniqueEmail(email:string):Promise<boolean>
-    
 
-    doesUserExist(email:string):Promise<boolean>
+    doesUserExist(email?: string,id?:string):Promise<boolean>
 
     getPasswordByEmail(email:string):Promise<string>
 
@@ -21,5 +20,7 @@ export interface UserRepositoryInferface {
     
     update(user: User): Promise<User>
 
-    delete(id: string): Promise<void>
+    delete(id: string): Promise<boolean>
+    
+    deleteAll():Promise<any>
 }

@@ -3,8 +3,9 @@ import { CreateUserUseCase } from "../../domain/useCases/user/createUser.useCase
 import { GetAllUserUseCase } from "../../domain/useCases/user/getAllUser.useCase";
 import {  DuplicateEmailError, AccessNameDoesNotExist } from '../../errors/user.error';
 import { SignInUseCase } from '../../domain/useCases/user/signIn.useCase';
+import { DeleteAllUsersUseCase } from '../../domain/useCases/user/deleteAllUsers.useCase';
 type userControllerInput = {
-
+    deleteAllUsersUseCase: DeleteAllUsersUseCase;
     createUserUseCase: CreateUserUseCase
     getAllUserUseCase: GetAllUserUseCase
     signInUseCase: SignInUseCase
@@ -30,7 +31,8 @@ export class UserController {
             const user = await this.input.getAllUserUseCase.execute();
             return response.status(201).json(user);
         } catch (error) {
-            return response.status(400).json({ error: "Erro no controlador" });
+            console.error(error.message)
+            return response.status(500).json({ error: error.message });
         }
     }
     async createUser(request: Request, response: Response): Promise<Response> {
@@ -51,6 +53,11 @@ export class UserController {
                 return response.status(500).json({ error: error.message });
             }
         }
+    }
+
+    async deleteAll(request: Request, response: Response){
+        await this.input.deleteAllUsersUseCase.execute()
+        return response.json({message:"Tudo deletado"})
     }
 
 }
