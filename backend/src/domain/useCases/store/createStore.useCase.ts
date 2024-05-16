@@ -1,5 +1,6 @@
 import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
+import { UserNotFoundError } from "../../../errors/errors";
 import { Store } from "../../models/store.model";
 
 
@@ -9,7 +10,7 @@ export class CreateStoreUseCase  {
         const storeInput = new Store(input)
         const userExists = await this.userRepository.findById(storeInput.userId)
         if(!userExists){
-            throw new Error("Usuario não existe")
+            throw new UserNotFoundError("Usuario não existe")
         }
         const store = await this.storeRepository.insert(storeInput)
         return store.toJSON()
@@ -19,10 +20,9 @@ export class CreateStoreUseCase  {
 
 
 type CreateStoreInput ={
-    id?: string; 
     userId : string
     name: string;
-    products:Product[]
+    Products?:Product[]
     description?: string;
     images?: string[];
     categories?: string[];
@@ -43,7 +43,7 @@ type CreateStoreOutput ={
     id?: string; 
     userId : string
     name: string;
-    products:Product[]
+    Products?:Product[]
     description?: string;
     images?: string[];
     categories?: string[];
@@ -68,12 +68,5 @@ type Review = {
 }
 
 type Product = {
-    id: string;
-    name: string;
-    description?: string;
-    price: number;
-    quantityAvailable: number;
-    images?: string[];
-    categories?: string[];
-    reviews?: Review[];
+    productId:string
 }

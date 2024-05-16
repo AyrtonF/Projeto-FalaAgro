@@ -186,6 +186,18 @@ export class MissingIdentifierError extends Error {
         return {name:this.name, status:this.status, message:this.message}
     }
 }
+
+export class AccessNameDoesExist extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Nível de acesso já existe");
+        this.name = "AccessNameDoesExist";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON(){
+        return {name:this.name, status:this.status, message:this.message}
+    }
+}
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
     accessNameDoesNotExistError: new AccessNameDoesNotExist(),
@@ -202,5 +214,6 @@ export const UserErrors = {
     incorrectPasswordError: new IncorrectPasswordError(),
     secretKeyNotProvidedError: new SecretKeyNotProvidedError(),
     missingIdentifierError: new MissingIdentifierError(),
+    accessNameDoesExist: new AccessNameDoesExist()
 };
 

@@ -40,9 +40,7 @@ export class Access {
         return this.props.updatedAt;
     }
 
-    private set id(value:string){
-        this.props.id = value
-    }
+    
     private set name(value:string){
         this.props.name = value
     }

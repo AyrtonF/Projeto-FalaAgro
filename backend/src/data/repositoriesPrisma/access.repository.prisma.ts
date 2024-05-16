@@ -1,6 +1,7 @@
 import { Access } from "../../domain/models/access.model";
 import { AccessRepositoryInterface } from "../repositories/access.repository.interface";
 import { prisma } from "../prisma";
+import { InternalServerError } from "../../errors/errors";
 
 export class AccessRepositoryPrisma implements AccessRepositoryInterface {
    async doesAccessExist(accessName: string[]): Promise<boolean> {
@@ -29,7 +30,8 @@ export class AccessRepositoryPrisma implements AccessRepositoryInterface {
 
             return newAccess;
         } catch (error) {
-            throw new Error("Error while inserting access");
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
         }
     }
 
@@ -54,7 +56,8 @@ export class AccessRepositoryPrisma implements AccessRepositoryInterface {
 
             return access;
         } catch (error) {
-            throw new Error("Error while finding access by id");
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
         }
     }
 
@@ -73,7 +76,8 @@ export class AccessRepositoryPrisma implements AccessRepositoryInterface {
 
             return accesses;
         } catch (error) {
-            throw new Error("Error while finding all accesses");
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
         }
     }
 

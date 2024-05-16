@@ -1,5 +1,5 @@
 import { AccessRepositoryInterface } from "../../../data/repositories/access.repository.interface";
-import { AccessNameDoesExist } from "../../../errors/access.error";
+import { AccessNameDoesExist } from "../../../errors/errors";
 import { Access } from "../../models/access.model";
 
 export class CreateAccessUseCase {
@@ -8,6 +8,7 @@ export class CreateAccessUseCase {
     async execute(input:CreateAccessInput):Promise<CreateAccessOutoput>{
         let accessExists = await this.accessRepository.doesAccessExist([input.name]) 
         if (accessExists){
+            
             throw new AccessNameDoesExist()
         }
         const accessInput = new Access(input)

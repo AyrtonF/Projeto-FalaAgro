@@ -15,7 +15,7 @@ export type StoreProps = {
     id?: string; 
     userId : string
     name: string;
-    products?:Product[]
+    Products?:Product[]
     description?: string;
     images?: string[];
     categories?: string[];
@@ -39,14 +39,7 @@ type Review = {
 }
 
 type Product = {
-    id: string;
-    name: string;
-    description?: string;
-    price: number;
-    quantityAvailable: number;
-    images?: string[];
-    categories?: string[];
-    reviews?: Review[];
+    productId:string
 }
 
 
@@ -57,7 +50,7 @@ export class Store{
             ...props,
             id:props.id ||  uuidv4(),
             userId:props.userId,
-            products:props.products || [],
+            Products:props.Products || [],
             description: props.description || "",
                 images: props.images || [],
                 categories: props.categories || [],
@@ -89,8 +82,8 @@ export class Store{
     get description() {
         return this.props.description;
     }
-    get products(){
-        return this.props.products
+    get Products(){
+        return this.props.Products
     }
     get images() {
         return this.props.images;
@@ -124,6 +117,57 @@ export class Store{
     }
     get updatedAt(){
         return this.props.createdAt
+    }
+    public set name(value:string){
+        this.props.name = value
+    }
+    
+    set description(value: string ) {
+        this.props.description = value;
+    }
+
+    set products(value: Product[]) {
+        this.props.Products = value;
+    }
+
+    set images(value: string[] ) {
+        this.props.images = value;
+    }
+
+    set categories(value: string[]) {
+        this.props.categories = value;
+    }
+
+    set contactInfo(value: {
+        address?: string;
+        email?: string;
+        phoneNumber?: string;
+    } ) {
+        this.props.contactInfo = value;
+    }
+
+    set openingHours(value: string[]) {
+        this.props.openingHours = value;
+    }
+
+    set returnPolicy(value: string) {
+        this.props.returnPolicy = value;
+    }
+
+    set followers(value: number ) {
+        this.props.followers = value;
+    }
+
+    set reviews(value: Review[] ) {
+        this.props.reviews = value;
+    }
+
+    set createdAt(value: Date ) {
+        this.props.createdAt = value;
+    }
+
+    set updatedAt(value: Date) {
+        this.props.updatedAt = value;
     }
 
     toJSON(){
