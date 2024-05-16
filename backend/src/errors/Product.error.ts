@@ -7,6 +7,26 @@ export class ProductError extends Error {
     }
 }
 
+export class UserNotLoggedInError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Não Autorizado");
+        this.name = "UserNotLoggedInError";
+        this.status = status || 401; // Status 401 indica "Unauthorized"
+    }
+}
+
+
+export class ProductNotFoundError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Produto não encontrado");
+        this.name = "ProductNotFoundError";
+        this.status = status || 404; 
+    }
+}
+
+
 export class IdError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
@@ -15,6 +35,16 @@ export class IdError extends Error {
         this.status = status || 400; 
     }
 }
+
+export class DuplicateProductNameError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Nome de produto duplicado na loja");
+        this.name = "DuplicateProductNameError";
+        this.status = status || 400; 
+    }
+}
+
 
 export class DuplicateIdError extends Error {
     status: number;
@@ -34,6 +64,29 @@ export class InvalidNameError extends Error {
     }
 }
 
+export class MissingRequiredFieldsError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Todos os campos obrigatórios devem ser fornecidos");
+        this.name = "MissingRequiredFieldsError";
+        this.status = status || 400; 
+    }
+}
+
+export class MinLengthError extends Error {
+    status: number;
+    minLength :number;
+    constructor(argumentName?: string, minLength?: number, status?: number) {
+        
+        super( `${minLength == 0 ? ` O campo '${argumentName}' esta com numero invalido de caracteres` : `O campo '${argumentName}' precisa de no minimo de caracteres é ${minLength}` } caracteres`);
+        this.name = "MinLengthError";
+        this.status = status || 400;
+        this.minLength = minLength || 0 // Status 400 indica "Bad Request"
+    }
+}
+
+
+
 export class DescriptionProductError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
@@ -42,15 +95,32 @@ export class DescriptionProductError extends Error {
         this.status = status || 400; 
     }
 }
-
-export class PriceError extends Error {
+export class NegativePriceError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "Erro no preço");
-        this.name = "PriceError";
+        super(message || "Preço não pode ser negativo");
+        this.name = "NegativePriceError";
         this.status = status || 400; 
     }
 }
+
+export class InvalidPriceFormatError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Formato de preço inválido");
+        this.name = "InvalidPriceFormatError";
+        this.status = status || 400; 
+    }
+}
+export class  InvalidStockAmountError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Quantidade de estoque inválida");
+        this.name = "InvalidStockAmountError";
+        this.status = status || 400; 
+    }
+}
+
 
 export class QuantityAvailableError extends Error {
     status: number;

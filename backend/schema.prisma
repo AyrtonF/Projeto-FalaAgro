@@ -30,7 +30,6 @@ model User {
   store          Store[]
 }
 
-
 model UserAccess {
   id         String   @id @default(uuid())
   User       User?    @relation(fields: [userId], references: [id])
@@ -45,28 +44,32 @@ model Access {
   id         String       @id @default(uuid())
   name       String       @unique
   UserAccess UserAccess[]
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
 model Product {
-  id          String        @id @default(uuid())
-  name        String
-  price       Float
-  amount      Int
-  Store       Store?        @relation(fields: [storeId], references: [id])
-  storeId     String?
-  SaleProduct SaleProduct[]
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+  id                String        @id @default(uuid())
+  name              String
+  price             Float
+  amount            Int
+  image             String[]      @default([])
+  description       String        @default("")
+  categories        String[]      @default([])
+  quantityAvailable Int           @default(0)
+  Store             Store?        @relation(fields: [storeId], references: [id])
+  storeId           String?
+  SaleProduct       SaleProduct[]
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 }
 
 model Store {
-  id         String    @id @default(uuid())
-  name       String
-  Product    Product[]
-  User       User?     @relation(fields: [userId], references: [id])
-  userId     String?
+  id        String    @id @default(uuid())
+  name      String
+  Product   Product[]
+  User      User?     @relation(fields: [userId], references: [id])
+  userId    String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -79,17 +82,17 @@ model Sale {
   Seller      User?         @relation("seller", fields: [sellerId], references: [id])
   sellerId    String?
   SaleProduct SaleProduct[]
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
 model SaleProduct {
-  id         String   @id @default(uuid())
-  quantify   Int
-  Sale       Sale     @relation(fields: [saleId], references: [id])
-  saleId     String
-  Product    Product  @relation(fields: [productId], references: [id])
-  productId  String
+  id        String   @id @default(uuid())
+  quantify  Int
+  Sale      Sale     @relation(fields: [saleId], references: [id])
+  saleId    String
+  Product   Product  @relation(fields: [productId], references: [id])
+  productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
