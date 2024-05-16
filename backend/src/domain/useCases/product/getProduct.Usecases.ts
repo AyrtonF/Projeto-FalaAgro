@@ -1,5 +1,5 @@
 import { ProductRepositoryInterface } from '../../../data/repositories/product.repository.interface';
-import { MissingRequiredFieldsError, ProductNotFoundError, UserNotLoggedInError } from '../../../errors/Product.error';
+import { MissingRequiredFieldsError, ProductNotFoundError, UserNotLoggedInError } from '../../../errors/product.error';
 import { Product } from '../../models/product.model';
 
 export class GetProductUseCase {

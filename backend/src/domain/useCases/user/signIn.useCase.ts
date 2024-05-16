@@ -1,31 +1,30 @@
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
-import { EmailNotFoundError, IncorrectPasswordError, SecretKeyNotProvidedError } from "../../../errors/user.errors";
-
+import { EmailNotFoundError, IncorrectPasswordError, SecretKeyNotProvidedError } from "../../../errors/errors";
 export class SignInUseCase {
     constructor(private userRepository: UserRepositoryInterface) {}
 
     async execute(input: SignInInput): Promise<SignInOutput> {
-        const { email, password } = input;
+        
 
         
-        const userExists = await this.userRepository.doesUserExist(email);
+        const userExists = await this.userRepository.doesUserExist({email:input.email});
         if (!userExists) {
             throw new EmailNotFoundError();
         }
 
        
-        const storedPassword = await this.userRepository.getPasswordByEmail(email);
+        const storedPassword = await this.userRepository.getPasswordByEmail(input.email);
 
         
-        const isPasswordValid = await compare(password, storedPassword);
+        const isPasswordValid = await compare(input.password, storedPassword);
         if (!isPasswordValid) {
             throw new IncorrectPasswordError();
         }
 
        
-        const userRoles = await this.userRepository.getRolesUserByEmail(email);
+        const payload = await this.userRepository.getRolesUserByEmail(input.email);
 
         const secretKey = process.env.MY_SECRET_KEY;
         if (!secretKey) {
@@ -33,7 +32,7 @@ export class SignInUseCase {
         }
 
         // Gerar o token de autenticação
-        const token = sign({ roles: userRoles }, secretKey, {
+        const token = sign({ userId: payload.userId,roles: payload.roles }, secretKey, {
             algorithm: "HS256",
             expiresIn: "1h",
         });

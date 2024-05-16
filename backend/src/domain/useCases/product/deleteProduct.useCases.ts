@@ -1,4 +1,4 @@
-import { ProductNotFoundError } from '../../../errors/Product.error';
+import { ProductNotFoundError } from '../../../errors/product.error';
 import { ProductRepositoryInterface } from './../../../data/repositories/product.repository.interface';
 
 

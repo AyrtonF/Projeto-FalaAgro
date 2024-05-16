@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { UserErrors } from '../../errors/user.errors';
+import { UserErrors } from '../../errors/errors';
 
 export type UserProps = {
-    id?: string; 
+    id?: string
     name:string
     email:string
     password:string
@@ -112,12 +112,13 @@ export class User{
 }
 
  
- isValidCPF(value: string): boolean {
-   // Remove todos os caracteres que não são números
-   const cpfClean = value.replace(/\D/g, '');
-   // Verifica se o CPF tem 11 dígitos
-   if (cpfClean.length !== 11) {
-       return false;
+isValidCPF(value: string): boolean {
+    // Remove todos os caracteres que não são números
+    const cpfClean = value.replace(/\D/g, '');
+    
+    // Verifica se o CPF tem 11 dígitos após a limpeza
+    if (cpfClean.length !== 11) {
+        return false;
     }
     
     // Verifica se todos os dígitos são iguais
@@ -135,25 +136,24 @@ export class User{
     
     // Verifica se o primeiro dígito verificador está correto
     if (parseInt(cpfClean.charAt(9)) !== digit1) {
-        console.error("aqui")
-       return false;
-   }
+        return false;
+    }
 
-   // Calcula o segundo dígito verificador
-   sum = 0;
-   for (let i = 0; i < 10; i++) {
-       sum += parseInt(cpfClean.charAt(i)) * (11 - i);
-   }
-   remainder = 11 - (sum % 11);
-   let digit2 = remainder >= 10 ? 0 : remainder;
+    // Calcula o segundo dígito verificador
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+        sum += parseInt(cpfClean.charAt(i)) * (11 - i);
+    }
+    remainder = 11 - (sum % 11);
+    let digit2 = remainder >= 10 ? 0 : remainder;
 
-   // Verifica se o segundo dígito verificador está correto
-   if (parseInt(cpfClean.charAt(10)) !== digit2) {
-       return false;
-   }
+    // Verifica se o segundo dígito verificador está correto
+    if (parseInt(cpfClean.charAt(10)) !== digit2) {
+        return false;
+    }
 
-   // Se passou por todas as verificações, o CPF é válido
-   return true;
+    // Se passou por todas as verificações, o CPF é válido
+    return true;
 }
 
 public set name(value:string){

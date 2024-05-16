@@ -1,4 +1,4 @@
-import { UserErrors } from "./user.errors";
+import { UserErrors } from "./errors";
 
 
 const errorMap: Record<string, UserError> = {

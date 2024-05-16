@@ -1,7 +1,6 @@
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
 import { UserNotFoundError } from "../../../errors/user.error";
 import { User } from "../../models/user.model";
-
 export class GetUserByIdUseCase {
     constructor(private userRepository: UserRepositoryInterface) {}
 

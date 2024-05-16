@@ -1,5 +1,4 @@
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface"
-
 export class GetAllUserUseCase {
     constructor(private userRepository:UserRepositoryInterface){}
 

@@ -1,6 +1,7 @@
 
+
 import { User } from "../../domain/models/user.model";
-import { InternalServerError, MissingIdentifierError, UserNotFoundError } from "../../errors/user.errors";
+import { InternalServerError, MissingIdentifierError, UserNotFoundError } from "../../errors/errors";
 import { prisma } from "../prisma";
 import { UserRepositoryInterface } from "../repositories/user.repository.interface";
 
@@ -54,7 +55,7 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                     }
                 }
             });
-
+            console.log(prismaUser)
             if (!prismaUser) {
                 return null
             }
@@ -68,31 +69,23 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
     }
     async findByEmail(email: string): Promise<User | null> {
         try {
-            const userFromPrisma = await prisma.user.findUnique({
+            const userPrisma = await prisma.user.findUnique({
                 where: {
                     email: email,
                 },
+                include:{
+                    UserAccess:{
+                        include:{
+                            Access:true
+                        }
+                    }
+                }
             });
 
-            if (!userFromPrisma) {
+            if (!userPrisma) {
                 return null;
             }
-
-            const user: User = new User({
-                id: userFromPrisma.id,
-                name: userFromPrisma.name,
-                email: userFromPrisma.email,
-                password: userFromPrisma.password,
-                cpf: userFromPrisma.cpf,
-                cnpj: userFromPrisma.cnpj || '',
-                cep: userFromPrisma.cep,
-                numberAddress: userFromPrisma.numberAddress,
-                AccessName: userFromPrisma.AccessName,
-                createdAt: userFromPrisma.createdAt,
-                updatedAt: userFromPrisma.updatedAt,
-            });
-
-            return user;
+            return this.mapPrismaUserToDomain(userPrisma)
         } catch (error) {
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
             throw new InternalServerError
@@ -111,8 +104,6 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                     }
                 }
             );
-
-           
             const users: User[] = usersFromPrisma.map(userPrisma => {
                 return this.mapPrismaUserToDomain(userPrisma)
             });
@@ -125,7 +116,7 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
     }
     async update(user: User): Promise<User> {
         try {
-            let valid = await (prisma.user.findUnique({ where: { id:user.id } })) == null ? true : false
+            let valid = await (prisma.user.findUnique({ where: { id:user.id } })) ? true : false
             if(!valid){
                 throw new UserNotFoundError
             }
@@ -149,11 +140,84 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                     numberAddress: user.numberAddress,
                 },
             });
-            console.error("aqui "+updatedUserFromPrisma)
-
-           
-
             return this.mapPrismaUserToDomain(updatedUserFromPrisma);
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
+    }
+   async AddAccessToUserUseCase({id,newAccess}:{id:string,newAccess:string}): Promise<User> {
+        try {
+        let valid = await (prisma.user.findUnique({ where: { id } })) ? true : false
+        if(!valid){
+            console.error("aqui")
+            throw new UserNotFoundError
+        }
+        const updatedUserFromPrisma = await prisma.user.update({
+            where: {
+                id
+            },
+            include: {
+                UserAccess: {
+                    include: {
+                        Access: true
+                    }
+                }
+            },
+            data: {
+                UserAccess: {
+                    create: {
+                        Access: {
+                            connectOrCreate: {
+                                where: {
+                                    name: newAccess
+                                },
+                                create: {
+                                    name: newAccess
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        return this.mapPrismaUserToDomain(updatedUserFromPrisma);
+            
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
+        
+    }
+    async RemoveAccessToUserUseCase({userId,accessName}:{userId:string,accessName:string}): Promise<User> {
+        try {
+            let valid = await (prisma.user.findUnique({ where: { id:userId } })) ? true : false
+            if(!valid){
+                throw new UserNotFoundError
+            }
+           // Encontre o acesso pelo nome
+        const access = await prisma.access.findUnique({
+            where: {
+                name: accessName
+            }
+        });
+
+        // Se o acesso existir, remova a associação do usuário com o acesso
+        if (access) {
+            const result = await prisma.userAccess.deleteMany({
+                where: {
+                    userId,
+                    accessId: access.id
+                }
+            });
+            if(!(result.count > 0)){
+                throw new Error('Acesso não deletado')
+            }
+        }
+
+        const userFromPrisma = await prisma.user.findUnique({ where: { id:userId } })
+            return this.mapPrismaUserToDomain(userFromPrisma);
+
         } catch (error) {
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
             throw new InternalServerError
@@ -172,7 +236,7 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
             throw new Error("Error while deleting user");
         }
     }
-    async doesUserExist(email?: string, id?: string): Promise<boolean> {
+    async doesUserExist({ email, id }: { email?: string, id?: string }): Promise<boolean> {
         try {
             let user;
             if (email) {
@@ -251,9 +315,10 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
         }
     }
     private mapPrismaUserToDomain(prismaUser: any): User {
-        const accessNames = prismaUser.UserAccess.map((access: any) => access.Access?.name || '');
+        const accessNames = prismaUser.UserAccess ? prismaUser.UserAccess.map((access: any) => access.Access?.name || '') : [];
     
         return new User({
+            id:prismaUser.id,
             name: prismaUser.name,
             email: prismaUser.email,
             password: prismaUser.password,

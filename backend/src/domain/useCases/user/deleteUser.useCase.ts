@@ -1,18 +1,17 @@
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface"
+import { UserNotFoundError } from "../../../errors/errors"
 
-
-export class deleteUserUseCase {
+export class DeleteUserUseCase {
     constructor(private userRepository:UserRepositoryInterface){}
-    async execute(userId:string):Promise<deleteUserOutput>{
-        const existingUser  = await this.userRepository.findById(userId)
-        if(!existingUser ){
-            throw new Error("usuario não existe")
+    async execute(userId:string):Promise<DeleteUserOutput>{
+        
+        const doesUserExist  = await this.userRepository.doesUserExist({id:userId})
+        if(!doesUserExist ){
+            throw new UserNotFoundError()
         }
 
-       const verification:boolean = await this.userRepository.delete(userId)
-       if(!verification){
-        throw new Error("Erro interno durante a exclusão do user")
-       }
+       await this.userRepository.delete(userId)
+       
 
        return {message:"Usuario deletado com sucesso"}
     }
@@ -20,7 +19,7 @@ export class deleteUserUseCase {
 
 
 
-type deleteUserOutput = {
+type DeleteUserOutput = {
     message:string
 }
 

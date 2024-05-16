@@ -10,7 +10,7 @@ export interface UserRepositoryInterface {
 
     isUniqueEmail(email:string):Promise<boolean>
 
-    doesUserExist(email?: string,id?:string):Promise<boolean>
+    doesUserExist({ email, id }: { email?: string, id?: string }):Promise<boolean>
 
     getPasswordByEmail(email:string):Promise<string>
 
@@ -19,6 +19,10 @@ export interface UserRepositoryInterface {
     findAll(): Promise<User[]>
     
     update(user: User): Promise<User>
+
+    AddAccessToUserUseCase({id,newAccess}:{id:string,newAccess:string}):Promise<User>
+
+    RemoveAccessToUserUseCase({userId,accessName}:{userId:string,accessName:string}):Promise<User>
 
     delete(id: string): Promise<boolean>
     

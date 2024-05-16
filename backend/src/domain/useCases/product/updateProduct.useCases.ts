@@ -1,6 +1,6 @@
 import { ProductRepositoryInterface } from './../../../data/repositories/product.repository.interface';
 import { Product } from '../../models/product.model';
-import { InvalidPriceFormatError, InvalidStockAmountError, MinLengthError, MissingRequiredFieldsError, ProductNotFoundError } from '../../../errors/Product.error';
+import { InvalidPriceFormatError, InvalidStockAmountError, MinLengthError, MissingRequiredFieldsError, ProductNotFoundError } from '../../../errors/product.error';
 
 export class UpdateProductUseCase {
   constructor(private productRepository: ProductRepositoryInterface) {}

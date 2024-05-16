@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { InvalidPriceFormatError, InvalidStockAmountError, NegativePriceError, } from "../../errors/Product.error";
+import { InvalidPriceFormatError, InvalidStockAmountError, NegativePriceError, } from "../../errors/product.error";
 
 export type ProductProps = {
   id?: string;

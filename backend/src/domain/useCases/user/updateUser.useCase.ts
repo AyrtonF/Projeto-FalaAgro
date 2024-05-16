@@ -1,8 +1,7 @@
  
 import { User } from "../../models/user.model";
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
-import { UserNotFoundError } from "../../../errors/user.errors";
-
+import { UserNotFoundError } from "../../../errors/errors";
 export class UpdateUserUseCase {
     constructor(private userRepository: UserRepositoryInterface) {}
 
@@ -19,7 +18,6 @@ export class UpdateUserUseCase {
         if (!user) {
             throw new UserNotFoundError();
         }
-        console.log(user == null ? "aqui": "Aqui não")
         // Atualizar os campos do usuário se eles foram fornecidos
         if (input.name) user.name = input.name;
         if (input.email) user.email = input.email;

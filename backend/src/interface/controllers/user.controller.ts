@@ -5,8 +5,11 @@ import { SignInUseCase } from '../../domain/useCases/user/signIn.useCase';
 import { DeleteAllUsersUseCase } from '../../domain/useCases/user/deleteAllUsers.useCase';
 import { handleErrors } from '../../errors/hadler.errors';
 import { GetUserByIdUseCase } from '../../domain/useCases/user/getUserById.useCase';
-import { InternalServerError } from '../../errors/user.errors';
+import { InternalServerError } from '../../errors/errors';
 import { UpdateUserUseCase } from '../../domain/useCases/user/updateUser.useCase';
+import { AddAccessToUserUseCase } from '../../domain/useCases/user/addAccessToUser.useCase';
+import { RemoveAccessToUserUseCase } from '../../domain/useCases/user/removeAccessToUser.useCase';
+import { DeleteUserUseCase } from '../../domain/useCases/user/deleteUser.useCase';
 type userControllerInput = {
     deleteAllUsersUseCase: DeleteAllUsersUseCase;
     createUserUseCase: CreateUserUseCase
@@ -14,7 +17,9 @@ type userControllerInput = {
     getUserByIdUseCase:GetUserByIdUseCase
     signInUseCase: SignInUseCase
     updateUserUseCase: UpdateUserUseCase
-
+    deleteUserUseCase: DeleteUserUseCase
+    addAccessToUserUseCase : AddAccessToUserUseCase
+    removeAccessToUserUseCase: RemoveAccessToUserUseCase
 }
 
 export class UserController {
@@ -86,8 +91,38 @@ export class UserController {
             }
         }
     }
-    
-    async getAllUser(request: Request, response: Response) {
+    async addAccessToUser(request:Request, response:Response):Promise<Response>{
+        const {newAccessName} = request.body
+        const {id} = request.user
+        try {
+            const updatedUser = await this.input.addAccessToUserUseCase.execute({id,newAccessName})
+            return response.status(200).json(updatedUser)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+    }
+    async removeAccessToUser(request:Request, response:Response):Promise<Response>{
+        const {accessName} = request.body
+        const {id} = request.user
+        try {
+            const updatedUser = await this.input.removeAccessToUserUseCase.execute({id,accessName})
+            return response.status(200).json(updatedUser)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+    }
+    async getAllUser(request:Request, response:Response):Promise<Response>{
+
         
         try {
             const user = await this.input.getAllUserUseCase.execute();
@@ -101,7 +136,20 @@ export class UserController {
             }
         }
     }
-
+    async deleteUser(request: Request, response: Response) {
+        try {
+            const {id} = request.params
+            const message = await this.input.deleteUserUseCase.execute(id);
+            return response.status(201).json(message);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+    }
+}
 
     async deleteAll(request: Request, response: Response){
         await this.input.deleteAllUsersUseCase.execute()

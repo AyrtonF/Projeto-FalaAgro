@@ -7,38 +7,14 @@ export class AccessError extends Error {
     }
 }
 
-export class IdError extends Error {
+export class AccessNameDoesExist extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "Erro no id");
-        this.name = "IdError";
-        this.status = status || 400; 
+        super(message || "Nível de acesso já existe");
+        this.name = "AccessNameDoesExist";
+        this.status = status || 400; // Bad Request
     }
-}
-
-export class InvalidNameError extends Error {
-    status: number;
-    constructor(message?: string, status?: number) {
-        super(message || "Nome invalido");
-        this.name = "IdError";
-        this.status = status || 400; 
-    }
-}
-
-export class CreatedAtError extends Error {
-    status: number;
-    constructor(message?: string, status?: number) {
-        super(message || "Erro ao criar");
-        this.name = "CreatedAtError";
-        this.status = status || 400; 
-    }
-}
-
-export class UpdatedAtError extends Error {
-    status: number;
-    constructor(message?: string, status?: number) {
-        super(message || "Erro ao atualizar");
-        this.name = "UpdatedAtError";
-        this.status = status || 400; 
+    toJSON(){
+        return {name:this.name, status:this.status, message:this.message}
     }
 }

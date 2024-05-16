@@ -22,7 +22,17 @@ export class AccessNameDoesNotExist extends Error {
         return {name:this.name, status:this.status, message:this.message}
     }
 }
-
+export class UserDoesNotHaveAccess extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Usuário não possui acesso");
+        this.name = "UserDoesNotHaveAccess";
+        this.status = status || 403; // Forbidden
+    }
+    toJSON(){
+        return {name:this.name, status:this.status, message:this.message}
+    }
+}
 export class InvalidEmailError extends Error {
     status: number;
     constructor(message?: string, status?: number) {

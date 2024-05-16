@@ -1,5 +1,5 @@
 import { ProductRepositoryInterface } from "../../../data/repositories/product.repository.interface";
-import { DuplicateIdError, DuplicateProductNameError, MissingRequiredFieldsError } from "../../../errors/Product.error";
+import { DuplicateIdError, DuplicateProductNameError, MissingRequiredFieldsError } from "../../../errors/product.error";
 import { Product } from "../../models/product.model";
 
 export class CreateProductUseCase {
