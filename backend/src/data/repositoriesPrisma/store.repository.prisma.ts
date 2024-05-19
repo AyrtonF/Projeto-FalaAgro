@@ -63,8 +63,32 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             throw new InternalServerError
         }
     }
-    update(store: Store): Promise<Store> {
-        throw new Error("Method not implemented.");
+   async update(store: Store): Promise<Store> {
+        try {
+            let valid = await (prisma.user.findUnique({ where: { id:store.id } })) ? true : false
+           
+            const updatedStoreFromPrisma = await prisma.store.update({
+                where: {
+                    id: store.id
+                },
+                data: {
+                    name: store.name,
+                    description: store.description,
+                    images: store.images,
+                    categories: store.categories,
+                    contactInfo: store.contactInfo ? JSON.stringify(store.contactInfo) : undefined, 
+                    openingHours: store.openingHours,
+                    returnPolicy: store.returnPolicy,
+                    followers: store.followers,
+                   
+                    updatedAt: new Date(), 
+                },
+            });
+            return this.mapPrismaStoreToDomain(updatedStoreFromPrisma);
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções da loja: "+ error.message);
+            throw new InternalServerError
+        }
     }
     delete(id: string): Promise<void> {
         throw new Error("Method not implemented.");

@@ -4,10 +4,13 @@ import { InternalServerError } from '../../errors/errors';
 import { handleErrors } from '../../errors/hadler.errors';
 import { GetStoreByIdUseCase } from '../../domain/useCases/store/getStoreById.useCase';
 import { GetAllStoreUseCase } from '../../domain/useCases/store/getAllStore.useCase';
+import { UpdateStoreUseCase } from '../../domain/useCases/store/updateStore.useCase';
+
 type StoreControllerInput = {
     createStoreUseCase: CreateStoreUseCase
     getStoreByIdUseCase: GetStoreByIdUseCase
     getAllStoreUseCase: GetAllStoreUseCase
+    updateStoreUseCase: UpdateStoreUseCase
 }
 
 
@@ -52,6 +55,24 @@ export class StoreController {
         try {
             const {storeId} = request.params;
             const store = await this.input.getStoreByIdUseCase.execute(storeId)
+            return response.status(200).json(store)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+    }
+
+    async updateStore(request: Request, response: Response):Promise<Response> {
+        
+        try {
+            const {name,storeId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt} = request.body;
+            const {id} = request.user
+            const userId = id
+            const store = await this.input.updateStoreUseCase.execute({name,storeId,userId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt})
             return response.status(200).json(store)
         } catch (error: unknown) {
             if (error instanceof Error) {
