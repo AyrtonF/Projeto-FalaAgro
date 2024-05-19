@@ -31,7 +31,7 @@ export function authMiddleware(permissions?: string[]) {
             const decodedToken = verify(token, MY_SECRET_KEY) as DecodedToken;
 
             // Define o id do usuário decodificado no objeto de solicitação (req)
-            console.log(decodedToken)
+       
             req.user = { id: decodedToken.userId };
 
             // Verifica as permissões do usuário se especificadas

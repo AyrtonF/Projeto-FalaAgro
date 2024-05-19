@@ -73,7 +73,7 @@ export class InvalidCnpjError extends Error {
 export class InvaidCpeError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "O CPE é invalido");
+        super(message || "O CEP é invalido");
         this.name = "InvaidCpeError";
         this.status = status || 400; 
     }
@@ -82,7 +82,7 @@ export class InvaidCpeError extends Error {
 export class InvalidNumberAddresssError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "O Número de endereço é invalido");
+        super(message || "O Número de endereço é muito grande ou muito pequero");
         this.name = "InvalidNumberAddresssError";
         this.status = status || 400; 
     }
@@ -91,16 +91,16 @@ export class InvalidNumberAddresssError extends Error {
 export class InvalidAcessNameError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "Esse nome de acesso é invalido");
+        super(message || "Esse  acesso não existe");
         this.name = "InvalidAcessNameErro";
-        this.status = status || 400; 
+        this.status = status || 404; 
     }
 }
 
 export class UnauthorizedError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "Não autorizado");
+        super(message || "Não logado");
         this.name = "UnauthorizedError";
         this.status = status || 401; 
     }
@@ -132,20 +132,3 @@ export class InternalServerErrorError extends Error {
         this.status = status || 500; 
     }
 }
-
-
-/* export const UserErrors = {
-    INVALID_NAME: new UserError("Invalid name", 400),
-    INVALID_EMAIL: new UserError("Invalid email", 400),
-    INVALID_PASSWORD: new UserError("Invalid password", 400),
-    INVALID_CPF: new UserError("Invalid CPF", 400),
-    INVALID_CNPJ: new UserError("Invalid CNPJ", 400),
-    INVALID_CEP: new UserError("Invalid CEP", 400),
-    INVALID_NUMBER_ADDRESS: new UserError("Invalid number address", 400),
-    INVALID_ACCESS_NAME: new UserError("Invalid access name", 400),
-    DUPLICATE_EMAIL: new UserError("Duplicate email", 409),
-    UNAUTHORIZED: new UserError("Unauthorized", 401),
-    FORBIDDEN: new UserError("Forbidden", 403),
-    USER_NOT_FOUND: new UserError("User not found", 404),
-    INTERNAL_SERVER_ERROR: new UserError("Internal server error", 500),
-}; */

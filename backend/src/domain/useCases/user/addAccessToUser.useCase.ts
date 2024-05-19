@@ -12,7 +12,6 @@ export class AddAccessToUserUseCase{
         
         let user: User | null = await this.userRepository.findById(input.id);
         if (!user) {
-            console.log("aqui")
             throw new UserNotFoundError();
         }
 
