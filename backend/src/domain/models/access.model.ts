@@ -41,13 +41,13 @@ export class Access {
     }
 
     
-    private set name(value:string){
+    public set name(value:string){
         this.props.name = value
     }
-    private set createdAt(value:Date){
+    public set createdAt(value:Date){
         this.props.createdAt = value
     }
-    private set updatedAt(value:Date){
+    public set updatedAt(value:Date){
         this.props.updatedAt = value
     }
     

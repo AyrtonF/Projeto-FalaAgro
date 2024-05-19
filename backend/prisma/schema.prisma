@@ -67,6 +67,13 @@ model Product {
 model Store {
   id        String    @id @default(uuid())
   name      String
+  description  String?
+  images       String[]
+  categories   String[]
+  contactInfo  Json?
+  openingHours String[]
+  returnPolicy String?
+  followers    Int       @default(0)
   Product   Product[]
   User      User?     @relation(fields: [userId], references: [id])
   userId    String?

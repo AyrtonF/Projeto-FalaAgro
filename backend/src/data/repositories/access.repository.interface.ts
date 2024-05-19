@@ -3,7 +3,7 @@ import { Access } from "../../domain/models/access.model";
 
 export interface AccessRepositoryInterface {
       
-    insert(user: Access): Promise<Access>;
+    insert(access: Access): Promise<Access>;
    
     findById(id: string): Promise<Access | null>;
 
@@ -11,7 +11,7 @@ export interface AccessRepositoryInterface {
     
     findAll(): Promise<Access[]>;
     
-    update(user: Access): Promise<Access>;
+    update(access: Access): Promise<Access>;
 
     delete(id: string): Promise<void>;
 }
