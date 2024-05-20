@@ -270,6 +270,18 @@ export class InvalidStockAmountError extends Error {
         return {name:this.name, status:this.status, message:this.message}
     }
 }
+export class UserNotOwnerError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Usuário não é o dono da loja");
+        this.name = "UserNotOwnerError";
+        this.status = status || 403; // Forbidden
+    }
+    toJSON(){
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
 
 export class MinLengthError extends Error {
     status: number;
@@ -306,5 +318,6 @@ export const UserErrors = {
     userNotLoggedInError: new UserNotLoggedInError(),
     productNotFoundError: new ProductNotFoundError(),
     missingRequiredFieldsError: new MissingRequiredFieldsError(),
-    duplicateProductNameError: new DuplicateProductNameError()
+    duplicateProductNameError: new DuplicateProductNameError(),
+    userNotOwnerError: new UserNotOwnerError(),
 };

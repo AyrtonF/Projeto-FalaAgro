@@ -5,12 +5,14 @@ import { handleErrors } from '../../errors/hadler.errors';
 import { GetStoreByIdUseCase } from '../../domain/useCases/store/getStoreById.useCase';
 import { GetAllStoreUseCase } from '../../domain/useCases/store/getAllStore.useCase';
 import { UpdateStoreUseCase } from '../../domain/useCases/store/updateStore.useCase';
+import { DeleteStoreUseCase } from '../../domain/useCases/store/deleteStore.useCase';
 
 type StoreControllerInput = {
     createStoreUseCase: CreateStoreUseCase
     getStoreByIdUseCase: GetStoreByIdUseCase
     getAllStoreUseCase: GetAllStoreUseCase
     updateStoreUseCase: UpdateStoreUseCase
+    deleteStoreUseCase: DeleteStoreUseCase
 }
 
 
@@ -74,6 +76,24 @@ export class StoreController {
             const userId = id
             const store = await this.input.updateStoreUseCase.execute({name,storeId,userId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt})
             return response.status(200).json(store)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+    }
+
+    async deleteStore(request: Request, response: Response):Promise<Response> {
+        
+        try {
+            const {storeId} = request.params;
+            const {id} = request.user
+            let userId = id
+            const message = await this.input.deleteStoreUseCase.execute({storeId,userId})
+            return response.status(200).json(message)
         } catch (error: unknown) {
             if (error instanceof Error) {
                 const errorResponse = handleErrors(error); 

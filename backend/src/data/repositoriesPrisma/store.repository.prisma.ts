@@ -6,7 +6,7 @@ import { StoreRepositoryInterface } from "../repositories/store.repository.infer
 
 
 export class StoreRepositoryPrisma implements StoreRepositoryInterface{
-   async insert(store: Store): Promise<Store> {
+    async insert(store: Store): Promise<Store> {
         try {
             const storePrisma = await prisma.store.create({
                 data:{
@@ -18,7 +18,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
                     }
                 }
             })
-
+            
             const newUser: Store = new Store({
                 name:storePrisma.name,
                 userId:storePrisma.userId || "",
@@ -30,18 +30,18 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
         }
         
     }
-   async findById(id: string): Promise<Store | null> {
+    async findById(id: string): Promise<Store | null> {
         try {
             const prismaStore = await prisma.store.findUnique({
                 where: { id },
             });
           
-          
+            
             if (!prismaStore) {
                 return null
             }
-           
-
+            
+            
             return this.mapPrismaStoreToDomain(prismaStore);
         } catch (error) {
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
@@ -51,12 +51,12 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     async findAll(): Promise<Store[]> {
         try {
             const prismaStores = await prisma.store.findMany({});
-          
-          
+            
+            
             const stores: Store[] = prismaStores.map(prismaStore => {
                 return this.mapPrismaStoreToDomain(prismaStore)
             });
-
+            
             return stores;
         } catch (error) {
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
@@ -80,7 +80,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
                     openingHours: store.openingHours,
                     returnPolicy: store.returnPolicy,
                     followers: store.followers,
-                   
+                    
                     updatedAt: new Date(), 
                 },
             });
@@ -90,8 +90,36 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             throw new InternalServerError
         }
     }
-    delete(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async isUserOwnerOfStore({ userId, storeId }: { userId: string; storeId: string; }): Promise<boolean> {
+        try {
+            const store = await prisma.store.findUnique({
+                where: { id: storeId },
+                select: { userId: true }
+            });
+        
+            return store ? store.userId === userId : false;
+            
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
+        
+    }
+   async delete(id: string): Promise<boolean> {
+        try {
+            await prisma.store.delete({
+                where: {
+                    id: id,
+                },
+            });
+            const valid = await (prisma.store.findUnique({ where: { id } })) ? true : false
+            return valid
+            
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
+        
     }
 
     private mapPrismaStoreToDomain(prismaStore: any): Store {

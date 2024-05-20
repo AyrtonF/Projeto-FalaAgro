@@ -17,7 +17,8 @@ const errorMap: Record<string, UserError> = {
     IncorrectPasswordError: UserErrors.incorrectPasswordError,
     SecretKeyNotProvidedError:  UserErrors.secretKeyNotProvidedError,
     MissingIdentifierError: UserErrors.missingIdentifierError,
-    AccessNameDoesExist: UserErrors.accessNameDoesExist
+    AccessNameDoesExist: UserErrors.accessNameDoesExist,
+    UserNotOwnerError: UserErrors.userNotOwnerError,
 }
 
 

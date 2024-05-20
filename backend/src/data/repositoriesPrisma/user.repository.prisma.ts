@@ -233,7 +233,8 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
             const valid = await (prisma.user.findUnique({ where: { id } })) ? true : false
             return valid
         } catch (error) {
-            throw new Error("Error while deleting user");
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
         }
     }
     async doesUserExist({ email, id }: { email?: string, id?: string }): Promise<boolean> {
