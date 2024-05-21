@@ -20,6 +20,12 @@ const errorMap: Record<string, UserError> = {
     AccessNameDoesExist: UserErrors.accessNameDoesExist,
     UserNotOwnerError: UserErrors.userNotOwnerError,
     DuplicateProductNameError: UserErrors.duplicateProductNameError,
+    DuplicateImagesError: UserErrors.duplicateImagesError,
+    ImagesNotFoundError: UserErrors.imagesNotFoundError,
+    TagsDuplicatedError:UserErrors.tagsDuplicatedError,
+    TagsNotFoundError: UserErrors.tagsNotFoundError,
+    CategoriesDuplicatedError: UserErrors.categoriesDuplicatedError,
+    CategoriesNotFoundError: UserErrors.categoriesNotFoundError
 }
 
 

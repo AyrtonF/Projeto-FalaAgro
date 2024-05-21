@@ -214,7 +214,7 @@ export class DuplicateProductNameError extends Error {
 export class MissingRequiredFieldsError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "Todos os campos devem está preenchidos.");
+        super(message || "Um ou mais campos obrigatórios não foram fornecidos.");
         this.name = "MissingRequiredFieldsError";
         this.status = status || 400; // Bad Request
     }
@@ -297,6 +297,78 @@ export class MinLengthError extends Error {
     }
 }
 
+export class DuplicateImagesError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Todas as imagens fornecidas já estão presentes no produto.");
+        this.name = "DuplicateImagesError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
+export class ImagesNotFoundError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Nenhuma das imagens fornecidas está presente no produto.");
+        this.name = "ImagesNotFoundError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
+export class TagsDuplicatedError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "As tags fornecidas já estão presentes no produto.");
+        this.name = "TagsDuplicatedError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
+export class TagsNotFoundError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Nenhuma das tags fornecidas está presente no produto.");
+        this.name = "TagsNotFoundError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
+export class CategoriesDuplicatedError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "As categorias fornecidas já estão presentes no produto.");
+        this.name = "CategoriesDuplicatedError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
+export class CategoriesNotFoundError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Nenhuma das categorias fornecidas está presente no produto.");
+        this.name = "CategoriesNotFoundError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
     accessNameDoesNotExistError: new AccessNameDoesNotExist(),
@@ -322,4 +394,11 @@ export const UserErrors = {
     missingRequiredFieldsError: new MissingRequiredFieldsError(),
     duplicateProductNameError: new DuplicateProductNameError(),
     userNotOwnerError: new UserNotOwnerError(),
+    duplicateImagesError: new DuplicateImagesError(),
+    imagesNotFoundError: new ImagesNotFoundError(),
+    tagsDuplicatedError: new TagsDuplicatedError(),
+    tagsNotFoundError: new TagsNotFoundError(),
+    categoriesDuplicatedError: new CategoriesDuplicatedError(),
+    categoriesNotFoundError: new CategoriesNotFoundError(),
+
 };
