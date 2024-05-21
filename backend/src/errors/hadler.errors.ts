@@ -19,6 +19,7 @@ const errorMap: Record<string, UserError> = {
     MissingIdentifierError: UserErrors.missingIdentifierError,
     AccessNameDoesExist: UserErrors.accessNameDoesExist,
     UserNotOwnerError: UserErrors.userNotOwnerError,
+    DuplicateProductNameError: UserErrors.duplicateProductNameError,
 }
 
 

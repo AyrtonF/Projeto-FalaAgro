@@ -5,8 +5,10 @@ export interface ProductRepositoryInterface {
 
   findById(id: string): Promise<Product | null>;
 
-  findByName(name: string, StoreId:string): Promise<Product | null>;
+  findByName({name,storeId}:{name: string, storeId:string}): Promise<Product | null>;
 
+  isDuplicateProductNameInStore ({name,storeId}:{name: string, storeId:string}):Promise<boolean>;
+  
   findAll(): Promise<Product[]>;
 
   update(product: Product): Promise<Product>;

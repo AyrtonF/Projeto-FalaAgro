@@ -1,44 +1,46 @@
 import { ProductRepositoryInterface } from '../../../data/repositories/product.repository.interface';
-import { MissingRequiredFieldsError, ProductNotFoundError, UserNotLoggedInError } from '../../../errors/product.error';
+import { MissingRequiredFieldsError, ProductNotFoundError, UserNotLoggedInError } from '../../../errors/errors';
 import { Product } from '../../models/product.model';
 
 export class GetProductUseCase {
   constructor(private productRepository: ProductRepositoryInterface) {}
 
   async execute(input: GetProductInput): Promise<GetProductOutput> {
-    // Verificar se uma query válida foi fornecida
-    if (!input.storeId) {
-      throw new UserNotLoggedInError();
-    }
   
-    // Buscar produto pelo ID, se fornecido
-    if (input.id) {
-     const product:Product|null = await this.productRepository.findById(input.id)
+    this.validateInput(input)
+   
+    if (input.productId) {
+     const product:Product|null = await this.productRepository.findById(input.productId)
       if(product){
         return product.toDTO()
       }
       throw new ProductNotFoundError();
     }
-    // Buscar produto pelo nome, se fornecido
-    if (input.name) {
-          const product:Product|null = await this.productRepository.findByName(input.name, input.storeId);
+    
+    if (input.productName) {
+          const product:Product|null = await this.productRepository.findByName({name:input.productName, storeId:input.storeId});
           if(product){
               return product.toDTO()
           }
             throw new ProductNotFoundError();
           }
-     throw new MissingRequiredFieldsError();
+     throw new MissingRequiredFieldsError()
+     
     }
-   
+
+    private validateInput(input: GetProductInput) {
+      if (!input.storeId || ((!input.productName) && (!input.productId))) {
+       throw new MissingRequiredFieldsError();
+      }
 }
  
 
-  
+}  
 
 type GetProductInput = {
   storeId: string;
-  id?: string;
-  name?: string 
+  productId?: string;
+  productName?: string 
 };
 
 type GetProductOutput = {

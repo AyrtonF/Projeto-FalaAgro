@@ -202,7 +202,7 @@ export class AccessNameDoesExist extends Error {
 export class DuplicateProductNameError extends Error {
     status: number;
     constructor(message?: string, status?: number) {
-        super(message || "O nome do produto já Existe.");
+        super(message || "O nome do produto já Existe na sua loja.");
         this.name = "DuplicateProductNameError";
         this.status = status || 409; // Conflict
     }
@@ -281,6 +281,8 @@ export class UserNotOwnerError extends Error {
         return { name: this.name, status: this.status, message: this.message };
     }
 }
+
+
 
 
 export class MinLengthError extends Error {

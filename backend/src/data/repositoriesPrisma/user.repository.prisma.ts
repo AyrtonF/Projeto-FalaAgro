@@ -39,8 +39,8 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
             return this.mapPrismaUserToDomain(prismaUser);
 
         } catch (error) {
-
-            throw new Error("Erro na criação do novo usuario")
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
         }
     }
     async findById(id: string): Promise<User | null> {

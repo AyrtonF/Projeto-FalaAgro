@@ -1,17 +1,17 @@
 import { ProductRepositoryInterface } from "../../../data/repositories/product.repository.interface";
-import { DuplicateIdError, DuplicateProductNameError, MissingRequiredFieldsError } from "../../../errors/product.error";
+import {DuplicateProductNameError, MissingRequiredFieldsError } from "../../../errors/errors";
 import { Product } from "../../models/product.model";
 
 export class CreateProductUseCase {
   constructor(private productRepository: ProductRepositoryInterface) {}
 
   async execute(input: CreateProductInput): Promise<CreateProductOutput> {
-    const existingProduct = await this.productRepository.findByName(
-      input.name,
-      input.storeId
+    const isDuplicateProductNameInStore  = await this.productRepository.isDuplicateProductNameInStore ({
+      name:input.name,
+      storeId:input.storeId}
     );
-    if (existingProduct) {
-      throw new DuplicateProductNameError();
+    if (isDuplicateProductNameInStore) {
+      throw new DuplicateProductNameError;
     }
 
     this.validateInput(input);
@@ -24,8 +24,6 @@ export class CreateProductUseCase {
   private validateInput(input: CreateProductInput) {
     if (
       !input.name ||
-      !input.description ||
-      !input.categories ||
       !input.price ||
       !input.amount ||
       !input.storeId 
@@ -39,15 +37,31 @@ export class CreateProductUseCase {
 
 type CreateProductInput = {
   storeId: string;
-  description: string;
   price: number;
   amount: number;
   name: string;
-  images?: string[];
+  description?: string;
   categories?: string[];
+  images?: string[];
   quantityAvailable?: number;
   createdAt?: Date;
   updatedAt?: Date;
+  discount?: number; 
+  attributes?: { [key: string]: string }; 
+  shippingInfo?: {
+    weight?: number; 
+    dimensions?: { length: number; width: number; height: number }; 
+    shippingCost?: number; 
+  };
+  status?: 'active' | 'inactive' | 'soldOut'; 
+  sku?: string; 
+  brand?: string;
+  vendor?: {
+    vendorId: string;
+    name: string;
+  };
+  averageRating?: number; 
+  tags?: string[]; 
 };
 
 type CreateProductOutput = {
@@ -60,4 +74,20 @@ type CreateProductOutput = {
   amount: number;
   categories: string[];
   quantityAvailable: number;
+  discount?: number;
+  attributes?: { [key: string]: string }; 
+  shippingInfo?: {
+    weight?: number;
+    dimensions?: { length: number; width: number; height: number };
+    shippingCost?: number; 
+  };
+  status?: 'active' | 'inactive' | 'soldOut';
+  sku?: string; 
+  brand?: string;
+  vendor?: {
+    vendorId: string;
+    name: string;
+  };
+  averageRating?: number; 
+  tags?: string[]; 
 };

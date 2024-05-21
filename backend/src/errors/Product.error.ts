@@ -36,14 +36,7 @@ export class IdError extends Error {
     }
 }
 
-export class DuplicateProductNameError extends Error {
-    status: number;
-    constructor(message?: string, status?: number) {
-        super(message || "Nome de produto duplicado na loja");
-        this.name = "DuplicateProductNameError";
-        this.status = status || 400; 
-    }
-}
+
 
 
 export class DuplicateIdError extends Error {
@@ -64,14 +57,7 @@ export class InvalidNameError extends Error {
     }
 }
 
-export class MissingRequiredFieldsError extends Error {
-    status: number;
-    constructor(message?: string, status?: number) {
-        super(message || "Todos os campos obrigatórios devem ser fornecidos");
-        this.name = "MissingRequiredFieldsError";
-        this.status = status || 400; 
-    }
-}
+
 
 export class MinLengthError extends Error {
     status: number;

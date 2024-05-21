@@ -1,36 +1,92 @@
 import { Request, Response } from "express";
-import { CreateProductUseCase } from "../../domain/useCases/product/createProductUseCase";
-import { GetAllProductsUseCase } from "../../domain/useCases/product/getAllProductsUseCase";
-import { UpdateProductPriceUseCase } from "../../domain/useCases/product/updateProductPriceUseCase";
-import { UpdateProductNameUseCase } from "../../domain/useCases/product/updateProductNameUseCase";
-import { DeleteProductUseCase } from "../../domain/useCases/product/deleteProductUseCase";
-import { Product } from "../../domain/models/Product.model";
+import { CreateProductUseCase } from "../../domain/useCases/product/createProduct.useCases";
+import { DeleteProductUseCase } from "../../domain/useCases/product/deleteProduct.useCases";
+import { GetProductUseCase } from "../../domain/useCases/product/getProduct.Usecases";
+import { GetAllProductUseCase } from "../../domain/useCases/product/getAllProduct.useCases";
+import { Product } from "../../domain/models/product.model";
+import { handleErrors } from "../../errors/hadler.errors";
+import { InternalServerError } from "../../errors/errors";
 
+type productControllerInput = {
+  createProductUseCase: CreateProductUseCase,
+  getProductUseCase: GetProductUseCase,
+  getAllProductUseCase: GetAllProductUseCase,
+  deleteProductUseCase: DeleteProductUseCase,
+}
 export class ProductController {
   constructor(
-    private createProductUseCase: CreateProductUseCase,
-    private getAllProductsUseCase: GetAllProductsUseCase,
-    private updateProductPriceUseCase: UpdateProductPriceUseCase,
-    private updateProductNameUseCase: UpdateProductNameUseCase,
-    private deleteProductUseCase: DeleteProductUseCase
+    private input:productControllerInput
+   
   ) {}
 
   async createProduct(request: Request, response: Response): Promise<Response> {
     try {
-      const { name, price, category } = request.body;
-      const product = await this.createProductUseCase.execute({
-        name,
+      const { storeId,price,amount,name } = request.body;
+
+      const product = await this.input.createProductUseCase.execute({
+        storeId,
         price,
-        category,
+        amount,
+        name,
       });
       return response.status(201).json(product);
-    } catch (error) {
-      console.error(error);
-      return response.status(500).json({ error: "Internal server error" });
-    }
+    } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
   }
 
-  async getAllProducts(
+  async getProduct(request: Request, response: Response): Promise<Response> {
+    try {
+      const { storeId, productId, productName } = request.body;
+
+      const product = await this.input.getProductUseCase.execute({storeId,productId,productName});
+      return response.status(201).json(product);
+    } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+  }
+  async getAllProducts(request: Request, response: Response): Promise<Response> {
+    try {
+
+      const products = await this.input.getAllProductUseCase.execute();
+      return response.status(201).json(products);
+    } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+  }
+
+  async deleteProduct(request: Request, response: Response): Promise<Response> {
+    try {
+      const { productId, storeId } = request.body;
+      const {id} = request.user
+      const isDeleted = await this.input.deleteProductUseCase.execute({productId,id,storeId});
+      return response.status(201).json(isDeleted);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+          const errorResponse = handleErrors(error); 
+          return response.status(errorResponse.status).json(errorResponse.message); 
+      } else {
+         throw new InternalServerError
+      }
+  }
+  }
+
+  /* async getAllProducts(
     request: Request,
     response: Response
   ): Promise<Response> {
@@ -90,5 +146,5 @@ export class ProductController {
       console.error(error);
       return response.status(500).json({ error: "Internal server error" });
     }
-  }
+  } */
 }

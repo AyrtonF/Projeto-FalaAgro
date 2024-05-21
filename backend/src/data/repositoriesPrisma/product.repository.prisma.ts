@@ -1,82 +1,130 @@
 import { Product } from "../../domain/models/product.model";
+import { InternalServerError } from "../../errors/errors";
 import { prisma } from "../prisma";
 import { ProductRepositoryInterface } from "../repositories/product.repository.interface";
 
 export class ProductRepositoryPrisma implements ProductRepositoryInterface {
+  async insert(product: Product): Promise<Product> {
+    try {
+      const prismaProduct = await prisma.product.create({
+        data: {
+          storeId: product.storeId,
+          name: product.name,
+          description: product.description , 
+          price: product.price,
+          amount: product.amount,
+          images: product.images , 
+          categories: product.categories , 
+          quantityAvailable: product.quantityAvailable,  
+          discount: product.discount,  
+          attributes: product.attributes ,
+          shippingInfo: product.shippingInfo , 
+          status: product.status, 
+          sku: product.sku ,  
+          brand: product.brand , 
+          averageRating: product.averageRating,  
+          tags: product.tags , 
+        },
+      });
+
+      return this.mapPrismaProductToDomain(prismaProduct)
+    } catch (error) {
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
+  }
+  async findByName({name,storeId}:{name: string, storeId:string}): Promise<Product | null> {
+    try {
+      const productsPrisma = await prisma.product.findMany({
+        where:{
+          storeId:storeId,
+          name:name
+        }
+      })
+      return  this.mapPrismaProductToDomain(productsPrisma[0])
+      
+    } catch (error) {
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
+    
+  }
+  async isDuplicateProductNameInStore({name,storeId}:{name: string, storeId:string}): Promise<boolean> {
+    
+    try {
+      const product = await prisma.store.findUnique({
+        where: {
+          id: storeId,
+        },
+        include: {
+          Product: {
+            where: {
+              name,
+            },
+          },
+        },
+      });
+    return !!product?.Product[0];
+      
+    } catch (error) {
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
+  }
+  updatePrice(id: string, price: number): Promise<Product> {
+    throw new Error("Method not implemented.");
+  }
+  updateName(id: string, name: string): Promise<Product> {
+    throw new Error("Method not implemented.");
+  }
   async doesProductExist(id?: string, name?: string): Promise<boolean> {
     try {
       let product;
       if (id) {
         product = await prisma.product.findUnique({ where: { id } });
       } else if (name) {
-        product = await prisma.product.findUnique({ where: { name } });
+        product = await prisma.product.findMany({ where: { name } });
+        product = product[0]
       } else {
         throw new Error("Missing identifier");
       }
 
       return !!product;
     } catch (error) {
-      throw new Error("Erro interno durante a verificação do id ou nome");
-    }
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
   }
 
-  async insert(product: Product): Promise<Product> {
-    try {
-      const prismaProduct = await prisma.product.create({
-        data: {
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          categoryId: product.categoryId,
-          createdAt: product.createdAt || undefined,
-          updatedAt: product.updatedAt || undefined,
-        },
-      });
-
-      return new Product({
-        id: prismaProduct.id,
-        name: prismaProduct.name,
-        description: prismaProduct.description,
-        price: prismaProduct.price,
-        categoryId: prismaProduct.categoryId,
-        createdAt: prismaProduct.createdAt,
-        updatedAt: prismaProduct.updatedAt,
-      });
-    } catch (error) {
-      throw new Error("Erro na criação do novo produto");
-    }
-  }
 
   async findById(id: string): Promise<Product | null> {
     try {
-      const productFromPrisma = await prisma.product.findUnique({
+      const productPrisma = await prisma.product.findUnique({
         where: { id },
       });
 
-      if (!productFromPrisma) {
+      if (!productPrisma) {
         return null;
       }
 
-      return this.mapPrismaProductToDomain(productFromPrisma);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to find product by ID: ${error.message}`);
-      } else {
-        throw new Error("Erro interno no servidor ao buscar um id");
-      }
+      return this.mapPrismaProductToDomain(productPrisma);
+    }  catch (error) {
+        if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+        throw new InternalServerError
     }
   }
 
   async findAll(): Promise<Product[]> {
     try {
-      const productsFromPrisma = await prisma.product.findMany();
+      const productsPrisma = await prisma.product.findMany();
 
-      return productsFromPrisma.map((productFromPrisma) =>
-        this.mapPrismaProductToDomain(productFromPrisma)
+      return productsPrisma.map((productPrisma) =>
+        this.mapPrismaProductToDomain(productPrisma)
       );
     } catch (error) {
-      throw new Error(error.message);
-    }
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
   }
 
   async update(product: Product): Promise<Product> {
@@ -104,19 +152,30 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
       const product = await prisma.product.findUnique({ where: { id } });
       return product == null;
     } catch (error) {
-      throw new Error("Erro ao deletar o produto");
-    }
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
   }
 
   private mapPrismaProductToDomain(prismaProduct: any): Product {
     return new Product({
       id: prismaProduct.id,
+      storeId: prismaProduct.storeId,
       name: prismaProduct.name,
-      description: prismaProduct.description,
+      description: prismaProduct.description , 
       price: prismaProduct.price,
-      categoryId: prismaProduct.categoryId,
-      createdAt: prismaProduct.createdAt,
-      updatedAt: prismaProduct.updatedAt,
+      amount: prismaProduct.amount,
+      images: prismaProduct.images , 
+      categories: prismaProduct.categories , 
+      quantityAvailable: prismaProduct.quantityAvailable,  
+      discount: prismaProduct.discount,  
+      attributes: prismaProduct.attributes ,
+      shippingInfo: prismaProduct.shippingInfo , 
+      status: prismaProduct.status, 
+      sku: prismaProduct.sku ,  
+      brand: prismaProduct.brand , 
+      averageRating: prismaProduct.averageRating,  
+      tags: prismaProduct.tags , 
     });
   }
 }
