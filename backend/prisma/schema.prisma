@@ -54,7 +54,7 @@ model Product {
   name              String
   images            String[] @default([])
   description       String   @default("")
-  price             Float
+  price             Int
   amount            Int
   categories        String[] @default([])
    Store             Store?        @relation(fields: [storeId], references: [id])

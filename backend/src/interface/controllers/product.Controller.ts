@@ -3,6 +3,7 @@ import { CreateProductUseCase } from "../../domain/useCases/product/createProduc
 import { DeleteProductUseCase } from "../../domain/useCases/product/deleteProduct.useCases";
 import { GetProductUseCase } from "../../domain/useCases/product/getProduct.Usecases";
 import { GetAllProductUseCase } from "../../domain/useCases/product/getAllProduct.useCases";
+import { UpdateProductUseCase } from "../../domain/useCases/product/updateProduct.useCases";
 import { Product } from "../../domain/models/product.model";
 import { handleErrors } from "../../errors/hadler.errors";
 import { InternalServerError } from "../../errors/errors";
@@ -12,6 +13,7 @@ type productControllerInput = {
   getProductUseCase: GetProductUseCase,
   getAllProductUseCase: GetAllProductUseCase,
   deleteProductUseCase: DeleteProductUseCase,
+  updateProductUseCase: UpdateProductUseCase,
 }
 export class ProductController {
   constructor(
@@ -60,6 +62,43 @@ export class ProductController {
 
       const products = await this.input.getAllProductUseCase.execute();
       return response.status(201).json(products);
+    } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+  }
+
+  async updateProduct(request: Request, response: Response): Promise<Response> {
+    try {
+      const {id} = request.user
+      const userId = id
+      const { productId, storeId, name, description, price, amount, addImage, removeImage, addCategories, removeCategories, quantityAvailable, discount, status, sku, brand, addTags, removeTags } = request.body;
+
+      const product = await this.input.updateProductUseCase.execute({
+        productId,
+        userId,
+        storeId,
+        name,
+        description,
+        price,
+        amount,
+        addImage,
+        removeImage,
+        addCategories,
+        removeCategories,
+        quantityAvailable,
+        discount,
+        status,
+        sku, 
+        brand,
+        addTags,
+        removeTags
+      });
+      return response.status(201).json(product);
     } catch (error: unknown) {
             if (error instanceof Error) {
                 const errorResponse = handleErrors(error); 

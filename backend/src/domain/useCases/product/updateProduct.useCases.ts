@@ -98,7 +98,7 @@ type UpdateProductInput = {
   removeImage?: string[];
   addCategories?: string[];
   removeCategories?: string[];
-  quantityAvailable: number;
+  quantityAvailable?: number;
   discount?: number;
   status?: 'active' | 'inactive' | 'soldOut';
   sku?: string; 
@@ -134,17 +134,3 @@ type UpdateProductOutput = {
   averageRating?: number; 
   tags?: string[];
 };
-
-
-/*  
-  
-  name: string;
-  images?: string[];
-  description: string;
-  price: number;
-  amount: number;
-  categories?: string[];
-
-  
-  */ 
-

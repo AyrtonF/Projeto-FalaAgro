@@ -16,6 +16,7 @@ const errorMap: Record<string, UserError> = {
     EmailNotFoundError:  UserErrors.emailNotFoundError,
     IncorrectPasswordError: UserErrors.incorrectPasswordError,
     SecretKeyNotProvidedError:  UserErrors.secretKeyNotProvidedError,
+    ProductNotFoundError: UserErrors.productNotFoundError,
     MissingIdentifierError: UserErrors.missingIdentifierError,
     AccessNameDoesExist: UserErrors.accessNameDoesExist,
     UserNotOwnerError: UserErrors.userNotOwnerError,
@@ -25,7 +26,8 @@ const errorMap: Record<string, UserError> = {
     TagsDuplicatedError:UserErrors.tagsDuplicatedError,
     TagsNotFoundError: UserErrors.tagsNotFoundError,
     CategoriesDuplicatedError: UserErrors.categoriesDuplicatedError,
-    CategoriesNotFoundError: UserErrors.categoriesNotFoundError
+    CategoriesNotFoundError: UserErrors.categoriesNotFoundError,
+    NegativePriceError: UserErrors.negativePriceError,
 }
 
 

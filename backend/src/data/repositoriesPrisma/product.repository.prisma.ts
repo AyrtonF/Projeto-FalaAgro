@@ -1,5 +1,5 @@
 import { Product } from "../../domain/models/product.model";
-import { InternalServerError } from "../../errors/errors";
+import { InternalServerError, ProductNotFoundError } from "../../errors/errors";
 import { prisma } from "../prisma";
 import { ProductRepositoryInterface } from "../repositories/product.repository.interface";
 
@@ -71,12 +71,8 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
       throw new InternalServerError
   }
   }
-  updatePrice(id: string, price: number): Promise<Product> {
-    throw new Error("Method not implemented.");
-  }
-  updateName(id: string, name: string): Promise<Product> {
-    throw new Error("Method not implemented.");
-  }
+ 
+ 
   async doesProductExist(id?: string, name?: string): Promise<boolean> {
     try {
       let product;
@@ -129,21 +125,38 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
 
   async update(product: Product): Promise<Product> {
     try {
+      let valid = await (prisma.product.findUnique({ where: { id:product.id } })) ? true : false
+      if(!valid){
+          throw new ProductNotFoundError();
+      }
       const updatedProductFromPrisma = await prisma.product.update({
         where: { id: product.id },
         data: {
+          id: product.id,
+          storeId: product.storeId,
           name: product.name,
-          description: product.description,
+          description: product.description , 
           price: product.price,
-          categoryId: product.categoryId,
-          updatedAt: new Date(),
+          amount: product.amount,
+          images: product.images , 
+          categories: product.categories , 
+          quantityAvailable: product.quantityAvailable,  
+          discount: product.discount,  
+          attributes: product.attributes ,
+          shippingInfo: product.shippingInfo , 
+          status: product.status, 
+          sku: product.sku ,  
+          brand: product.brand , 
+          averageRating: product.averageRating,  
+          tags: product.tags , 
         },
       });
 
       return this.mapPrismaProductToDomain(updatedProductFromPrisma);
     } catch (error) {
-      throw new Error("Erro na atualização do produto");
-    }
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
   }
 
   async delete(id: string): Promise<boolean> {

@@ -234,6 +234,14 @@ export class ProductNotFoundError extends Error {
         return {name:this.name, status:this.status, message:this.message}
     }
 }
+export class NegativePriceError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Preço não pode ser negativo");
+        this.name = "NegativePriceError";
+        this.status = status || 400; 
+    }
+}
 
 export class UserNotLoggedInError extends Error {
     status: number;
@@ -400,5 +408,5 @@ export const UserErrors = {
     tagsNotFoundError: new TagsNotFoundError(),
     categoriesDuplicatedError: new CategoriesDuplicatedError(),
     categoriesNotFoundError: new CategoriesNotFoundError(),
-
+    negativePriceError: new NegativePriceError(),
 };
