@@ -19,6 +19,7 @@ type GetUserUseCaseOutput ={
     cpf: string;
     cnpj?: string;
     cep: string;
+    store?:{id?:string|undefined}[]
     numberAddress: number;
     AccessName: string[];
 }[]

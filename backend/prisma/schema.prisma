@@ -50,7 +50,7 @@ model Access {
 
 model Product {
   id                String   @id @default(uuid())
-  storeId           String
+  storeId           String?
   name              String
   images            String[] @default([])
   description       String   @default("")
@@ -92,7 +92,7 @@ model Store {
 
 model Sale {
   id          String        @id @default(uuid())
-  total_value Float
+  totalValue Float
   Buyer       User?         @relation("buyer", fields: [buyerId], references: [id])
   buyerId     String?
   Seller      User?         @relation("seller", fields: [sellerId], references: [id])

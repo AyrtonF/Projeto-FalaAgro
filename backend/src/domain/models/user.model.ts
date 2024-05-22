@@ -8,6 +8,7 @@ export type UserProps = {
     password:string
     cpf:string
     cnpj?:string
+    store?:UserStore[]
     cep:string
     numberAddress:number
     AccessName:string[]
@@ -25,6 +26,7 @@ export class User{
         ...props,
         id:props.id ||  uuidv4(),
         cnpj:props.cnpj  || '',
+        store: props.store || [],
         createdAt:props.createdAt || new Date(),
         updatedAt:props.updatedAt || new Date()
     }
@@ -50,11 +52,11 @@ export class User{
  }
  toDTO(){
     
-    const { id, name, email, cpf, cnpj, cep, numberAddress, AccessName } = this.props;
+    const { id, name, email, cpf, cnpj, cep, numberAddress, AccessName, store } = this.props;
     if(cnpj !== ""){
-        return { id, name, email, cpf, cnpj, cep, numberAddress, AccessName }
+        return { id, name, email, cpf, cnpj, cep, numberAddress, AccessName, store }
     }else{
-        return { id, name, email, cpf, cep, numberAddress, AccessName }
+        return { id, name, email, cpf, cep, numberAddress, AccessName, store }
     }
     
  }
@@ -197,6 +199,9 @@ public set AccessName(value:string[]){
 public set id (value:string){
    this.props.id = value
 }
+public set store (value:UserStore[]){
+    this.props.store = value
+ }
 
  get id(){
    return this.props.id
@@ -225,6 +230,9 @@ public set id (value:string){
  get AccessName(){
     return this.props.AccessName
  }
+ get store(){
+    return this.props.store
+ }
  get createAt(){
     return this.props.createdAt
  }
@@ -233,4 +241,10 @@ public set id (value:string){
  }
 
  
+}
+
+
+
+type UserStore = {
+    id:string
 }

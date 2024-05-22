@@ -31,8 +31,10 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                 include:{
                     UserAccess:{
                         include:{
-                        Access:true
-                    }}
+                        Access:true,
+                       
+                    }},
+                    store:true
                 }
             });
             
@@ -52,10 +54,11 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                         include:{
                             Access:true
                         }
-                    }
+                    },
+                    store:true
                 }
             });
-            console.log(prismaUser)
+            
             if (!prismaUser) {
                 return null
             }
@@ -100,14 +103,15 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                             include:{
                                 Access:true
                             }
-                        }
-                    }
+                        },
+                        store:true
+                    },
                 }
             );
+            
             const users: User[] = usersFromPrisma.map(userPrisma => {
                 return this.mapPrismaUserToDomain(userPrisma)
             });
-
             return users;
         } catch (error) {
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
@@ -317,7 +321,19 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
     }
     private mapPrismaUserToDomain(prismaUser: any): User {
         const accessNames = prismaUser.UserAccess ? prismaUser.UserAccess.map((access: any) => access.Access?.name || '') : [];
-    
+        
+        
+        type StoreUser = {
+            id:string
+        }
+        let stores:StoreUser[]  = []
+        
+            let storesPrisma = prismaUser.store
+            for (let index = 0; index < storesPrisma.length; index++) {
+                let storeId = prismaUser.store[index].id
+                stores.push({id:storeId})
+            }
+        
         return new User({
             id:prismaUser.id,
             name: prismaUser.name,
@@ -328,6 +344,7 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
             cep: prismaUser.cep,
             numberAddress: prismaUser.numberAddress,
             AccessName: accessNames,
+            store:stores,
             createdAt: prismaUser.createdAt,
             updatedAt: prismaUser.updatedAt,
         });

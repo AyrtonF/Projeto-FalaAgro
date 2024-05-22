@@ -27,8 +27,6 @@ export class CreateProductUseCase {
       !input.price ||
       !input.amount ||
       !input.storeId 
-      
-     
     ) {
      throw new MissingRequiredFieldsError();
     }
