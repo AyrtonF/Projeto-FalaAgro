@@ -132,7 +132,8 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                     UserAccess:{
                         include:{
                         Access:true
-                    }}
+                    }},
+                    store:true
                 },
                 data: {
                     name: user.name,
@@ -154,7 +155,6 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
         try {
         let valid = await (prisma.user.findUnique({ where: { id } })) ? true : false
         if(!valid){
-            console.error("aqui")
             throw new UserNotFoundError
         }
         const updatedUserFromPrisma = await prisma.user.update({
@@ -324,14 +324,18 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
         
         
         type StoreUser = {
-            id:string
+            name:string
+            categories:string[]
+            description:string
         }
         let stores:StoreUser[]  = []
         
             let storesPrisma = prismaUser.store
             for (let index = 0; index < storesPrisma.length; index++) {
-                let storeId = prismaUser.store[index].id
-                stores.push({id:storeId})
+                let name = prismaUser.store[index].name
+                let categories = prismaUser.store[index].categories
+                let description = prismaUser.store[index].description || ""
+                stores.push({name,categories,description})
             }
         
         return new User({

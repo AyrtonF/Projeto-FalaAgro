@@ -39,7 +39,10 @@ type Review = {
 }
 
 type Product = {
-    productId:string
+   
+    name:string,
+    price:number,
+    amount:number
 }
 
 

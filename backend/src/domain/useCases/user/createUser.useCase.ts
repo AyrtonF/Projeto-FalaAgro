@@ -48,4 +48,4 @@ type CreateUserInput = {
     updatedAt?: Date;
 };
 
-type CreateUserOutput = Omit<CreateUserInput, "password">; // Exclui a senha do retorno
+type CreateUserOutput = Omit<CreateUserInput, "password">; 

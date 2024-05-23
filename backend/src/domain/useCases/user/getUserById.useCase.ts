@@ -23,6 +23,12 @@ type GetUserByIdOutput =  {
     cpf: string;
     cnpj?: string;
     cep: string;
+    store?:StoreUser[]
     numberAddress: number;
     AccessName: string[];
+}
+type StoreUser = {
+    name:string
+    categories:string[]
+    description:string
 }

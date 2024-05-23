@@ -11,6 +11,19 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             const storePrisma = await prisma.store.create({
                 data:{
                     name:store.name,
+                    description: store.description,
+                    images: store.images,
+                    categories: store.categories,
+                    contactInfo: {
+                        address: store.contactInfo?.address || 0,
+                        email: store.contactInfo?.email || "",
+                        phoneNumber: store.contactInfo?.phoneNumber || ""
+                    },
+                    openingHours: store.openingHours,
+                    returnPolicy: store.returnPolicy,
+                    followers: store.followers,
+                    createdAt: store.createdAt,
+                    updatedAt: store.updatedAt,
                     User:{
                         connect:{
                             id: store.userId
@@ -19,12 +32,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
                 }
             })
             
-            const newUser: Store = new Store({
-                name:storePrisma.name,
-                userId:storePrisma.userId || "",
-                id:storePrisma.id
-            });
-            return newUser
+            return this.mapPrismaStoreToDomain(storePrisma);
         } catch (error) {
             throw new Error("Method not implemented.");
         }
@@ -50,7 +58,18 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     }
     async findAll(): Promise<Store[]> {
         try {
-            const prismaStores = await prisma.store.findMany({});
+            const prismaStores = await prisma.store.findMany({
+                include:{
+                    Product:{
+                        select:{
+                            name:true,
+                            price:true,
+                            amount:true,
+                            status:true
+                        }
+                    }
+                }
+            });
             
             
             const stores: Store[] = prismaStores.map(prismaStore => {
@@ -129,6 +148,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             userId: prismaStore.userId,
             name: prismaStore.name,
             description: prismaStore.description,
+            Products: prismaStore.Product,
             images: prismaStore.images,
             categories: prismaStore.categories,
             contactInfo: {

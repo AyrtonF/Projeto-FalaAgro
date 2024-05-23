@@ -8,7 +8,7 @@ export type UserProps = {
     password:string
     cpf:string
     cnpj?:string
-    store?:UserStore[]
+    store?:StoreUser[]
     cep:string
     numberAddress:number
     AccessName:string[]
@@ -199,7 +199,7 @@ public set AccessName(value:string[]){
 public set id (value:string){
    this.props.id = value
 }
-public set store (value:UserStore[]){
+public set store (value:StoreUser[]){
     this.props.store = value
  }
 
@@ -245,6 +245,8 @@ public set store (value:UserStore[]){
 
 
 
-type UserStore = {
-    id:string
+type StoreUser = {
+    name:string
+    categories:string[]
+    description:string
 }
