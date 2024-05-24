@@ -3,7 +3,7 @@ import { SaleRepositoryPrisma } from '../data/repositoriesPrisma/sale.repository
 import { ProductRepositoryPrisma } from '../data/repositoriesPrisma/product.repository.prisma';
 import { CreateSaleUseCase } from '../domain/useCases/sales/createSale.useCase';
 import { SaleController } from '../interface/controllers/sale.controller';
-
+import { authMiddleware } from '../middlewares/AuthMiddleware';
 
 const saleRoute = Router()
 
@@ -18,6 +18,6 @@ const createSaleUseCase = new CreateSaleUseCase(productRepository,saleRepository
 
 const saleController = new SaleController({createSaleUseCase})
 
-saleRoute.post('/sale', (request, response) => saleController.createSale(request, response));
+saleRoute.post('/sale',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.createSale(request, response));
 
 export {saleRoute}

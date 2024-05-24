@@ -4,6 +4,33 @@ import { prisma } from "../prisma";
 import { ProductRepositoryInterface } from "../repositories/product.repository.interface";
 
 export class ProductRepositoryPrisma implements ProductRepositoryInterface {
+  
+  async quatifyAmountValid(checkQuantify: any): Promise<boolean> {
+
+    try {
+      const productsPrisma = await prisma.product.findMany({
+        where:{
+          id:checkQuantify.id
+        }
+      })
+
+      for (let index = 0; index < productsPrisma.length; index++) {
+
+        if(checkQuantify[index].quantify > productsPrisma[index].amount ){
+           return false
+        }
+        
+      }
+
+      return true
+    } catch (error) {
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
+  }
+  }
+
+
+
   async insert(product: Product): Promise<Product> {
     try {
       const prismaProduct = await prisma.product.create({
@@ -180,8 +207,16 @@ async findAll(): Promise<Product[]> {
   }
   }
 
+  
+    
+  
   async delete(id: string): Promise<boolean> {
     try {
+      await prisma.saleProduct.deleteMany({
+        where: {
+          productId: id,
+        },
+      });
       await prisma.product.delete({ where: { id } });
       const product = await prisma.product.findUnique({ where: { id } });
       return product == null;

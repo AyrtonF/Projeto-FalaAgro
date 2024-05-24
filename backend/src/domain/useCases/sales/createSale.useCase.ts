@@ -17,14 +17,17 @@ export class CreateSaleUseCase {
 
         const productIds = input.products.map(product => product.id);
         const productsByDatabase:Product[] = await this.productRepository.findManyByIds(productIds);
-       // console.log(input.products)
+        let isQuatifyAmountValid = await this.productRepository.quatifyAmountValid(input.products) 
+       if(!isQuatifyAmountValid){
+        throw new Error("Quantidade de produto solicidata é maior que o estoque")
+       }
         const productWithQuantify = productsByDatabase.map(product => {
             const foundProduct = input.products.find(p => p.id === product.id);
             
             if (!foundProduct) {
                 throw new Error(`Produto com ID ${product.id} não encontrado.`);
             }
-            
+           
             return {
                 id: product.id,
                 name: product.name,
@@ -32,7 +35,7 @@ export class CreateSaleUseCase {
                 quantify: foundProduct.quantify,
             };
         });
-        // console.log(productWithQuantify)
+         
         
         let totalValue = productWithQuantify.reduce((total, product) => {
             return total + product.price * product.quantify;
@@ -41,6 +44,8 @@ export class CreateSaleUseCase {
         if (input.userSellerId === input.userBuyerId) {
             throw new Error("Não pode existir venda para si mesmo");
         }
+        
+
         
         const saleProps: SaleProps = {
             products: productWithQuantify,

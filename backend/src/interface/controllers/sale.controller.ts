@@ -15,8 +15,10 @@ export class SaleController {
 
     async createSale(request: Request, response: Response): Promise<Response> {
         try {
-            const { products, userSellerId,userBuyerId} = request.body;
-            
+            const { products, userSellerId} = request.body;
+            const {id} = request.user
+
+            const  userBuyerId = id 
 
             const input = { products, userSellerId, userBuyerId, };
             const output = await this.input.createSaleUseCase.execute(input);

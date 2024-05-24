@@ -126,7 +126,7 @@ export class Product {
   }
 
   isValidAmount(value: number): boolean {
-    return Number.isInteger(value) && value >= 0;
+    return true;
   }
 
   get id() {

@@ -7,10 +7,9 @@ import { SaleRepositoryInterface } from "../repositories/sale.repository.interfa
 export class SaleRepositoryPrisma implements SaleRepositoryInterface{
    async insert(sale: Sale): Promise<Sale> {
     try {
-
-      const salePrisma =  await prisma.sale.create({
+        const salePrisma =  await prisma.sale.create({
             data: {
-               
+                
                 totalValue: sale.totalValue,
                 Seller: { connect: { id: sale.userSellerId } },
                 Buyer: { connect: { id: sale.userBuyerId } },   
@@ -24,15 +23,19 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
                     })),
                 },
             }, include: {
-                SaleProduct: true,
+                SaleProduct:{include:{
+                    Product:true
+                }},
                 
             },
         });
         
+       
+        
         return this.mapPrismSaleToDomain(salePrisma)
         
     }catch (error) {
-        console.log("error.message")
+       
         if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
         throw new InternalServerError
     }
@@ -57,7 +60,7 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
         throw new Error("Method not implemented.");
     }
     private mapPrismSaleToDomain(prismaSale: any): Sale {
-        // Defina o tipo ProductSale
+      
         type ProductSale = {
             id: string;
             name: string;
@@ -65,8 +68,10 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
             price: number;
         };
     
-        // Mapeie os produtos de prismaSale.SaleProduct para objetos ProductSale
+        
+        
         const products: ProductSale[] = prismaSale.SaleProduct.map((productPrisma: any) => {
+      
             return {
                 id: productPrisma.Product.id,
                 name: productPrisma.Product.name,
@@ -74,8 +79,7 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
                 price: productPrisma.Product.price,
             };
         });
-    console.log(prismaSale)
-        // Crie um objeto Sale com os dados mapeados
+
         return new Sale({
             id: prismaSale.id,
             totalValue: prismaSale.totalValue,
@@ -86,21 +90,7 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
             buyerConfirmed: prismaSale.buyerConfirmed,
             sellerConfirmed: prismaSale.sellerConfirmed,
             status: prismaSale.status,
-            products: products, // Preencha o array products com os produtos mapeados
+            products: products,
         });
     }
 }
-/* 
-
-  id?: string;
-    products: ProductSale[];
-    userSellerId: string;
-    userBuyerId: string;
-    totalValue?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    buyerConfirmed?: boolean; 
-    sellerConfirmed?: boolean; 
-    status?: 'completed' | 'pending' | 'canceled';
-
-*/
