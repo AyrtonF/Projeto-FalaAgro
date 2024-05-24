@@ -1,7 +1,7 @@
 import { ProductRepositoryInterface } from "../../../data/repositories/product.repository.interface";
 import { SaleRepositoryInterface } from "../../../data/repositories/sale.repository.interface";
 import { Sale, SaleProps } from "../../models/sale.model";
-import { MissingRequiredFieldsError } from "../../../errors/errors";
+import { InsufficientStockError, MissingRequiredFieldsError, ProductNotFoundError, SelfSaleError } from "../../../errors/errors";
 import { Product } from "../../models/product.model";
 
 export class CreateSaleUseCase {
@@ -19,13 +19,13 @@ export class CreateSaleUseCase {
         const productsByDatabase:Product[] = await this.productRepository.findManyByIds(productIds);
         let isQuatifyAmountValid = await this.productRepository.quatifyAmountValid(input.products) 
        if(!isQuatifyAmountValid){
-        throw new Error("Quantidade de produto solicidata é maior que o estoque")
+        throw new InsufficientStockError
        }
         const productWithQuantify = productsByDatabase.map(product => {
             const foundProduct = input.products.find(p => p.id === product.id);
             
             if (!foundProduct) {
-                throw new Error(`Produto com ID ${product.id} não encontrado.`);
+                throw new ProductNotFoundError
             }
            
             return {
@@ -42,7 +42,7 @@ export class CreateSaleUseCase {
         }, 0);
         
         if (input.userSellerId === input.userBuyerId) {
-            throw new Error("Não pode existir venda para si mesmo");
+            throw new SelfSaleError
         }
         
 

@@ -41,11 +41,46 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
     }
        
     }
-    findById(id: string): Promise<Sale | null> {
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<Sale | null> {
+        try {
+            const salesPrisma = await prisma.sale.findUnique({
+                where:{
+                    id
+                },
+                include: {
+                    SaleProduct:{include:{
+                        Product:true
+                    }},
+                    
+                },
+            })
+          
+            return this.mapPrismSaleToDomain(salesPrisma)
+
+        } catch (error) {
+       
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
     }
-    findAll(): Promise<Sale[]> {
-        throw new Error("Method not implemented.");
+    async findAll(): Promise<Sale[]> {
+        try {
+            const salesPrisma = await prisma.sale.findMany({
+                include: {
+                    SaleProduct:{include:{
+                        Product:true
+                    }},
+                    
+                },
+            })
+          
+            return salesPrisma.map((salePrisma)=> this.mapPrismSaleToDomain(salePrisma))
+
+        } catch (error) {
+       
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
     }
     findAllBySellerId(sellerId: string): Promise<Sale[]> {
         throw new Error("Method not implemented.");

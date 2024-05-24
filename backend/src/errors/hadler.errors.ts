@@ -28,6 +28,9 @@ const errorMap: Record<string, UserError> = {
     CategoriesDuplicatedError: UserErrors.categoriesDuplicatedError,
     CategoriesNotFoundError: UserErrors.categoriesNotFoundError,
     NegativePriceError: UserErrors.negativePriceError,
+    SelfSaleError: UserErrors.selfSaleError,
+    InsufficientStockError: UserErrors.insufficientStockError,
+    SaleNotFoundError: UserErrors.saleNotFoundError,
 }
 
 

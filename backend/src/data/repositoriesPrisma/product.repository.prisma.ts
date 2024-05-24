@@ -8,12 +8,16 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
   async quatifyAmountValid(checkQuantify: any): Promise<boolean> {
 
     try {
+      
       const productsPrisma = await prisma.product.findMany({
         where:{
-          id:checkQuantify.id
+          id: { in: checkQuantify.map((checkQ: any) => checkQ.id) }
         }
       })
-
+      if(!productsPrisma){
+        throw new ProductNotFoundError
+      }
+     
       for (let index = 0; index < productsPrisma.length; index++) {
 
         if(checkQuantify[index].quantify > productsPrisma[index].amount ){
@@ -152,6 +156,7 @@ async findManyByIds(ids: string[]): Promise<Product[]> {
 }
 
 async updateQuantity(id: string, quantity: number): Promise<void> {
+
   await prisma.product.update({
       where: { id: id },
       data: { amount: { decrement: quantity } },

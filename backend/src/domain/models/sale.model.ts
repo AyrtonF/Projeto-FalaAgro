@@ -32,7 +32,13 @@ export class Sale {
     get id() {
         return this.props.id;
       }
-
+     toJSON(){
+        return this.props
+      }
+      toDTO(){
+        {}
+        this.props
+      }
       get products() {
         return this.props.products;
       }

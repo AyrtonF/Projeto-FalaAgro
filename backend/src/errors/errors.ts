@@ -364,6 +364,17 @@ export class CategoriesDuplicatedError extends Error {
         return { name: this.name, status: this.status, message: this.message };
     }
 }
+export class SelfSaleError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Não pode existir venda para si mesmo.");
+        this.name = "SelfSaleError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
 
 export class CategoriesNotFoundError extends Error {
     status: number;
@@ -376,7 +387,28 @@ export class CategoriesNotFoundError extends Error {
         return { name: this.name, status: this.status, message: this.message };
     }
 }
-
+export class InsufficientStockError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Quantidade de produto solicitada é maior que o estoque.");
+        this.name = "InsufficientStockError";
+        this.status = status || 400; // Bad Request
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+export class SaleNotFoundError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Pedido não encontrado.");
+        this.name = "SaleNotFoundError";
+        this.status = status || 404; // Not Found
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
     accessNameDoesNotExistError: new AccessNameDoesNotExist(),
@@ -409,4 +441,7 @@ export const UserErrors = {
     categoriesDuplicatedError: new CategoriesDuplicatedError(),
     categoriesNotFoundError: new CategoriesNotFoundError(),
     negativePriceError: new NegativePriceError(),
+    selfSaleError: new SelfSaleError(),
+    insufficientStockError: new InsufficientStockError(),
+    saleNotFoundError: new SaleNotFoundError(),
 };
