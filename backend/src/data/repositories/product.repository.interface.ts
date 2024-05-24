@@ -11,6 +11,10 @@ export interface ProductRepositoryInterface {
   
   findAll(): Promise<Product[]>;
 
+  findManyByIds(ids: string[]): Promise<Product[]>;
+
+  updateQuantity(id: string, quantity: number): Promise<void>;
+
   update(product: Product): Promise<Product>;
 
   delete(id: string, storeId:string): Promise<boolean>;

@@ -4,8 +4,12 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "cpf" TEXT NOT NULL,
+    "cnpj" TEXT,
+    "cep" TEXT NOT NULL,
+    "numberAddress" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -25,8 +29,8 @@ CREATE TABLE "UserAccess" (
 CREATE TABLE "Access" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Access_pkey" PRIMARY KEY ("id")
 );
@@ -34,12 +38,25 @@ CREATE TABLE "Access" (
 -- CreateTable
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "price" DOUBLE PRECISION NOT NULL,
-    "amount" INTEGER NOT NULL,
     "storeId" TEXT,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "name" TEXT NOT NULL,
+    "images" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "description" TEXT NOT NULL DEFAULT '',
+    "price" INTEGER NOT NULL,
+    "amount" INTEGER NOT NULL,
+    "categories" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "quantityAvailable" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "discount" DOUBLE PRECISION DEFAULT 0,
+    "attributes" JSONB,
+    "shippingInfo" JSONB,
+    "status" TEXT DEFAULT 'active',
+    "sku" TEXT DEFAULT '',
+    "brand" TEXT DEFAULT '',
+    "vendorId" TEXT DEFAULT '',
+    "averageRating" DOUBLE PRECISION DEFAULT 0,
+    "tags" TEXT[] DEFAULT ARRAY[]::TEXT[],
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -48,9 +65,16 @@ CREATE TABLE "Product" (
 CREATE TABLE "Store" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "description" TEXT,
+    "images" TEXT[],
+    "categories" TEXT[],
+    "contactInfo" JSONB,
+    "openingHours" TEXT[],
+    "returnPolicy" TEXT,
+    "followers" INTEGER NOT NULL DEFAULT 0,
     "userId" TEXT,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Store_pkey" PRIMARY KEY ("id")
 );
@@ -58,11 +82,14 @@ CREATE TABLE "Store" (
 -- CreateTable
 CREATE TABLE "Sale" (
     "id" TEXT NOT NULL,
-    "total_value" DOUBLE PRECISION NOT NULL,
+    "totalValue" DOUBLE PRECISION NOT NULL,
     "buyerId" TEXT,
     "sellerId" TEXT,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "buyerConfirmed" BOOLEAN NOT NULL DEFAULT false,
+    "sellerConfirmed" BOOLEAN NOT NULL DEFAULT false,
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Sale_pkey" PRIMARY KEY ("id")
 );
@@ -73,8 +100,8 @@ CREATE TABLE "SaleProduct" (
     "quantify" INTEGER NOT NULL,
     "saleId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "SaleProduct_pkey" PRIMARY KEY ("id")
 );

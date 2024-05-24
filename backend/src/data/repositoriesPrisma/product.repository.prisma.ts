@@ -8,13 +8,13 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
     try {
       const prismaProduct = await prisma.product.create({
         data: {
-            Store:{
-              connect:{
-                  id:product.storeId
-              } 
-          },
-          name: product.name,
-          description: product.description , 
+          Store:{
+            connect:{
+              id:product.storeId
+            } 
+              },
+              name: product.name,
+              description: product.description , 
           price: product.price,
           amount: product.amount,
           images: product.images , 
@@ -30,35 +30,35 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
           tags: product.tags , 
         },
       });
-
+      
       return this.mapPrismaProductToDomain(prismaProduct)
     } catch (error) {
       if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
       throw new InternalServerError
   }
-  }
-  async findByName({name,storeId}:{name: string, storeId:string}): Promise<Product | null> {
-    try {
-      const productsPrisma = await prisma.product.findMany({
-        where:{
-          storeId:storeId,
-          name:name
-        }
-      })
-      return  this.mapPrismaProductToDomain(productsPrisma[0])
-      
-    } catch (error) {
-      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
-      throw new InternalServerError
-  }
+}
+async findByName({name,storeId}:{name: string, storeId:string}): Promise<Product | null> {
+  try {
+    const productsPrisma = await prisma.product.findMany({
+      where:{
+        storeId:storeId,
+        name:name
+      }
+    })
+    return  this.mapPrismaProductToDomain(productsPrisma[0])
     
+  } catch (error) {
+    if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+    throw new InternalServerError
   }
-  async isDuplicateProductNameInStore({name,storeId}:{name: string, storeId:string}): Promise<boolean> {
-    
-    try {
-      const product = await prisma.store.findUnique({
-        where: {
-          id: storeId,
+  
+}
+async isDuplicateProductNameInStore({name,storeId}:{name: string, storeId:string}): Promise<boolean> {
+  
+  try {
+    const product = await prisma.store.findUnique({
+      where: {
+        id: storeId,
         },
         include: {
           Product: {
@@ -68,15 +68,15 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
           },
         },
       });
-    return !!product?.Product[0];
+      return !!product?.Product[0];
       
     } catch (error) {
       if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
       throw new InternalServerError
+    }
   }
-  }
- 
- 
+  
+  
   async doesProductExist(id?: string, name?: string): Promise<boolean> {
     try {
       let product;
@@ -88,36 +88,53 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
       } else {
         throw new Error("Missing identifier");
       }
-
+      
       return !!product;
     } catch (error) {
       if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
       throw new InternalServerError
+    }
   }
-  }
-
-
+  
+  
   async findById(id: string): Promise<Product | null> {
     try {
       const productPrisma = await prisma.product.findUnique({
         where: { id },
       });
-
+      
       if (!productPrisma) {
         return null;
       }
-
+      
       return this.mapPrismaProductToDomain(productPrisma);
     }  catch (error) {
-        if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
-        throw new InternalServerError
+      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+      throw new InternalServerError
     }
   }
+ 
+async findManyByIds(ids: string[]): Promise<Product[]> {
+      const productsPrisma = await prisma.product.findMany({
+        where: { id: { in: ids } },
+       });
+       //console.log(productsPrisma)
+    return productsPrisma.map((productPrisma) =>
+      this.mapPrismaProductToDomain(productPrisma)
+       );
+}
 
-  async findAll(): Promise<Product[]> {
-    try {
+async updateQuantity(id: string, quantity: number): Promise<void> {
+  await prisma.product.update({
+      where: { id: id },
+      data: { amount: { decrement: quantity } },
+  });
+}
+
+async findAll(): Promise<Product[]> {
+  try {
       const productsPrisma = await prisma.product.findMany();
-
+      
       return productsPrisma.map((productPrisma) =>
         this.mapPrismaProductToDomain(productPrisma)
       );

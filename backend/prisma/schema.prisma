@@ -49,28 +49,28 @@ model Access {
 }
 
 model Product {
-  id                String   @id @default(uuid())
+  id                String        @id @default(uuid())
   storeId           String?
   name              String
-  images            String[] @default([])
-  description       String   @default("")
+  images            String[]      @default([])
+  description       String        @default("")
   price             Int
   amount            Int
-  categories        String[] @default([])
-   Store             Store?        @relation(fields: [storeId], references: [id])
-   SaleProduct       SaleProduct[]
-  quantityAvailable Int      @default(0)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  discount          Float?   @default(0)
-  attributes        Json?        
-  shippingInfo      Json?         
-  status            String?  @default("active")
-  sku               String?  @default("")
-  brand             String?  @default("")
-  vendorId          String?  @default("")
-  averageRating     Float?   @default(0)
-  tags              String[] @default([])
+  categories        String[]      @default([])
+  Store             Store?        @relation(fields: [storeId], references: [id])
+  SaleProduct       SaleProduct[]
+  quantityAvailable Int           @default(0)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  discount          Float?        @default(0)
+  attributes        Json?
+  shippingInfo      Json?
+  status            String?       @default("active")
+  sku               String?       @default("")
+  brand             String?       @default("")
+  vendorId          String?       @default("")
+  averageRating     Float?        @default(0)
+  tags              String[]      @default([])
 }
 
 model Store {
@@ -91,15 +91,18 @@ model Store {
 }
 
 model Sale {
-  id          String        @id @default(uuid())
-  totalValue Float
-  Buyer       User?         @relation("buyer", fields: [buyerId], references: [id])
-  buyerId     String?
-  Seller      User?         @relation("seller", fields: [sellerId], references: [id])
-  sellerId    String?
-  SaleProduct SaleProduct[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id              String        @id @default(uuid())
+  totalValue      Float
+  Buyer           User?         @relation("buyer", fields: [buyerId], references: [id])
+  buyerId         String?
+  Seller          User?         @relation("seller", fields: [sellerId], references: [id])
+  sellerId        String?
+  buyerConfirmed  Boolean       @default(false)
+  sellerConfirmed Boolean       @default(false)
+  SaleProduct     SaleProduct[]
+  status          String        @default("pending")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 model SaleProduct {
