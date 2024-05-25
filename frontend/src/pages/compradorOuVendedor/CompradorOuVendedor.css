@@ -1,0 +1,26 @@
+/* src/components/CompradorOuVendedor.css */
+
+.cadastro-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .cadastro-content {
+    text-align: center;
+  }
+  
+  .button-group {
+    margin-top: 20px;
+  }
+  
+  .button-group .btn {
+    margin-right: 10px;
+    width: 20rem;
+    height: 5rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 2rem;
+  }
+  

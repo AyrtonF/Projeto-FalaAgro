@@ -1,0 +1,48 @@
+/* Navbar.css */
+
+.custom-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+  
+  .navbar-brand-img {
+    margin-left: 1%;
+  }
+  
+  .navbar-form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  
+  .btn-login,
+  .btn-announcement {
+    margin: 0 10px;
+  }
+  
+  /* Responsiveness */
+  @media (max-width: 768px) {
+    .navbar-left,
+    .navbar-right {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+  
+    .navbar-brand-img {
+      margin-left: 0;
+    }
+  
+    .btn-login,
+    .btn-announcement {
+      margin: 5px 0;
+    }
+  }
+  
