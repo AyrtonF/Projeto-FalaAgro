@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { UserErrors } from '../../errors/errors';
+import { InvalidCNPJError, UserErrors } from '../../errors/errors';
+import { InvalidCpfError } from '../../errors/user.error';
 
 export type UserProps = {
     id?: string
@@ -21,7 +22,7 @@ export type UserProps = {
 export class User{
  public props:Required<UserProps>
  constructor(props:UserProps){
-   
+   this.validateProps(props)
     this.props = {
         ...props,
         id:props.id ||  uuidv4(),
@@ -46,7 +47,19 @@ export class User{
     }
    
  }
-
+ private validateProps(props: UserProps) {
+    if (typeof props.name !== 'string') throw new TypeError('Name must be a string');
+    if (typeof props.email !== 'string') throw new TypeError('Email must be a string');
+    if (typeof props.password !== 'string') throw new TypeError('Password must be a string');
+    if (typeof props.cpf !== 'string') throw new TypeError('CPF must be a string');
+    if (props.cnpj && typeof props.cnpj !== 'string') throw new TypeError('CNPJ must be a string');
+    if (typeof props.cep !== 'string') throw new TypeError('CEP must be a string');
+    if (typeof props.numberAddress !== 'number') throw new TypeError('Number Address must be a number');
+    if (!Array.isArray(props.AccessName) || !props.AccessName.every(item => typeof item === 'string')) {
+        throw new TypeError('AccessName must be an array of strings');
+    }
+    if (props.store && !Array.isArray(props.store)) throw new TypeError('Store must be an array');
+}
  toJSON(){
     return this.props
  }
@@ -158,50 +171,66 @@ isValidCPF(value: string): boolean {
     return true;
 }
 
-public set name(value:string){
-    this.props.name = value
+set name(value: string) {
+    if (typeof value !== 'string') throw new TypeError('Name must be a string');
+    this.props.name = value;
 }
 
-public set email(value:string){
-    if(!this.isValidEmail){
-        throw new Error("Email invalido")
+set email(value: string) {
+    if (typeof value !== 'string') throw new TypeError('Email must be a string');
+    if (!this.isValidEmail(value)) {
+        throw new Error('Email inválido');
     }
-    this.props.email = value
+    this.props.email = value;
 }
 
-public set password(value:string){
-    this.props.password = value
+set password(value: string) {
+    if (typeof value !== 'string') throw new TypeError('Password must be a string');
+    this.props.password = value;
 }
 
-public set cpf(value:string){
-    if(!this.isValidCPF){
-        throw new Error("CPF invalido")
+set cpf(value: string) {
+    if (typeof value !== 'string') throw new TypeError('CPF must be a string');
+    if (!this.isValidCPF(value)) {
+        throw new InvalidCpfError('Email inválido');
     }
-    this.props.cpf = value
+    this.props.cpf = value;
 }
 
-public set cnpj(value:string){
-    if(!this.isValidCNPJ){
-        throw new Error("CNPJ invalido")
+set cnpj(value: string) {
+    if (typeof value !== 'string') throw new TypeError('CNPJ must be a string');
+    if (value && !this.isValidCNPJ(value)) {
+        throw new InvalidCNPJError('CNPJ inválido');
     }
-    this.props.cnpj = value
+    this.props.cnpj = value;
 }
 
-public set cep(value:string){
-    this.props.cep = value
+set cep(value: string) {
+    if (typeof value !== 'string') throw new TypeError('CEP must be a string');
+    this.props.cep = value;
 }
-public set numberAddress(value:number){
-    this.props.numberAddress = value
+
+set numberAddress(value: number) {
+    if (typeof value !== 'number') throw new TypeError('Number Address must be a number');
+    this.props.numberAddress = value;
 }
-public set AccessName(value:string[]){
-    this.props.AccessName = value
+
+set AccessName(value: string[]) {
+    if (!Array.isArray(value) || !value.every(item => typeof item === 'string')) {
+        throw new TypeError('AccessName must be an array of strings');
+    }
+    this.props.AccessName = value;
 }
-public set id (value:string){
-   this.props.id = value
+
+set id(value: string) {
+    if (typeof value !== 'string') throw new TypeError('ID must be a string');
+    this.props.id = value;
 }
-public set store (value:StoreUser[]){
-    this.props.store = value
- }
+
+set store(value: StoreUser[]) {
+    if (!Array.isArray(value)) throw new TypeError('Store must be an array');
+    this.props.store = value;
+}
 
  get id(){
    return this.props.id

@@ -30,6 +30,7 @@ export class UserController {
 
         try {
             const { name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt } = request.body;
+            //console.log(name, email, password, cpf, cnpj, cep, numberAddress, AccessName)
             const user = await this.input.createUserUseCase.execute({ name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt });
             return response.status(201).json(user);
         } catch (error: unknown) {
@@ -78,6 +79,7 @@ export class UserController {
 
     async updateUser(request:Request, response:Response):Promise<Response>{
         const {name, email, password, cpf, cnpj, cep, numberAddress} = request.body
+        
         const {id} = request.params
         try {
             const updatedUser = await this.input.updateUserUseCase.execute({id,name, email, password, cpf, cnpj, cep, numberAddress})

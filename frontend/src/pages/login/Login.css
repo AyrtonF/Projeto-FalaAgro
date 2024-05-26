@@ -121,3 +121,15 @@
       display: none;
     }
   }
+
+  .my-form__button--register{
+    background-color: none !important;
+    border: none;
+    color: none;
+  }
+
+  .my-form__button--register:hover{
+   
+    border: none;
+    color: blue;
+  }
