@@ -1,0 +1,135 @@
+/* src/components/CadastroComprador.css */
+
+.form-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .form-side {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .info-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo {
+    max-width: 100px;
+    margin-bottom: 20px;
+  }
+  
+  .my-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .mensagem-boas-vinda h1 {
+    margin-bottom: 20px;
+  }
+  
+  .socials-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .socials-row a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .socials-row img {
+    max-width: 24px;
+    margin-right: 10px;
+  }
+  
+  .divisor {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .linha-divisor {
+    flex: 1;
+    height: 1px;
+    background-color: #ccc;
+  }
+  
+  .text-field {
+    margin-bottom: 20px;
+  }
+  
+  .text-field label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .text-field input {
+    flex: 1;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .text-field svg {
+    margin-left: 10px;
+  }
+  
+  .my-form__button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .my-form__button:hover {
+    background-color: #0056b3;
+  }
+  
+  .my-form__actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .my-form__actions a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .my-form__actions a:hover {
+    text-decoration: underline;
+  }
+  
+  .mockup {
+    max-width: 100%;
+  }
+  @media (max-width: 768px) {
+    .info-side {
+      display: none;
+    }
+  }
+
+  .my-form__button--register{
+    background-color: none !important;
+    border: none;
+    color: none;
+  }
+
+  .my-form__button--register:hover{
+   
+    border: none;
+    color: blue;
+  }

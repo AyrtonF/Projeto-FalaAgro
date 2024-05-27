@@ -1,0 +1,9 @@
+.produto-carousel .carousel-item img {
+    height: 400px; /* Altura fixa para as imagens */
+}
+
+@media (max-width: 768px) {
+    .produto-carousel .carousel-item img {
+        height: 250px; /* Altura menor para telas menores */
+    }
+}

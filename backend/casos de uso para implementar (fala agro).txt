@@ -1,0 +1,87 @@
+Casos de Uso para Usuários:
+
+Criar Usuário: Permitir que novos usuários se cadastrem na plataforma.
+
+Autenticar Usuário: Permitir que usuários façam login na plataforma.
+
+Atualizar Usuário: Permitir que usuários atualizem suas informações pessoais.
+
+Recuperar Usuário: Permitir que usuários visualizem suas informações pessoais.
+
+Excluir Usuário: Permitir que usuários excluam suas contas na plataforma.
+
+
+Gerenciamento de Acesso do Usuário
+
+Definir Tipo de Acesso: Permitir que administradores atribuam o tipo de acesso (comprador/vendedor) aos usuários.
+
+Visualizar Tipo de Acesso: Permitir que usuários visualizem seu tipo de acesso atual.
+
+
+
+
+
+Casos de Uso para Loja:
+
+Listar Lojas: Permitir que usuários visualizem uma lista de lojas disponíveis.
+
+Buscar Loja por ID: Permitir que usuários encontrem uma loja específica pelo seu ID.
+
+Criar Loja: Permitir que vendedores criem novas lojas.
+
+Atualizar Loja: Permitir que vendedores atualizem informações de lojas existentes.
+
+Excluir Loja: Permitir que vendedores removam suas lojas da plataforma.
+
+
+
+
+Casos de Uso para Produtos:
+
+Listar Produtos: Permitir que usuários visualizem uma lista de produtos disponíveis em uma loja.
+
+Buscar Produto por ID: Permitir que usuários encontrem um produto específico pelo seu ID.
+
+Criar Produto: Permitir que vendedores adicionem novos produtos para venda em suas lojas.
+
+Atualizar Produto: Permitir que vendedores atualizem informações de produtos existentes em suas lojas.
+
+Excluir Produto: Permitir que vendedores removam produtos de suas lojas.
+
+
+
+Casos de Uso para Pedidos:
+
+Listar Pedidos: Permitir que usuários visualizem uma lista de pedidos feitos em uma loja.
+
+Buscar Pedido por ID: Permitir que usuários encontrem um pedido específico pelo seu ID.
+
+Realizar Pedido: Permitir que clientes façam pedidos de produtos disponíveis em uma loja.
+
+Atualizar Pedido: Permitir que clientes atualizem informações de pedidos pendentes.
+
+Cancelar Pedido: Permitir que clientes cancelem pedidos pendentes.
+
+Casos de Uso para Avaliações e Comentários:
+
+Gerenciamento de Avaliações e Comentários
+
+Adicionar Avaliação/Comentário: Permitir que clientes deixem avaliações e comentários sobre produtos em uma loja.
+
+Atualizar Avaliação/Comentário: Permitir que clientes atualizem ou removam suas avaliações e comentários.
+
+Visualizar Avaliações/Comentários: Permitir que usuários visualizem as avaliações e comentários de produtos em uma loja.
+
+Casos de Uso para Pagamentos e Entrega:
+
+Gerenciamento de Pagamentos
+
+Processar Pagamento: Permitir que clientes efetuem o pagamento pelos pedidos realizados em uma loja.
+
+Gerenciar Métodos de Pagamento: Permitir que usuários adicionem, atualizem ou removam métodos de pagamento associados às suas contas.
+
+Gerenciamento de Entrega
+
+Registrar Entrega: Permitir que vendedores registrem o status de entrega dos pedidos.
+
+Rastrear Entrega: Permitir que clientes rastreiem o status de entrega dos pedidos feitos.

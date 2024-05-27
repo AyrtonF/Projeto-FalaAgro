@@ -1,0 +1,45 @@
+
+ 
+[ 
+    {
+    "nome": "Maçã",
+    "descrição": "Uma fruta comestível de casca fina e polpa branca."
+  },
+  {
+    "nome": "Cachorro",
+    "descrição": "Um mamífero doméstico conhecido por sua lealdade aos humanos."
+  },
+  {
+    "nome": "Montanha",
+    "descrição": "Uma elevação natural da superfície terrestre, geralmente com um pico."
+  },
+  {
+    "nome": "Livro",
+    "descrição": "Um conjunto de páginas impressas ou em formato digital, contendo texto ou imagens."
+  },
+  {
+    "nome": "Café",
+    "descrição": "Uma bebida feita a partir dos grãos torrados da planta de café."
+  },
+  {
+    "nome": "Computador",
+    "descrição": "Uma máquina eletrônica capaz de processar dados e executar tarefas."
+  },
+  {
+    "nome": "Futebol",
+    "descrição": "Um esporte de equipe jogado com uma bola redonda entre dois times de onze jogadores."
+  },
+  {
+    "nome": "Piano",
+    "descrição": "Um instrumento musical de teclado que produz som através da vibração das cordas."
+  },
+  {
+    "nome": "Universo",
+    "descrição": "A totalidade do espaço, tempo, matéria e energia existentes."
+  },
+  {
+    "nome": "Avião",
+    "descrição": "Uma aeronave mais pesada que o ar, capaz de voar utilizando motores."
+  }
+]
+

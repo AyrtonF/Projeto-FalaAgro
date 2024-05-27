@@ -1,0 +1,23 @@
+#container-footer{
+    width: 100%;
+    height: 20vw;
+    background-color: rgb(151, 201, 76);
+    margin-top: 5vw;
+
+}
+
+#margin-ajust{
+    padding: 0px 5vw;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-div-footer{
+    color: rgb(73, 73, 73);
+    height: 100%;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
