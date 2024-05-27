@@ -150,7 +150,7 @@ export const deleteUserMany = async (req: Request, res: Response) => {
   //função para deletar um usuario
   try {
     await prisma.user.deleteMany();
-    return res.status(200).son({ message: "Todos deletados" });
+    return res.status(200).json({ message: "Todos deletados" });
   } catch (error) {
     return res.status(400).json(error.message);
   }
