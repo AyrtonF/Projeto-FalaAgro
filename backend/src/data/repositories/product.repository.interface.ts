@@ -18,6 +18,7 @@ export interface ProductRepositoryInterface {
   update(product: Product): Promise<Product>;
 
   delete(id: string, storeId:string): Promise<boolean>;
+  deleteAll():Promise<boolean>
 
   quatifyAmountValid(checkQuantify:any):Promise<boolean>
 }

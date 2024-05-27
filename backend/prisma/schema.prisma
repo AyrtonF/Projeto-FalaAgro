@@ -108,9 +108,9 @@ model Sale {
 model SaleProduct {
   id        String   @id @default(uuid())
   quantify  Int
-  Sale      Sale     @relation(fields: [saleId], references: [id])
+  Sale      Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
   saleId    String
-  Product   Product  @relation(fields: [productId], references: [id])
+  Product   Product  @relation(fields: [productId], references: [id],onDelete: Cascade)
   productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

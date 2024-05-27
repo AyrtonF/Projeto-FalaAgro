@@ -41,13 +41,13 @@ const userController = new UserController({
 
 // Rotas
 userRouter.post('/user', (request, response) => userController.createUser(request, response));
-userRouter.get('/user',/* authMiddleware(["Admin"]), */ (request, response) => userController.getAllUser(request, response));
-userRouter.get('/user/:id',authMiddleware(["Comprador","Vendedor","Admin"]), (request, response) => userController.getUserById(request, response));
+userRouter.get('/user-all',/* authMiddleware(["Admin"]), */ (request, response) => userController.getAllUser(request, response));
+userRouter.get('/user/',authMiddleware(["Comprador","Vendedor","Admin"]), (request, response) => userController.getUserById(request, response));
 userRouter.post('/sign-in', (request, response) => userController.signInUseCase(request, response));
-userRouter.put('/user/:id',authMiddleware(["Comprador","Vendedor","Admin"]),(request, response) => userController.updateUser(request, response))
+userRouter.put('/user/',authMiddleware(["Comprador","Vendedor","Admin"]),(request, response) => userController.updateUser(request, response))
 userRouter.put('/user/access/add',authMiddleware(["Comprador","Vendedor","Admin"]),(request, response) => userController.addAccessToUser(request, response))
 userRouter.put('/user/access/remove',authMiddleware(["Comprador","Vendedor","Admin"]),(request, response) => userController.removeAccessToUser(request, response))
 userRouter.delete('/user-delete-all',authMiddleware(["Admin"]), (request, response) => userController.deleteAll(request, response));
-userRouter.delete('/user/:id',authMiddleware(["Comprador,Vendedor,Admin"]), (request, response) => userController.deleteUser(request, response));
+userRouter.delete('/user/',authMiddleware(["Comprador","Vendedor","Admin"]), (request, response) => userController.deleteUser(request, response));
 
 export { userRouter };

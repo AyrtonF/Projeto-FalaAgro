@@ -1,16 +1,17 @@
-export function convertStringsToUppercase(obj: any): any {
-    if (obj !== null && typeof obj === "object") {
-        // Percorre todas as propriedades do objeto
-        Object.keys(obj).forEach((key) => {
-            // Verifica se o valor da propriedade é uma string
-            if (typeof obj[key] === "string") {
-                // Converte a string para maiúsculas
-                obj[key] = obj[key].toUpperCase();
-            } else if (typeof obj[key] === "object") {
-                // Se o valor da propriedade for um objeto, chama a função recursivamente
-                obj[key] = convertStringsToUppercase(obj[key]);
-            }
-        });
+export function toUpperCaseStrings<T extends object>(obj: T): T {
+    const result: any = {};
+    for (const key in obj) {
+        if(typeof obj[key] === 'string' && !key.toLowerCase().includes('id')){
+            console.log(key)
+        }
+        else if (typeof obj[key] === 'string') {
+            
+            result[key] = (obj[key] as string).toUpperCase();
+        } else if (Array.isArray(obj[key])) {
+            result[key] = obj[key].map(item => typeof item === 'string' ? item.toUpperCase() : item);
+        } else {
+            result[key] = obj[key];
+        }
     }
-    return obj;
+    return result;
 }

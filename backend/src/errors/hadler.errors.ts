@@ -31,6 +31,7 @@ const errorMap: Record<string, UserError> = {
     SelfSaleError: UserErrors.selfSaleError,
     InsufficientStockError: UserErrors.insufficientStockError,
     SaleNotFoundError: UserErrors.saleNotFoundError,
+    InvalidFieldTypeError: UserErrors.invalidFieldTypeError,
 }
 
 

@@ -409,6 +409,23 @@ export class SaleNotFoundError extends Error {
         return { name: this.name, status: this.status, message: this.message };
     }
 }
+
+export class InvalidFieldTypeError extends Error {
+    status: number;
+   
+    
+    constructor( message?: string, status?: number) {
+        super(message || `Tipo inválido para o campo`);
+        this.name = "InvalidFieldTypeError";
+        this.status = status || 400; // Bad Request
+      
+    }
+
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message};
+    }
+}
+
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
     accessNameDoesNotExistError: new AccessNameDoesNotExist(),
@@ -444,4 +461,5 @@ export const UserErrors = {
     selfSaleError: new SelfSaleError(),
     insufficientStockError: new InsufficientStockError(),
     saleNotFoundError: new SaleNotFoundError(),
+    invalidFieldTypeError: new InvalidFieldTypeError(),
 };

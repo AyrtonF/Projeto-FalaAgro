@@ -5,11 +5,13 @@ import { SignInUseCase } from '../../domain/useCases/user/signIn.useCase';
 import { DeleteAllUsersUseCase } from '../../domain/useCases/user/deleteAllUsers.useCase';
 import { handleErrors } from '../../errors/hadler.errors';
 import { GetUserByIdUseCase } from '../../domain/useCases/user/getUserById.useCase';
-import { InternalServerError } from '../../errors/errors';
+import { InternalServerError, InvalidFieldTypeError } from '../../errors/errors';
 import { UpdateUserUseCase } from '../../domain/useCases/user/updateUser.useCase';
 import { AddAccessToUserUseCase } from '../../domain/useCases/user/addAccessToUser.useCase';
 import { RemoveAccessToUserUseCase } from '../../domain/useCases/user/removeAccessToUser.useCase';
 import { DeleteUserUseCase } from '../../domain/useCases/user/deleteUser.useCase';
+import { toUpperCaseStrings } from '../../../functions/toUpperCase';
+
 type userControllerInput = {
     deleteAllUsersUseCase: DeleteAllUsersUseCase;
     createUserUseCase: CreateUserUseCase
@@ -29,9 +31,17 @@ export class UserController {
     async createUser(request: Request, response: Response): Promise<Response> {
 
         try {
-            const { name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt } = request.body;
-            //console.log(name, email, password, cpf, cnpj, cep, numberAddress, AccessName)
-            const user = await this.input.createUserUseCase.execute({ name, email, password, cpf, cnpj, cep, numberAddress, AccessName, createdAt, updatedAt });
+            let { name, email, password, cpf, cnpj, cep, numberAddress, AccessName} = request.body;
+           
+           
+            
+        if(typeof numberAddress == 'string' ){
+          if(isNaN(parseInt(numberAddress)))  throw new InvalidFieldTypeError("Tipo inválido para o campo: NumberAddress ")
+            numberAddress = parseInt(numberAddress)
+        }
+        
+        let propsUpperCase = {name, email, password, cpf, cnpj, cep, numberAddress, AccessName}
+            const user = await this.input.createUserUseCase.execute(propsUpperCase);
             return response.status(201).json(user);
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -43,7 +53,7 @@ export class UserController {
         }
     }
     async getUserById(request: Request, response: Response): Promise<Response> {
-        const { id } = request.params;
+        const { id } = request.user;
 
         
         if (!id || typeof id !== 'string') {
@@ -80,7 +90,7 @@ export class UserController {
     async updateUser(request:Request, response:Response):Promise<Response>{
         const {name, email, password, cpf, cnpj, cep, numberAddress} = request.body
         
-        const {id} = request.params
+        const {id} = request.user
         try {
             const updatedUser = await this.input.updateUserUseCase.execute({id,name, email, password, cpf, cnpj, cep, numberAddress})
             return response.status(200).json(updatedUser)
@@ -140,7 +150,7 @@ export class UserController {
     }
     async deleteUser(request: Request, response: Response) {
         try {
-            const {id} = request.params
+            const {id} = request.user
             const message = await this.input.deleteUserUseCase.execute(id);
             return response.status(201).json(message);
         } catch (error: unknown) {

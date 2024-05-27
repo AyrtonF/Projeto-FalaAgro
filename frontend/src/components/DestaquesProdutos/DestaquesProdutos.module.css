@@ -1,0 +1,62 @@
+.containerDestaques{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 25vw;
+    width: 100%;
+
+}
+
+.containerProduto{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1vw;
+    width: 20vw;
+    height: auto;
+    cursor: pointer;
+    border-radius: 15px;
+    background-color: rgb(245, 245, 245);
+    box-shadow: 3px 3px 10px black;
+    transition: 0.5s;
+    font-size: 0.9vw;
+}
+.containerProduto:hover{
+    box-shadow: 3px 3px 15px rgb(103, 161, 15);
+    transition: 0.5s;
+}
+
+.carrosselItensAjust{
+    width: 90%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.containerAllProducts{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200vw;
+    transform: translateX(0%);
+    transition: 0.5s;
+}
+
+.buttonCarrossel{
+    height: 30%;
+    border: none;
+    background:rgba(160, 160, 160, 0.3)  ;
+    margin: 0vw 2vw;
+    cursor: pointer;
+}
+
+.imgStyle{
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.buttonToProduct{
+    
+}

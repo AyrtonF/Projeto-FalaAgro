@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { InvalidCNPJError, UserErrors } from '../../errors/errors';
+import { InvalidCNPJError, InvalidFieldTypeError, UserErrors } from '../../errors/errors';
 import { InvalidCpfError } from '../../errors/user.error';
 
 export type UserProps = {
@@ -23,6 +23,7 @@ export class User{
  public props:Required<UserProps>
  constructor(props:UserProps){
    this.validateProps(props)
+
     this.props = {
         ...props,
         id:props.id ||  uuidv4(),
@@ -48,17 +49,17 @@ export class User{
    
  }
  private validateProps(props: UserProps) {
-    if (typeof props.name !== 'string') throw new TypeError('Name must be a string');
-    if (typeof props.email !== 'string') throw new TypeError('Email must be a string');
-    if (typeof props.password !== 'string') throw new TypeError('Password must be a string');
-    if (typeof props.cpf !== 'string') throw new TypeError('CPF must be a string');
-    if (props.cnpj && typeof props.cnpj !== 'string') throw new TypeError('CNPJ must be a string');
-    if (typeof props.cep !== 'string') throw new TypeError('CEP must be a string');
-    if (typeof props.numberAddress !== 'number') throw new TypeError('Number Address must be a number');
+    if (typeof props.name !== 'string') throw new InvalidFieldTypeError("Tipo inválido para o campo: name");
+    if (typeof props.email !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: Email');
+    if (typeof props.password !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: Password ');
+    if (typeof props.cpf !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CPF ');
+    if (props.cnpj && typeof props.cnpj !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CNPJ');
+    if (typeof props.cep !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CEP ');
+    if (typeof props.numberAddress !== 'number') throw new InvalidFieldTypeError('Tipo inválido para o campo: NumberAddress ');
     if (!Array.isArray(props.AccessName) || !props.AccessName.every(item => typeof item === 'string')) {
-        throw new TypeError('AccessName must be an array of strings');
+        throw new InvalidFieldTypeError('Tipo inválido para o campo: AccessName');
     }
-    if (props.store && !Array.isArray(props.store)) throw new TypeError('Store must be an array');
+    if (props.store && !Array.isArray(props.store)) throw new InvalidFieldTypeError('Tipo inválido para o campo: Store ');
 }
  toJSON(){
     return this.props
@@ -172,12 +173,12 @@ isValidCPF(value: string): boolean {
 }
 
 set name(value: string) {
-    if (typeof value !== 'string') throw new TypeError('Name must be a string');
+    if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: Name ');
     this.props.name = value;
 }
 
 set email(value: string) {
-    if (typeof value !== 'string') throw new TypeError('Email must be a string');
+    if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: Email ');
     if (!this.isValidEmail(value)) {
         throw new Error('Email inválido');
     }
@@ -185,12 +186,12 @@ set email(value: string) {
 }
 
 set password(value: string) {
-    if (typeof value !== 'string') throw new TypeError('Password must be a string');
+    if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: Password ');
     this.props.password = value;
 }
 
 set cpf(value: string) {
-    if (typeof value !== 'string') throw new TypeError('CPF must be a string');
+    if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CPF');
     if (!this.isValidCPF(value)) {
         throw new InvalidCpfError('Email inválido');
     }
@@ -198,7 +199,7 @@ set cpf(value: string) {
 }
 
 set cnpj(value: string) {
-    if (typeof value !== 'string') throw new TypeError('CNPJ must be a string');
+    if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CNPJ ');
     if (value && !this.isValidCNPJ(value)) {
         throw new InvalidCNPJError('CNPJ inválido');
     }
@@ -206,29 +207,29 @@ set cnpj(value: string) {
 }
 
 set cep(value: string) {
-    if (typeof value !== 'string') throw new TypeError('CEP must be a string');
+    if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CEP ');
     this.props.cep = value;
 }
 
 set numberAddress(value: number) {
-    if (typeof value !== 'number') throw new TypeError('Number Address must be a number');
+    if (typeof value !== 'number') throw new InvalidFieldTypeError('Tipo inválido para o campo: Number Address r');
     this.props.numberAddress = value;
 }
 
 set AccessName(value: string[]) {
     if (!Array.isArray(value) || !value.every(item => typeof item === 'string')) {
-        throw new TypeError('AccessName must be an array of strings');
+        throw new TypeError('Tipo inválido para o campo: AccessName ');
     }
     this.props.AccessName = value;
 }
 
 set id(value: string) {
-    if (typeof value !== 'string') throw new TypeError('ID must be a string');
+    if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: ID ');
     this.props.id = value;
 }
 
 set store(value: StoreUser[]) {
-    if (!Array.isArray(value)) throw new TypeError('Store must be an array');
+    if (!Array.isArray(value)) throw new InvalidFieldTypeError('Tipo inválido para o campo: Store');
     this.props.store = value;
 }
 

@@ -1,6 +1,6 @@
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
 import { AccessRepositoryInterface } from "../../../data/repositories/access.repository.interface";
-import { DuplicateEmailError, AccessNameDoesNotExist } from "../../../errors/errors";
+import { DuplicateEmailError, AccessNameDoesNotExist, InvalidFieldTypeError } from "../../../errors/errors";
 import { User } from "../../models/user.model";
 import { hash } from "bcryptjs";
 export class CreateUserUseCase {
@@ -27,7 +27,8 @@ export class CreateUserUseCase {
             throw new AccessNameDoesNotExist();
         }
 
-        // Inserir usuário no repositório
+       
+        
         const user = await this.userRepository.insert(new User(input));
 
         return user.toJSON();

@@ -4,6 +4,7 @@ import { prisma } from "../prisma";
 import { ProductRepositoryInterface } from "../repositories/product.repository.interface";
 
 export class ProductRepositoryPrisma implements ProductRepositoryInterface {
+
   
   async quatifyAmountValid(checkQuantify: any): Promise<boolean> {
 
@@ -229,6 +230,26 @@ async findAll(): Promise<Product[]> {
       if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
       throw new InternalServerError
   }
+  }
+  async deleteAll(): Promise<boolean> {
+    try {
+      // Log antes da exclusão
+      console.log('Iniciando exclusão de todos os produtos');
+
+      let result = await prisma.product.deleteMany();
+
+      // Log após a exclusão
+      console.log(`Número de registros deletados: ${result.count}`);
+
+      // Retorna verdadeiro se a operação foi bem-sucedida
+      return result.count > 0;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Erro ao deletar produtos: ", error.message);
+        throw new Error("Erro ao deletar produtos: " + error.message);
+      }
+      throw new InternalServerError();
+    }
   }
 
   private mapPrismaProductToDomain(prismaProduct: any): Product {

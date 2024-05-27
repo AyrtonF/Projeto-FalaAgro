@@ -1,0 +1,34 @@
+#container {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(97, 97, 97);
+}
+
+.container-types-img {
+    background-color: rgb(140, 204, 45);
+    height: 6vw;
+    width: 6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.container-types-img:hover {
+    height: 8vw;
+    width: 8vw;
+    transition: 0.5s;
+}
+
+.types-img {
+    width: 5vw;
+}
+
+.categorie-item {
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

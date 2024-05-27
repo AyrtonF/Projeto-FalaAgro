@@ -14,7 +14,7 @@ import CompradorOuVendedor from '../pages/compradorOuVendedor/CompradorOuVendedo
 import PaginaProduto from '../pages/paginaProduto/PaginaProduto';
 
 const AppRoutes = () => {
-
+  
   
   return (
     <Router>
