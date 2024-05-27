@@ -17,6 +17,9 @@ export class CreateSaleUseCase {
 
         const productIds = input.products.map(product => product.id);
         const productsByDatabase:Product[] = await this.productRepository.findManyByIds(productIds);
+        if(productsByDatabase.length == 0){
+            throw new ProductNotFoundError
+        }
         let isQuatifyAmountValid = await this.productRepository.quatifyAmountValid(input.products) 
        if(!isQuatifyAmountValid){
         throw new InsufficientStockError
@@ -44,7 +47,7 @@ export class CreateSaleUseCase {
         if (input.userSellerId === input.userBuyerId) {
             throw new SelfSaleError
         }
-        
+        console.log()
 
         
         const saleProps: SaleProps = {

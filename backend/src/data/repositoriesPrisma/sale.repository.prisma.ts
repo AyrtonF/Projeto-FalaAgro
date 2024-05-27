@@ -30,7 +30,7 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
             },
         });
         
-       
+        //console.log(sale)
         
         return this.mapPrismSaleToDomain(salePrisma)
         
@@ -104,9 +104,8 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
         };
     
         
-        
         const products: ProductSale[] = prismaSale.SaleProduct.map((productPrisma: any) => {
-      
+            
             return {
                 id: productPrisma.Product.id,
                 name: productPrisma.Product.name,
@@ -114,7 +113,8 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
                 price: productPrisma.Product.price,
             };
         });
-
+        
+        
         return new Sale({
             id: prismaSale.id,
             totalValue: prismaSale.totalValue,

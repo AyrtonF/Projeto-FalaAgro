@@ -6,6 +6,7 @@ import { GetStoreByIdUseCase } from '../../domain/useCases/store/getStoreById.us
 import { GetAllStoreUseCase } from '../../domain/useCases/store/getAllStore.useCase';
 import { UpdateStoreUseCase } from '../../domain/useCases/store/updateStore.useCase';
 import { DeleteStoreUseCase } from '../../domain/useCases/store/deleteStore.useCase';
+import { DeleteAllStoreUseCase } from '../../domain/useCases/store/deteleAllStores.useCase';
 
 type StoreControllerInput = {
     createStoreUseCase: CreateStoreUseCase
@@ -13,6 +14,7 @@ type StoreControllerInput = {
     getAllStoreUseCase: GetAllStoreUseCase
     updateStoreUseCase: UpdateStoreUseCase
     deleteStoreUseCase: DeleteStoreUseCase
+    deleteAllStoreUseCase: DeleteAllStoreUseCase
 }
 
 
@@ -56,7 +58,9 @@ export class StoreController {
         
         try {
             const {storeId} = request.params;
-            const store = await this.input.getStoreByIdUseCase.execute(storeId)
+            const {id} = request.user
+            const userId = id
+            const store = await this.input.getStoreByIdUseCase.execute({storeId,userId})
             return response.status(200).json(store)
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -93,6 +97,21 @@ export class StoreController {
             const {id} = request.user
             let userId = id
             const message = await this.input.deleteStoreUseCase.execute({storeId,userId})
+            return response.status(200).json(message)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+    }
+    async deleteAllStore(request: Request, response: Response):Promise<Response> {
+        
+        try {
+            
+            const message = await this.input.deleteAllStoreUseCase.execute()
             return response.status(200).json(message)
         } catch (error: unknown) {
             if (error instanceof Error) {

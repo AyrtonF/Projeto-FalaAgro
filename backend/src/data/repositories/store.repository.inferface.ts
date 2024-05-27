@@ -10,6 +10,8 @@ export interface StoreRepositoryInterface{
     update(store: Store): Promise<Store>;
 
     delete(id: string): Promise<boolean>;
+    
+    deleteAll(): Promise<boolean>;
 
     isUserOwnerOfStore({userId, storeId}:{userId: string, storeId: string}):Promise<boolean>
 }

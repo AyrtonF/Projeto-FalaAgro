@@ -43,7 +43,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             const prismaStore = await prisma.store.findUnique({
                 where: { id },
             });
-          
+            
             
             if (!prismaStore) {
                 return null
@@ -82,10 +82,10 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             throw new InternalServerError
         }
     }
-   async update(store: Store): Promise<Store> {
+    async update(store: Store): Promise<Store> {
         try {
             let valid = await (prisma.user.findUnique({ where: { id:store.id } })) ? true : false
-           
+            
             const updatedStoreFromPrisma = await prisma.store.update({
                 where: {
                     id: store.id
@@ -115,7 +115,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
                 where: { id: storeId },
                 select: { userId: true }
             });
-        
+            
             return store ? store.userId === userId : false;
             
         } catch (error) {
@@ -124,7 +124,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
         }
         
     }
-   async delete(id: string): Promise<boolean> {
+    async delete(id: string): Promise<boolean> {
         try {
             await prisma.store.delete({
                 where: {
@@ -140,12 +140,23 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
         }
         
     }
-
+   async deleteAll(): Promise<boolean> {
+        try {
+            let result = await prisma.store.deleteMany()
+    
+            return !(result.count == 0)
+            
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
+    }
+    
     private mapPrismaStoreToDomain(prismaStore: any): Store {
         
         return new Store({
             id: prismaStore.id,
-            userId: prismaStore.userId,
+            userId: prismaStore.userId || "Loja sem dono",
             name: prismaStore.name,
             description: prismaStore.description,
             Products: prismaStore.Product,

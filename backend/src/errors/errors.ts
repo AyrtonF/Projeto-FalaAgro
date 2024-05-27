@@ -426,6 +426,22 @@ export class InvalidFieldTypeError extends Error {
     }
 }
 
+// src/errors/UserAlreadyHasStoreError.ts
+export class UserAlreadyHasStoreError extends Error {
+    status: number;
+
+    constructor(message?: string, status?: number) {
+        super(message || 'Usuário já possui uma loja.');
+        this.name = 'UserAlreadyHasStoreError';
+        this.status = status || 409; // Conflict
+    }
+
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
+
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
     accessNameDoesNotExistError: new AccessNameDoesNotExist(),
@@ -462,4 +478,5 @@ export const UserErrors = {
     insufficientStockError: new InsufficientStockError(),
     saleNotFoundError: new SaleNotFoundError(),
     invalidFieldTypeError: new InvalidFieldTypeError(),
+    userAlreadyHasStoreError: new UserAlreadyHasStoreError(),
 };

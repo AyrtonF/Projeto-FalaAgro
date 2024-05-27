@@ -1,17 +1,22 @@
 import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
-import { UserNotFoundError } from "../../../errors/errors";
+import { UserAlreadyHasStoreError, UserNotFoundError } from "../../../errors/errors";
 import { Store } from "../../models/store.model";
 
 
 export class CreateStoreUseCase  {
     constructor(private storeRepository:StoreRepositoryInterface,private userRepository:UserRepositoryInterface){}
     async execute(input:CreateStoreInput):Promise<CreateStoreOutput>{
+        
         const storeInput = new Store(input)
         const userExists = await this.userRepository.findById(storeInput.userId)
+        
         if(!userExists){
             throw new UserNotFoundError("Usuario não existe")
         }
+        if(userExists.store.length > 0){
+            throw new UserAlreadyHasStoreError()
+        } 
         const store = await this.storeRepository.insert(storeInput)
         return store.toJSON()
     }

@@ -47,7 +47,7 @@ userRouter.post('/sign-in', (request, response) => userController.signInUseCase(
 userRouter.put('/user/',authMiddleware(["Comprador","Vendedor","Admin"]),(request, response) => userController.updateUser(request, response))
 userRouter.put('/user/access/add',authMiddleware(["Comprador","Vendedor","Admin"]),(request, response) => userController.addAccessToUser(request, response))
 userRouter.put('/user/access/remove',authMiddleware(["Comprador","Vendedor","Admin"]),(request, response) => userController.removeAccessToUser(request, response))
-userRouter.delete('/user-delete-all',authMiddleware(["Admin"]), (request, response) => userController.deleteAll(request, response));
+userRouter.delete('/user-delete-all',authMiddleware(["Admin","Vendedor","Admin"]), (request, response) => userController.deleteAll(request, response));
 userRouter.delete('/user/',authMiddleware(["Comprador","Vendedor","Admin"]), (request, response) => userController.deleteUser(request, response));
 
 export { userRouter };

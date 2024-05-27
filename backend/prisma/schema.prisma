@@ -27,7 +27,7 @@ model User {
   sale_as_buyer  Sale[]       @relation("buyer")
   sale_as_seller Sale[]       @relation("seller")
   UserAccess     UserAccess[]
-  store          Store[]
+  store          Store[]  
 }
 
 model UserAccess {

@@ -1,21 +1,28 @@
 import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
+import { UserNotOwnerError } from "../../../errors/errors";
 import { Store } from "../../models/store.model";
 
 
 export class GetStoreByIdUseCase {
     constructor(private storeRepository:StoreRepositoryInterface) {}
 
-    async execute(storeId: string): Promise<GetStoreByIdOutput> {
-        const store:Store|null = await this.storeRepository.findById(storeId);
+    async execute(input: GetStoreByIdInput): Promise<GetStoreByIdOutput> {
+        const store:Store|null = await this.storeRepository.findById(input.storeId);
         
         if (!store) {
             throw new Error("Loja não encontrada")
         }
-
+        const isOwner:boolean   = await this.storeRepository.isUserOwnerOfStore({storeId:input.storeId,userId:input.userId})
+        if(!isOwner ){
+           throw new UserNotOwnerError()
+        }
         return store.toJSON()
     }
 }
-
+type GetStoreByIdInput = {
+    userId:string
+    storeId:string
+}
 type GetStoreByIdOutput ={
     id?: string; 
     userId : string
