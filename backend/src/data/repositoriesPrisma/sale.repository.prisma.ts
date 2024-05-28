@@ -30,7 +30,7 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
             },
         });
         
-        //console.log(sale)
+       
         
         return this.mapPrismSaleToDomain(salePrisma)
         

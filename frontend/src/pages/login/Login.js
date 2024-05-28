@@ -27,7 +27,7 @@ const Login = () => {
       }
     } catch (err) {
       // Trate o erro aqui, por exemplo, mostrando uma mensagem ao usuário
-      console.log(err.message)
+     
       setError('Falha ao fazer login. Verifique suas credenciais.');
     }
   };

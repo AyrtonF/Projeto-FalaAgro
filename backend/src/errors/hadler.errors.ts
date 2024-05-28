@@ -43,7 +43,7 @@ export function handleErrors(error: Error): HandleErrorsOutput {
     if (errorResponse) {
         return { status: errorResponse.status, message: { error: errorResponse.message } };
     } else {
-        console.error(error);
+        
         return { status: 500, message: {error:'Erro interno do servidor'} };
     }
 }

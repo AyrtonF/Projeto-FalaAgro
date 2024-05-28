@@ -47,7 +47,7 @@ export class CreateSaleUseCase {
         if (input.userSellerId === input.userBuyerId) {
             throw new SelfSaleError
         }
-        console.log()
+        
 
         
         const saleProps: SaleProps = {

@@ -150,7 +150,7 @@ async findManyByIds(ids: string[]): Promise<Product[]> {
       const productsPrisma = await prisma.product.findMany({
         where: { id: { in: ids } },
        });
-       //console.log(productsPrisma)
+      
     return productsPrisma.map((productPrisma) =>
       this.mapPrismaProductToDomain(productPrisma)
        );
@@ -234,12 +234,12 @@ async findAll(): Promise<Product[]> {
   async deleteAll(): Promise<boolean> {
     try {
       // Log antes da exclusão
-      console.log('Iniciando exclusão de todos os produtos');
+     
 
       let result = await prisma.product.deleteMany();
 
       // Log após a exclusão
-      console.log(`Número de registros deletados: ${result.count}`);
+    
 
       // Retorna verdadeiro se a operação foi bem-sucedida
       return result.count > 0;

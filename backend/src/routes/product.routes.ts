@@ -42,16 +42,3 @@ productRouter.delete('/product-all/',authMiddleware(['Vendedor','Comprador',"Adm
 export { productRouter };
 
 
-
-/* 
-// Parse the JSON response
-var jsonData = pm.response.json();
-
-// Check if the token exists in the response
-if (jsonData.token) {
-    // Set the token in the environment variable
-    pm.environment.set("token", jsonData.token);
-} else {
-    console.log("Token not found in the response");
-} 
-*/

@@ -155,9 +155,9 @@ export class ProductController {
   async deleteProductAll(request: Request, response: Response): Promise<Response> {
     try {
     
-      const {id} = request.user
+    
       const isDeleted = await this.input.deleteAllProductUseCase.execute().then(result => {
-        console.log(result.message);
+        
       })
       .catch(error => {
         console.error(error);
