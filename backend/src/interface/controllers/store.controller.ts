@@ -58,9 +58,9 @@ export class StoreController {
         
         try {
             const {storeId} = request.params;
-            const {id} = request.user
-            const userId = id
-            const store = await this.input.getStoreByIdUseCase.execute({storeId,userId})
+            //const {id} = request.user
+            //const userId = id
+            const store = await this.input.getStoreByIdUseCase.execute({storeId})
             return response.status(200).json(store)
         } catch (error: unknown) {
             if (error instanceof Error) {

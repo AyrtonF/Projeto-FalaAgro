@@ -7,6 +7,7 @@ import Home from '../pages/home/Home';
 import PerfilComprador from '../pages/perfilComprador/PerfilComprador';
 import CadastroComprador from '../pages/cadastroComprador/CadastroComprador';
 import Login from '../pages/login/Login';
+import { CarrinhoProvider } from '../context/CarrinhoContext';
 import PerfilVendedor from '../pages/perfilVendedor/PerfilVendedor';
 import CadastroVendedor from '../pages/cadastroVendedor/CadastroVendedor';
 import MinhaLoja from '../pages/minhaLoja/MinhaLoja';
@@ -17,22 +18,25 @@ const AppRoutes = () => {
   
   
   return (
-    <Router>
-      <CustomNavbar />
-      <Routes>
-        <Route path="/adicionarAcessoVendedor" element={<AdicionarAcessoVendedor />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/perfilComprador" element={<PerfilComprador />} />
-        <Route path="/cadastroComprador" element={<CadastroComprador />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/perfilVendedor" element={<PerfilVendedor />} />
-        <Route path="/cadastroVendedor" element={<CadastroVendedor />} />
-        <Route path="/minhaLoja" element={<MinhaLoja />} />
-        <Route path="/compradorOuVendedor" element={<CompradorOuVendedor />} />
-        <Route path="/paginaProduto" element={<PaginaProduto />} />
-        {/* Adicione outras rotas conforme necessário */}
-      </Routes>
+    <CarrinhoProvider>
+        <Router>
+          <CustomNavbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/adicionarAcessoVendedor" element={<AdicionarAcessoVendedor />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/perfilComprador" element={<PerfilComprador />} />
+            <Route path="/cadastroComprador" element={<CadastroComprador />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/perfilVendedor" element={<PerfilVendedor />} />
+            <Route path="/cadastroVendedor" element={<CadastroVendedor />} />
+            <Route path="/minhaLoja" element={<MinhaLoja />} />
+            <Route path="/compradorOuVendedor" element={<CompradorOuVendedor />} />
+            <Route path="/PaginaProduto/:productId" element={<PaginaProduto />} />
+            {/* Adicione outras rotas conforme necessário */}
+          </Routes>
     </Router>
+    </CarrinhoProvider>
   );
 };
 

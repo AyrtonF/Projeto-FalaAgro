@@ -33,7 +33,7 @@ const storeController = new StoreController({
 });
 
 storeRouter.post('/store',authMiddleware(['Vendedor',"Admin"]), (request, response) => storeController.createStore(request, response));
-storeRouter.get('/store/:storeId',authMiddleware(['Vendedor',"Admin"]), (request, response) => storeController.getStoreById(request, response));
+storeRouter.get('/store/:storeId',/* authMiddleware(['Vendedor',"Admin"]), */ (request, response) => storeController.getStoreById(request, response));
 storeRouter.get('/store/',authMiddleware(['Vendedor',"Admin"]), (request, response) => storeController.getAllStore(request, response));
 storeRouter.put('/store',authMiddleware(['Vendedor',"Admin"]), (request, response) => storeController.updateStore(request, response));
 storeRouter.delete('/store/:storeId',authMiddleware(['Vendedor',"Admin"]), (request, response) => storeController.deleteStore(request, response));

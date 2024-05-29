@@ -1,0 +1,24 @@
+/* src/components/Carrinho.css */
+.carrinho-container {
+    margin-top: 20px;
+  }
+  
+  .carrinho-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .carrinho-total h4 {
+    margin: 0;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  .table td input {
+    width: 60px;
+  }
+  

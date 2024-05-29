@@ -12,15 +12,15 @@ export class GetStoreByIdUseCase {
         if (!store) {
             throw new Error("Loja não encontrada")
         }
-        const isOwner:boolean   = await this.storeRepository.isUserOwnerOfStore({storeId:input.storeId,userId:input.userId})
+       /*  const isOwner:boolean   = await this.storeRepository.isUserOwnerOfStore({storeId:input.storeId,userId:input.userId})
         if(!isOwner ){
            throw new UserNotOwnerError()
-        }
+        } */
         return store.toJSON()
     }
 }
 type GetStoreByIdInput = {
-    userId:string
+    //userId:string
     storeId:string
 }
 type GetStoreByIdOutput ={

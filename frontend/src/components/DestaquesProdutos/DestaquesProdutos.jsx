@@ -15,8 +15,9 @@ function DestaquesProdutos({ title }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3333/product-all');
+        const response = await axios.get('http://localhost:3333/product/featered');
         if (response.status >= 200 && response.status <= 300) {
+          
           setProducts(response.data);
         }
       } catch (err) {
@@ -53,7 +54,7 @@ function DestaquesProdutos({ title }) {
           <div className={styles.containerAllProducts} id="all-products">
             {products.map((product, index) => (
               <div key={index} className={styles.containerProduto}>
-                <Link to='/PaginaProduto'>
+                <Link to={`/PaginaProduto/${product.id}`}>
                   <img src={product.img || vacaTeste} alt={product.name} className={styles.imgStyle} />
                 </Link>
                 <p>{product.name}</p>

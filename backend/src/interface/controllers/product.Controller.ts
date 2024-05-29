@@ -3,6 +3,8 @@ import { CreateProductUseCase } from "../../domain/useCases/product/createProduc
 import { DeleteProductUseCase } from "../../domain/useCases/product/deleteProduct.useCases";
 import { GetProductUseCase } from "../../domain/useCases/product/getProduct.Usecases";
 import { GetAllProductUseCase } from "../../domain/useCases/product/getAllProduct.useCases";
+import { GetProductShowCaseUseCase } from "../../domain/useCases/product/getProductShowCase.useCase";
+import { GetProductByIdUseCase } from "../../domain/useCases/product/getProductById.useCase";
 import { UpdateProductUseCase } from "../../domain/useCases/product/updateProduct.useCases";
 import { DeleteAllProductUseCase } from "../../domain/useCases/product/deleteAllProduct.useCase";
 import { Product } from "../../domain/models/product.model";
@@ -16,6 +18,8 @@ type productControllerInput = {
   deleteProductUseCase: DeleteProductUseCase,
   updateProductUseCase: UpdateProductUseCase,
   deleteAllProductUseCase: DeleteAllProductUseCase,
+  getProductByIdUseCase: GetProductByIdUseCase
+  getProductShowCaseUseCase: GetProductShowCaseUseCase
 }
 export class ProductController {
   constructor(
@@ -70,7 +74,7 @@ export class ProductController {
         }
   }
 
-  async getProduct(request: Request, response: Response): Promise<Response> {
+  async getProductByIdOrByNameInStore(request: Request, response: Response): Promise<Response> {
     try {
       const { storeId, productId, productName } = request.body;
 
@@ -85,10 +89,32 @@ export class ProductController {
             }
         }
   }
-  async getAllProducts(request: Request, response: Response): Promise<Response> {
+
+  async getProductById(request: Request, response: Response): Promise<Response> {
+    try {
+      const { productId } = request.params;
+      console.log(productId)
+      const product = await this.input.getProductByIdUseCase.execute({productId});
+      return response.status(201).json(product);
+    } catch (error: unknown) {
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+  }
+  async getAllProducts(request: Request, response: Response, _protected?:boolean): Promise<Response> {
     try {
 
-      const products = await this.input.getAllProductUseCase.execute();
+      let products
+      if(_protected){
+         products = await this.input.getProductShowCaseUseCase.execute();
+      }else{
+         products = await this.input.getAllProductUseCase.execute();
+      }
+      
       return response.status(201).json(products);
     } catch (error: unknown) {
             if (error instanceof Error) {
