@@ -7,7 +7,7 @@ Pré-requisitos
 Antes de começar, certifique-se de ter os seguintes softwares instalados em sua máquina:
 
 Node.js (versão 16 ou superior)
-yarn (instalado globalmente)
+yarn ou npm (instalado globalmente)
 Docker
 Conta PostgreSQL com acesso ao servidor
 Instalação
