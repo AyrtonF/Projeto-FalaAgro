@@ -1,5 +1,5 @@
 import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
-import { UserNotOwnerError } from "../../../errors/errors";
+import { StoreNotFoundError, UserNotOwnerError } from "../../../errors/errors";
 import { Store } from "../../models/store.model";
 
 
@@ -10,7 +10,7 @@ export class GetStoreByIdUseCase {
         const store:Store|null = await this.storeRepository.findById(input.storeId);
         
         if (!store) {
-            throw new Error("Loja não encontrada")
+            throw new StoreNotFoundError
         }
        /*  const isOwner:boolean   = await this.storeRepository.isUserOwnerOfStore({storeId:input.storeId,userId:input.userId})
         if(!isOwner ){

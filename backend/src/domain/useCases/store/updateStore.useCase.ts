@@ -1,4 +1,5 @@
 import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
+import { StoreNotFoundError } from "../../../errors/errors";
 import { Store } from "../../models/store.model";
 
 
@@ -11,7 +12,7 @@ export class UpdateStoreUseCase  {
         const store:Store|null = await this.storeRepository.findById(input.storeId);
 
         if (!store) {
-            throw new Error("Loja não encontrada");
+            throw new StoreNotFoundError
         }
        
         if (input.name) store.name = input.name;

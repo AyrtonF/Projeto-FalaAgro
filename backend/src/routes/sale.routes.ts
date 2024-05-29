@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { SaleRepositoryPrisma } from '../data/repositoriesPrisma/sale.repository.prisma';
 import { ProductRepositoryPrisma } from '../data/repositoriesPrisma/product.repository.prisma';
+import { StoreRepositoryPrisma } from '../data/repositoriesPrisma/store.repository.prisma';
 import { CreateSaleUseCase } from '../domain/useCases/sales/createSale.useCase';
 import { GetAllSaleUseCase } from '../domain/useCases/sales/getAllSale.useCase';
 import { GetSaleByIdUseCase } from '../domain/useCases/sales/getSaleById.useCase';
@@ -12,9 +13,9 @@ const saleRoute = Router()
 
 const saleRepository = new SaleRepositoryPrisma()
 const productRepository= new ProductRepositoryPrisma()
+const storeRepository = new StoreRepositoryPrisma()
 
-
-const createSaleUseCase = new CreateSaleUseCase(productRepository,saleRepository)
+const createSaleUseCase = new CreateSaleUseCase(productRepository,saleRepository,storeRepository)
 const getAllSaleUseCase = new GetAllSaleUseCase(saleRepository)
 const getSaleByIdUseCase = new GetSaleByIdUseCase(saleRepository)
 

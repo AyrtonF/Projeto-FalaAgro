@@ -1,20 +1,26 @@
 import { ProductRepositoryInterface } from "../../../data/repositories/product.repository.interface";
+import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
 import { SaleRepositoryInterface } from "../../../data/repositories/sale.repository.interface";
 import { Sale, SaleProps } from "../../models/sale.model";
-import { InsufficientStockError, MissingRequiredFieldsError, ProductNotFoundError, SelfSaleError } from "../../../errors/errors";
+import { InsufficientStockError, MissingRequiredFieldsError, ProductNotFoundError, SelfSaleError, StoreNotFoundError } from "../../../errors/errors";
 import { Product } from "../../models/product.model";
 
 export class CreateSaleUseCase {
     constructor(
         private productRepository: ProductRepositoryInterface,
-        private saleRepository: SaleRepositoryInterface
+        private saleRepository: SaleRepositoryInterface,
+        private storeRepository: StoreRepositoryInterface
     ) {}
 
     async execute(input: CreateSaleInput): Promise<CreateSaleOutput> {
-        if (!input.products || !input.userSellerId || !input.userBuyerId ) {
+        if (!input.products || !input.userBuyerId || ! input.storeId ) {
             throw new MissingRequiredFieldsError("Algum ou alguns campos obrigatórios não foram fornecidos.");
         }
-
+        const store = await this.storeRepository.findById(input.storeId)
+        if(!store){
+            throw new StoreNotFoundError
+        }
+        let userSellerId = store.userId
         const productIds = input.products.map(product => product.id);
         const productsByDatabase:Product[] = await this.productRepository.findManyByIds(productIds);
         if(productsByDatabase.length == 0){
@@ -44,7 +50,7 @@ export class CreateSaleUseCase {
             return total + product.price * product.quantify;
         }, 0);
         
-        if (input.userSellerId === input.userBuyerId) {
+        if (userSellerId === input.userBuyerId) {
             throw new SelfSaleError
         }
         
@@ -52,7 +58,7 @@ export class CreateSaleUseCase {
         
         const saleProps: SaleProps = {
             products: productWithQuantify,
-            userSellerId: input.userSellerId,
+            userSellerId: userSellerId,
             userBuyerId: input.userBuyerId,
             totalValue: totalValue,
         };
@@ -84,7 +90,7 @@ export class CreateSaleUseCase {
 
 type CreateSaleInput = {
     products: ProductSale[];
-    userSellerId: string;
+    storeId:string
     userBuyerId: string;
  
 };

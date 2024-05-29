@@ -1,43 +1,65 @@
 import React, { createContext, useState } from 'react';
-
 import axios from 'axios';
+
 export const CarrinhoContext = createContext();
 
 export const CarrinhoProvider = ({ children }) => {
     const [carrinho, setCarrinho] = useState([]);
-   
-    const [pedido,setPedido] = useState(null) 
+    const [storeId, setStoreId] = useState(null);
+    const [pedido, setPedido] = useState(null);
     const [error, setError] = useState('');
+    const [sucesso, setSucesso] = useState('');
+
     axios.interceptors.request.use(
         (config) => {
-          const token = localStorage.getItem('token');
-          if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-          }
-          return config;
+            const token = localStorage.getItem('token');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
         },
         (error) => {
-          return Promise.reject(error);
+            return Promise.reject(error);
         }
-      );
-      
-      const fazerPedido = async (products, storeId) => {
+    );
+
+    const fazerPedido = async (products, storeId) => {
         try {
-          const response = await axios.post('http://localhost:3333/sale', {
-            products,
-            storeId
-          });
-      
-          if (response.status === 200) {
-            console.log(response.data);
-          }
+            const response = await axios.post('http://localhost:3333/sale', {
+                products,
+                storeId
+            });
+
+            if (response.status >= 200 && response.status < 300) {
+                console.log(response.data);
+                setPedido(response.data);
+                setSucesso('Pedido encaminhado com sucesso, veja em "Meu Perfil".');
+            }
         } catch (err) {
-          // Trate o erro aqui, por exemplo, mostrando uma mensagem ao usuário
-          setError('Falha ao finalizar a compra. ');
+            if (err.response.data) {
+                console.log(err.response.data);
+                setError(err.response.data.error);
+            } else {
+                setError('Falha ao finalizar a compra.');
+            }
         }
-      };
+    };
+
     const adicionarProduto = (produto) => {
-        setCarrinho([...carrinho, { ...produto, quantidade: 1 }]);
+        if (carrinho.length === 0) {
+            setCarrinho([{ ...produto, quantidade: 1 }]);
+            setStoreId(produto.storeId);
+        } else if (produto.storeId === storeId) {
+            setCarrinho([...carrinho, { ...produto, quantidade: 1 }]);
+        } else {
+            return false; // Produto é de uma loja diferente
+        }
+        return true; // Produto adicionado com sucesso
+    };
+
+    const limparCarrinho = () => {
+        setCarrinho([]);
+        setStoreId(null);
     };
 
     const editarQuantidade = (produtoId, quantidade) => {
@@ -47,17 +69,21 @@ export const CarrinhoProvider = ({ children }) => {
     };
 
     const finalizarPedido = () => {
-        // lógica para finalizar o pedido
-        let products = carrinho.map((produto)=>produto.id)
-        let storeId = carrinho[0].storeId
-        console.log(storeId)
-        
-        //fazerPedido(carrinho,userId)
-        setCarrinho([]);
+        if (carrinho.length === 0) return;
+
+        const products = carrinho.map(produto => ({
+            id: produto.id,
+            quantify: produto.quantidade
+        }));
+
+        const storeId = carrinho[0].storeId;
+
+        fazerPedido(products, storeId);
+        limparCarrinho();
     };
 
     return (
-        <CarrinhoContext.Provider value={{ carrinho, adicionarProduto, editarQuantidade, finalizarPedido }}>
+        <CarrinhoContext.Provider value={{ carrinho, adicionarProduto, editarQuantidade, limparCarrinho, finalizarPedido, error, sucesso }}>
             {children}
         </CarrinhoContext.Provider>
     );

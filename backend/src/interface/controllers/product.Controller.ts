@@ -93,7 +93,7 @@ export class ProductController {
   async getProductById(request: Request, response: Response): Promise<Response> {
     try {
       const { productId } = request.params;
-      console.log(productId)
+      
       const product = await this.input.getProductByIdUseCase.execute({productId});
       return response.status(201).json(product);
     } catch (error: unknown) {

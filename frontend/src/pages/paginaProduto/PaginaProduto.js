@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import './PaginaProduto.css';
 import { Carousel } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import lojaImg from '../../assets/Drone.jpg'; // Imagem da loja
 import { CarrinhoContext } from '../../context/CarrinhoContext'; // Importar o contexto do carrinho
@@ -10,7 +10,9 @@ const PaginaProduto = () => {
     const { productId } = useParams();
     const [produto, setProduto] = useState(null);
     const [loja, setLoja] = useState(null);
-    const { adicionarProduto } = useContext(CarrinhoContext); // Usar o contexto do carrinho
+    const { adicionarProduto, limparCarrinho, sucesso, error } = useContext(CarrinhoContext); // Usar o contexto do carrinho
+    const navigate = useNavigate(); // Usar o hook useNavigate para redirecionar
+    const [showNotification, setShowNotification] = useState(false);
 
     useEffect(() => {
         const fetchProduto = async () => {
@@ -29,7 +31,6 @@ const PaginaProduto = () => {
             try {
                 const response = await axios.get(`http://localhost:3333/store/${storeId}`);
                 setLoja(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.error("Erro ao buscar a loja:", error);
             }
@@ -37,6 +38,16 @@ const PaginaProduto = () => {
 
         fetchProduto();
     }, [productId]);
+
+    useEffect(() => {
+        if (sucesso || error) {
+            setShowNotification(true);
+            const timer = setTimeout(() => {
+                setShowNotification(false);
+            }, 9000); // Defina o tempo em milissegundos para a notificação desaparecer (neste caso, 5 segundos)
+            return () => clearTimeout(timer);
+        }
+    }, [sucesso, error]);
 
     const getStatusClass = (status) => {
         if (status === 'active') return 'status-venda';
@@ -49,11 +60,29 @@ const PaginaProduto = () => {
     }
 
     const handleAdicionarAoCarrinho = () => {
-        adicionarProduto(produto);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            // Redirecionar para a página de login se não estiver logado
+            navigate('/login');
+        } else {
+            const sucesso = adicionarProduto(produto);
+            if (!sucesso) {
+                if (window.confirm('O carrinho contém produtos de outra loja. Deseja substituir o carrinho com o novo produto?')) {
+                    limparCarrinho();
+                    adicionarProduto(produto);
+                }
+            }
+        }
     };
 
     return (
         <div className="container pagina-produto-container">
+            {showNotification && (
+                <div className="alert alert-success" onClick={() => setShowNotification(false)}>
+                    {sucesso && <span>{sucesso}</span>}
+                    {error && <span>{error}</span>}
+                </div>
+            )}
             <div className="row">
                 <div className="col-lg-6 col-md-12">
                     <div className="produto-carousel">
@@ -84,7 +113,7 @@ const PaginaProduto = () => {
                     <div className="produto-info">
                         <h2 className="produto-nome">{produto.name || ""}</h2>
                         <p className="produto-descricao">{produto.description || ""}</p>
-                        <p className="produto-preco">Preço: ${produto.price || ""}</p>
+                        <p className="produto-preco">Preço: ${produto.price/10 || ""}</p>
                         {produto.dimensoes && <p className="produto-dimensoes"><strong>Dimensões:</strong> {produto.dimensoes}</p>}
                         <p className={`produto-status ${getStatusClass(produto.status)}`}><strong>Status:</strong> {produto.status || "Ativo"}</p>
                         <div className="produto-tags">

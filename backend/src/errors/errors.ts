@@ -409,7 +409,17 @@ export class SaleNotFoundError extends Error {
         return { name: this.name, status: this.status, message: this.message };
     }
 }
-
+export class StoreNotFoundError extends Error {
+    status: number;
+    constructor(message?: string, status?: number) {
+        super(message || "Loja não encontrado.");
+        this.name = "StoreNotFoundError";
+        this.status = status || 404; // Not Found
+    }
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
 export class InvalidFieldTypeError extends Error {
     status: number;
    
@@ -479,4 +489,5 @@ export const UserErrors = {
     saleNotFoundError: new SaleNotFoundError(),
     invalidFieldTypeError: new InvalidFieldTypeError(),
     userAlreadyHasStoreError: new UserAlreadyHasStoreError(),
+    storeNotFoundError: new StoreNotFoundError(),
 };
