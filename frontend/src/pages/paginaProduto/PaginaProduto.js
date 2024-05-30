@@ -96,6 +96,7 @@ const PaginaProduto = () => {
                                         <img
                                             className="d-block w-100"
                                             src={`data:image/jpeg;base64,${imagem}`}
+                                            
                                             alt={`Imagem ${index + 1}`}
                                         />
                                     </Carousel.Item>

@@ -9,9 +9,9 @@ const Home = ()=>{
         <>
         <Carrossel/>
         <Categories className="categories"/>
-        <DestaquesProdutos title={"Grãos"}/>
-        <DestaquesProdutos title={"Maquinário"}/>
-        <DestaquesProdutos title={"Animais"}/>
+        <DestaquesProdutos />
+        <DestaquesProdutos />
+        <DestaquesProdutos />
 
 
         <Footer/>
