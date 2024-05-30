@@ -5,6 +5,7 @@ import { StoreRepositoryPrisma } from '../data/repositoriesPrisma/store.reposito
 import { CreateSaleUseCase } from '../domain/useCases/sales/createSale.useCase';
 import { GetAllSaleUseCase } from '../domain/useCases/sales/getAllSale.useCase';
 import { GetSaleByIdUseCase } from '../domain/useCases/sales/getSaleById.useCase';
+import { GetSaleByUserIdUseCase } from '../domain/useCases/sales/getSaleByUserId.useCase';
 import { SaleController } from '../interface/controllers/sale.controller';
 import { authMiddleware } from '../middlewares/AuthMiddleware';
 
@@ -18,10 +19,12 @@ const storeRepository = new StoreRepositoryPrisma()
 const createSaleUseCase = new CreateSaleUseCase(productRepository,saleRepository,storeRepository)
 const getAllSaleUseCase = new GetAllSaleUseCase(saleRepository)
 const getSaleByIdUseCase = new GetSaleByIdUseCase(saleRepository)
+const getSaleByUserIdUseCase = new GetSaleByUserIdUseCase(saleRepository)
 
-const saleController = new SaleController({createSaleUseCase,getAllSaleUseCase,getSaleByIdUseCase})
+const saleController = new SaleController({createSaleUseCase,getAllSaleUseCase,getSaleByIdUseCase,getSaleByUserIdUseCase})
 
 saleRoute.post('/sale',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.createSale(request, response));
 saleRoute.get('/sale-all',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.getAllSales(request, response));
 saleRoute.get('/sale',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.getSaleById(request, response));
+saleRoute.get('/sale-userId',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.getSaleByUserId(request, response));
 export {saleRoute}
