@@ -7,5 +7,5 @@ export interface SaleRepositoryInterface{
     findAllBySellerId(sellerId: string): Promise<Sale[]>;
     findAllByBuyerId(buyerId: string): Promise<Sale[]>;
     update(sale: Sale): Promise<Sale>;
-    delete(id: string): Promise<boolean>;
+    delete({sellerId,saleId}:{sellerId:string,saleId:string}): Promise<boolean>;
 }

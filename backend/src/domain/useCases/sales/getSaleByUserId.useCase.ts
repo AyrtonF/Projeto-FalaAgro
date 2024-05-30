@@ -1,12 +1,22 @@
 
 import { SaleRepositoryInterface } from "../../../data/repositories/sale.repository.interface";
-import { SaleNotFoundError } from "../../../errors/errors";
+import { MissingRequiredFieldsError, SaleNotFoundError } from "../../../errors/errors";
 import { Sale } from "../../models/sale.model";
 
 export class GetSaleByUserIdUseCase {
     constructor(private saleRepository: SaleRepositoryInterface) {}
     async execute(input: GetSaleByUserIdInput):Promise<GetSaleByUserIdOutput>{
-        const sales:Sale[] = await this.saleRepository.findAllByBuyerId(input.userId)
+        if(!input.buyerId && !input.sellerId){
+            throw new MissingRequiredFieldsError("Algum ou alguns campos obrigatórios não foram fornecidos.");
+        }
+        let sales:Sale[] = []
+        if(input.buyerId){
+             sales = await this.saleRepository.findAllByBuyerId(input.buyerId)    
+        }
+        else if(input.sellerId){
+             sales = await this.saleRepository.findAllBySellerId(input.sellerId)
+        }
+        
         if (!sales) {
             throw new SaleNotFoundError()
         }
@@ -14,7 +24,8 @@ export class GetSaleByUserIdUseCase {
     }
 }
 type GetSaleByUserIdInput = {
-    userId:string
+    buyerId?:string
+    sellerId?:string
 }
 type GetSaleByUserIdOutput = {
     id: string;

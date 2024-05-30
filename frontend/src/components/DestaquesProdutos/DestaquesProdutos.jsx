@@ -17,7 +17,6 @@ function DestaquesProdutos({ title }) {
       try {
         const response = await axios.get('http://localhost:3333/product/featered');
         if (response.status >= 200 && response.status <= 300) {
-          
           setProducts(response.data);
         }
       } catch (err) {
@@ -53,12 +52,19 @@ function DestaquesProdutos({ title }) {
         <div className={styles.carrosselItensAjust}>
           <div className={styles.containerAllProducts} id="all-products">
             {products.map((product, index) => (
-              <div key={index} className={styles.containerProduto}>
-                <Link to={`/PaginaProduto/${product.id}`}>
-                  <img src={product.img || vacaTeste} alt={product.name} className={styles.imgStyle} />
+              <div key={index} className={`${styles.containerProduto} card mb-4`}>
+                <Link to={`/PaginaProduto/${product.id}`} className="text-decoration-none text-dark">
+                  <img
+                    src={product.images && product.images.length > 0 ? `data:image/jpeg;base64,${product.images[0]}` : vacaTeste}
+                    alt={product.name}
+                    style={product.images.length > 0 ? {maxWidth:'5em'}:{maxWidth:'8em'}}
+                    className={`card-img-top ${styles.imgStyle}`}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">{product.name}</h5>
+                    <p className="card-text" style={{ textAlign: "center" }}>{product.description}</p>
+                  </div>
                 </Link>
-                <p>{product.name}</p>
-                <p style={{ textAlign: "center" }}>{product.description}</p>
               </div>
             ))}
           </div>

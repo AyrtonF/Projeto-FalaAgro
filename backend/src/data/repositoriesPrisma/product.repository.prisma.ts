@@ -184,6 +184,7 @@ async findAll(): Promise<Product[]> {
       if(!valid){
           throw new ProductNotFoundError();
       }
+      const imageBuffers = product.images.map(image => Buffer.from(image, 'base64'));
       const updatedProductFromPrisma = await prisma.product.update({
         where: { id: product.id },
         data: {
@@ -193,7 +194,7 @@ async findAll(): Promise<Product[]> {
           description: product.description , 
           price: product.price,
           amount: product.amount,
-          images: product.images , 
+          images: imageBuffers , 
           categories: product.categories , 
           quantityAvailable: product.quantityAvailable,  
           discount: product.discount,  

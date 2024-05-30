@@ -13,7 +13,8 @@ import CadastroVendedor from '../pages/cadastroVendedor/CadastroVendedor';
 import MinhaLoja from '../pages/minhaLoja/MinhaLoja';
 import CompradorOuVendedor from '../pages/compradorOuVendedor/CompradorOuVendedor';
 import PaginaProduto from '../pages/paginaProduto/PaginaProduto';
-
+import PedidosPendentesComprador from '../pages/pedidosPendentesComprador/PedidosPendentesComprador'
+import PedidosFinalizadosComprador from '../pages/pedidosFinalizadosComprador/PedidosFinalizadosComprador';
 
 const AppRoutes = () => {
   
@@ -34,7 +35,9 @@ const AppRoutes = () => {
             <Route path="/minhaLoja" element={<MinhaLoja />} />
             <Route path="/compradorOuVendedor" element={<CompradorOuVendedor />} />
             <Route path="/PaginaProduto/:productId" element={<PaginaProduto />} />
-            <Route path="/PerfilComprador/:productId" element={<PerfilComprador />} />
+            <Route path="/PerfilComprador/" element={<PerfilComprador />} />
+            <Route path="/PedidosPendentesComprador/" element={<PedidosPendentesComprador />} />
+            <Route path="/PedidosFinalizadosComprador/" element={<PedidosFinalizadosComprador />} />
             {/* Adicione outras rotas conforme necessário */}
           </Routes>
     </Router>

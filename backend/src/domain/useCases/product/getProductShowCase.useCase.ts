@@ -9,7 +9,7 @@ export class GetProductShowCaseUseCase {
     const products: Product[] = await this.productRepository.findAll();
     return products.map(product => {
       const {   
-        images,
+       
         amount,
         quantityAvailable,
         discount,
@@ -35,7 +35,7 @@ type  GetProductShowCaseOutput = {
   
   description: string;
   price: number;
-
+  images:string[]
   categories: string[];
 
 }[]

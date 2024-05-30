@@ -451,6 +451,32 @@ export class UserAlreadyHasStoreError extends Error {
     }
 }
 
+export class NotSellerOfOrderError extends Error {
+    status: number;
+
+    constructor(message?: string, status?: number) {
+        super(message || 'Você não é o vendedor desse pedido.');
+        this.name = 'NotSellerOfOrderError';
+        this.status = status || 403; // Forbidden
+    }
+
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+export class NotBuyerOfOrderError extends Error {
+    status: number;
+
+    constructor(message?: string, status?: number) {
+        super(message || 'Você não é o comprador desse pedido.');
+        this.name = 'NotBuyerOfOrderError';
+        this.status = status || 403; // Forbidden
+    }
+
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
 
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
@@ -490,4 +516,6 @@ export const UserErrors = {
     invalidFieldTypeError: new InvalidFieldTypeError(),
     userAlreadyHasStoreError: new UserAlreadyHasStoreError(),
     storeNotFoundError: new StoreNotFoundError(),
+    notSellerOfOrderError: new NotSellerOfOrderError(),
+    notBuyerOfOrderError: new NotBuyerOfOrderError(),
 };

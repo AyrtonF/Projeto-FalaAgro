@@ -88,7 +88,7 @@ model Store {
   User         User?     @relation(fields: [userId], references: [id])
   userId       String?
   createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  updatedAt    DateTime  @default(now())
 }
 
 model Sale {
@@ -96,7 +96,7 @@ model Sale {
   totalValue      Float
   Buyer           User?         @relation("buyer", fields: [buyerId], references: [id])
   buyerId         String?
-  Seller          User?         @relation("seller", fields: [sellerId], references: [id])
+  Seller          User?         @relation("seller", fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId        String?
   buyerConfirmed  Boolean       @default(false)
   sellerConfirmed Boolean       @default(false)
@@ -111,7 +111,7 @@ model SaleProduct {
   quantify  Int
   Sale      Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
   saleId    String
-  Product   Product  @relation(fields: [productId], references: [id],onDelete: Cascade)
+  Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -30,14 +30,12 @@ export class ProductController {
   async createProduct(request: Request, response: Response): Promise<Response> {
     try {
       const { storeId, price, amount, name, description, categories } = request.body;
-      console.log(request.body)
+      
       // Processar imagens
       const images = (request.files as Express.Multer.File[]).map(file => {
         return file.buffer.toString('base64'); // ou salvar diretamente como Buffer se preferir
       });
-      console.log("Dados recebidos:", {
-        storeId, price:parseFloat(price) , amount, name, description, categories
-      });
+      
       const product = await this.input.createProductUseCase.execute({
         storeId,
         price: parseFloat(price), 
@@ -50,7 +48,7 @@ export class ProductController {
      
       return response.status(201).json(product);
     } catch (error: unknown) {
-       console.log(error.message)
+       
       if (error instanceof Error) {
         const errorResponse = handleErrors(error);
         return response.status(errorResponse.status).json(errorResponse.message);

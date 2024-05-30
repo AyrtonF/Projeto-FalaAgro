@@ -1,5 +1,5 @@
 import { Sale } from "../../domain/models/sale.model";
-import { InternalServerError, ProductNotFoundError } from "../../errors/errors";
+import { InternalServerError, ProductNotFoundError, SaleNotFoundError } from "../../errors/errors";
 import { prisma } from "../prisma";
 import { SaleRepositoryInterface } from "../repositories/sale.repository.interface";
 
@@ -51,14 +51,17 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
                     SaleProduct:{include:{
                         Product:true
                     }},
-                    
+                  
                 },
             })
-          
+            console.log(salesPrisma)
+            if (!salesPrisma){
+                return salesPrisma
+            }
             return this.mapPrismSaleToDomain(salesPrisma)
 
         } catch (error) {
-       
+            
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
             throw new InternalServerError
         }
@@ -122,11 +125,62 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
             throw new InternalServerError
         }
     }
-    update(sale: Sale): Promise<Sale> {
-        throw new Error("Method not implemented.");
+    async update(sale: Sale): Promise<Sale> {
+        try {
+            let valid = await (prisma.sale.findUnique({ where: { id:sale.id } })) ? true : false
+            if(!valid){
+                throw new SaleNotFoundError
+            }
+            if(sale.buyerConfirmed && sale.sellerConfirmed){
+                sale.status = "completed"
+            }
+            const updatedSaleFromPrisma = await prisma.sale.update({
+                where: {
+                    id: sale.id
+                },
+                include: {
+                    SaleProduct:{include:{
+                        Product:true
+                    }},
+                   
+                },
+                data: {
+                    totalValue: sale.totalValue,
+                    buyerConfirmed: sale.buyerConfirmed,
+                    sellerConfirmed: sale.sellerConfirmed,
+                    status:sale.status,
+                   
+                },
+            });
+           
+            return this.mapPrismSaleToDomain(updatedSaleFromPrisma);
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
     }
-    delete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    async delete({sellerId,saleId}:{sellerId:string,saleId:string}): Promise<boolean> {
+        try {
+         
+          const  salePrisma = await prisma.sale.delete({
+                where: {
+                    id: saleId,
+                 
+                    Seller:{
+                        id:sellerId
+                    }
+                },
+                include:{
+                    Seller:true
+                }
+            });
+            //console.log(salePrisma.Seller)
+            const valid = await (prisma.sale.findUnique({ where: { id:saleId } })) ? true : false
+            return valid
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
     }
     private mapPrismSaleToDomain(prismaSale: any): Sale {
       
