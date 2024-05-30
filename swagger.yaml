@@ -1,0 +1,234 @@
+openapi: 3.0.0
+info:
+  title: Backend FalaAgro
+  description: Documentação da API utilizando Swagger/OpenAPI para o projeto de residência com a FalaAgro
+  version: 1.0.0
+servers:
+  - url: http://localhost:3333
+
+paths:
+  # Rotas de Produto
+  /product:
+    post:
+      summary: Criar um novo produto
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Produto criado com sucesso
+
+  /product-cascate:
+    post:
+      summary: Criar um novo produto em cascata
+      responses:
+        '200':
+          description: Produto criado com sucesso
+
+  /product-in-store:
+    get:
+      summary: Obter produto por ID ou nome na loja
+      responses:
+        '200':
+          description: Produto recuperado com sucesso
+
+  /product/featered/:
+    get:
+      summary: Obter todos os produtos em destaque
+      responses:
+        '200':
+          description: Produtos em destaque recuperados com sucesso
+
+  /product/{productId}/:
+    get:
+      summary: Obter produto por ID
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID do produto para recuperar
+      responses:
+        '200':
+          description: Produto recuperado com sucesso
+
+  /product-all/:
+    get:
+      summary: Obter todos os produtos
+      responses:
+        '200':
+          description: Produtos recuperados com sucesso
+
+  /product/:
+    put:
+      summary: Atualizar um produto
+      responses:
+        '200':
+          description: Produto atualizado com sucesso
+    delete:
+      summary: Deletar um produto
+      responses:
+        '200':
+          description: Produto deletado com sucesso
+
+  /product-all/:
+    delete:
+      summary: Deletar todos os produtos
+      responses:
+        '200':
+          description: Todos os produtos deletados com sucesso
+
+  # Rotas de Vendas
+  /sale:
+    post:
+      summary: Criar uma nova venda
+      responses:
+        '200':
+          description: Venda criada com sucesso
+    get:
+      summary: Obter venda por ID
+      responses:
+        '200':
+          description: Venda recuperada com sucesso
+
+  /sale-all:
+    get:
+      summary: Obter todas as vendas
+      responses:
+        '200':
+          description: Vendas recuperadas com sucesso
+
+  /sale-userId:
+    get:
+      summary: Obter vendas por ID do usuário
+      responses:
+        '200':
+          description: Vendas recuperadas com sucesso
+
+  # Rotas de Lojas
+  /store:
+    post:
+      summary: Criar uma nova loja
+      responses:
+        '200':
+          description: Loja criada com sucesso
+    put:
+      summary: Atualizar uma loja
+      responses:
+        '200':
+          description: Loja atualizada com sucesso
+
+  /store/{storeId}:
+    get:
+      summary: Obter loja por ID
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID da loja para recuperar
+      responses:
+        '200':
+          description: Loja recuperada com sucesso
+    delete:
+      summary: Deletar uma loja por ID
+      parameters:
+        - name: storeId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID da loja para deletar
+      responses:
+        '200':
+          description: Loja deletada com sucesso
+
+  /store-all/:
+    get:
+      summary: Obter todas as lojas
+      responses:
+        '200':
+          description: Lojas recuperadas com sucesso
+    delete:
+      summary: Deletar todas as lojas
+      responses:
+        '200':
+          description: Todas as lojas deletadas com sucesso
+
+  # Rotas de Usuários
+  /user:
+    post:
+      summary: Criar um novo usuário
+      responses:
+        '200':
+          description: Usuário criado com sucesso
+    get:
+      summary: Obter usuário por ID
+      responses:
+        '200':
+          description: Usuário recuperado com sucesso
+    put:
+      summary: Atualizar um usuário
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso
+    delete:
+      summary: Deletar um usuário
+      responses:
+        '200':
+          description: Usuário deletado com sucesso
+
+  /user-all:
+    get:
+      summary: Obter todos os usuários
+      responses:
+        '200':
+          description: Usuários recuperados com sucesso
+
+  /sign-in:
+    post:
+      summary: Fazer login de um usuário
+      responses:
+        '200':
+          description: Usuário logado com sucesso
+
+  /user/access/add:
+    put:
+      summary: Adicionar acesso a um usuário
+      responses:
+        '200':
+          description: Acesso adicionado com sucesso
+
+  /user/access/remove:
+    put:
+      summary: Remover acesso de um usuário
+      responses:
+        '200':
+          description: Acesso removido com sucesso
+
+  /user-delete-all:
+    delete:
+      summary: Deletar todos os usuários
+      responses:
+        '200':
+          description: Todos os usuários deletados com sucesso
