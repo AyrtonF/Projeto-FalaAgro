@@ -3,232 +3,1017 @@ info:
   title: Backend FalaAgro
   description: Documentação da API utilizando Swagger/OpenAPI para o projeto de residência com a FalaAgro
   version: 1.0.0
+externalDocs:
+  description: Conheça a FalaAgro
+  url: https://falaagro.com/
 servers:
   - url: http://localhost:3333
 
-paths:
-  # Rotas de Produto
-  /product:
-    post:
-      summary: Criar um novo produto
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
+components:
+  schemas:
+  #Produtos
+    CreateProductInput:
+      type: object
+      required: 
+        - storeId
+        - price
+        - amount
+        - name
+      properties:
+        storeId:
+          type: string
+        price:
+          type: number
+        amount:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        images:
+          type: array
+          items:
+            type: string
+        quantityAvailable:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        discount:
+          type: number
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        shippingInfo:
+          type: object
+          properties:
+            weight:
+              type: number
+            dimensions:
               type: object
               properties:
-                images:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
+                length:
+                  type: number
+                width:
+                  type: number
+                height:
+                  type: number
+            shippingCost:
+              type: number
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - soldOut
+        sku:
+          type: string
+        brand:
+          type: string
+        vendor:
+          type: object
+          properties:
+            vendorId:
+              type: string
+            name:
+              type: string
+        averageRating:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+
+    CreateProductOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        storeId:
+          type: string
+        name:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        price:
+          type: number
+        amount:
+          type: number
+        categories:
+          type: array
+          items:
+            type: string
+        quantityAvailable:
+          type: number
+        discount:
+          type: number
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        shippingInfo:
+          type: object
+          properties:
+            weight:
+              type: number
+            dimensions:
+              type: object
+              properties:
+                length:
+                  type: number
+                width:
+                  type: number
+                height:
+                  type: number
+            shippingCost:
+              type: number
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - soldOut
+        sku:
+          type: string
+        brand:
+          type: string
+        vendor:
+          type: object
+          properties:
+            vendorId:
+              type: string
+            name:
+              type: string
+        averageRating:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+    
+    GetProductOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        storeId:
+          type: string
+        name:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        price:
+          type: number
+        amount:
+          type: number
+        categories:
+          type: array
+          items:
+            type: string
+        quantityAvailable:
+          type: number
+
+    GetAllProductOutPut:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          storeId:
+            type: string
+          name:
+            type: string
+          images:
+            type: array
+            items:
+              type: string
+          description:
+            type: string
+          price:
+            type: number
+          amount:
+            type: number
+          categories:
+            type: array
+            items:
+              type: string
+          quantityAvailable:
+            type: number
+
+    GetProductShowCaseOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        categories:
+          type: array
+          items:
+            type: string
+
+    UpdateProductInput:
+      type: object
+      required:
+        - productId
+        - userId
+        - storeId
+      properties:
+        productId:
+          type: string
+        userId:
+          type: string
+        storeId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        amount:
+          type: number
+        addImage:
+          type: array
+          items:
+            type: string
+        removeImage:
+          type: array
+          items:
+            type: string
+        addCategories:
+          type: array
+          items:
+            type: string
+        removeCategories:
+          type: array
+          items:
+            type: string
+        quantityAvailable:
+          type: number
+        discount:
+          type: number
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - soldOut
+        sku:
+          type: string
+        brand:
+          type: string
+        addTags:
+          type: array
+          items:
+            type: string
+        removeTags:
+          type: array
+          items:
+            type: string
+
+    UpdateProductOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        storeId:
+          type: string
+        name:
+          type: string
+        images:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        price:
+          type: number
+        amount:
+          type: number
+        categories:
+          type: array
+          items:
+            type: string
+        quantityAvailable:
+          type: number
+        discount:
+          type: number
+        attributes:
+          type: object
+          additionalProperties:
+            type: string
+        shippingInfo:
+          type: object
+          properties:
+            weight:
+              type: number
+            dimensions:
+              type: object
+              properties:
+                length:
+                  type: number
+                width:
+                  type: number
+                height:
+                  type: number
+            shippingCost:
+              type: number
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+            - soldOut
+        sku:
+          type: string
+        brand:
+          type: string
+        vendor:
+          type: object
+          properties:
+            vendorId:
+              type: string
+            name:
+              type: string
+        averageRating:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+
+    DeleteProductOutput:
+      type: object
+      properties:
+        message:
+          type: string
+
+tags:
+  - name: Produtos
+    description: Criar, deletar, atualizar e obter informações sobre os produtos
+  - name: Vendas
+    description: Criar e obter informações sobre as vendas
+  - name: Lojas
+    description: Criar, deletar, atualizar e obter informações sobre Lojas
+  - name: Usuarios
+    description: Criar, deletar, atualizar e obter informações sobre Usuarios
+  - name: Acessos
+    description: Criar, deletar, atualizar e obter informações sobre Acessos
+
+paths:
+  #Produtos
+
+  /product:
+    post:
+      tags:
+        - Produtos
+      summary: Criar um novo produto
+      description: Criar um novo produto
+      requestBody:
+        description: Objeto CreateProductInput para criar um novo produto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductInput'
       responses:
-        '200':
-          description: Produto criado com sucesso
+        '201':
+          description: Produto criado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProductOutput'
+        '400':
+          description: Requisição inválida.
+        '500':
+          description: Erro interno do servidor.
 
   /product-cascate:
     post:
+      tags:
+        - Produtos
       summary: Criar um novo produto em cascata
+      description: Criar um novo produto em cascata
+      requestBody:
+        description: Criar um novo produto em cascata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductInput'
       responses:
-        '200':
-          description: Produto criado com sucesso
+        '201':
+          description: Objetos criados com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProductOutput'
+        '400':
+          description: Requisição inválida.
 
   /product-in-store:
     get:
+      tags:
+        - Produtos
       summary: Obter produto por ID ou nome na loja
+      description: Obter produto por ID ou nome na loja
+      parameters:
+        - in: query
+          name: productId
+          schema:
+            type: string
+          description: ID do produto.
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: Nome do produto.
       responses:
         '200':
-          description: Produto recuperado com sucesso
+          description: Produto encontrado com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetProductOutput'
+        '404':
+          description: Produto não encontrado.
 
-  /product/featered/:
+  /product/featured/:
     get:
+      tags:
+        - Produtos
       summary: Obter todos os produtos em destaque
+      description: Obter todos os produtos em destaque
       responses:
         '200':
-          description: Produtos em destaque recuperados com sucesso
+          description: Produtos em destaque encontrados com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetProductShowCaseOutput'
+        '404':
+          description: Nenhum produto em destaque encontrado.
 
   /product/{productId}/:
     get:
+      tags:
+        - Produtos
       summary: Obter produto por ID
+      description: Obter produto por ID
       parameters:
-        - name: productId
-          in: path
-          required: true
+        - in: path
+          name: productId
           schema:
             type: string
-          description: ID do produto para recuperar
+          required: true
+          description: ID do produto.
       responses:
         '200':
-          description: Produto recuperado com sucesso
+          description: Produto encontrado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProductOutput'
+        '404':
+          description: Produto não encontrado.
 
   /product-all/:
     get:
+      tags:
+        - Produtos
       summary: Obter todos os produtos
+      description: Obter todos os produtos
       responses:
         '200':
-          description: Produtos recuperados com sucesso
+          description: Todos os produtos encontrados com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAllProductOutPut'
+        '404':
+          description: Nenhum produto encontrado.
 
+    delete:
+      tags:
+        - Produtos
+      summary: Deletar todos os produtos
+      description: Deletar todos os produtos
+      parameters:
+        - name: id
+          in: query
+          description: ID do produto a ser deletado
+          required: true
+          schema:
+            type: string
+        - name: storeId
+          in: query
+          description: ID da loja onde o produto está registrado
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Todos os produtos deletados com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteProductOutput'
+        '404':
+          description: Nenhum produto encontrado.
+      
   /product/:
     put:
-      summary: Atualizar um produto
+      tags:
+        - Produtos
+      summary: Atualizar produto
+      description: Atualizar produto
+      requestBody:
+        description: Atualizar produto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductInput'
       responses:
-        '200':
-          description: Produto atualizado com sucesso
-    delete:
-      summary: Deletar um produto
-      responses:
-        '200':
-          description: Produto deletado com sucesso
+        '201':
+          description: Produto atualizado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProductOutput'
+        '400':
+          description: Requisição inválida.
+        '404':
+          description: Produto não encontrado.
 
-  /product-all/:
     delete:
-      summary: Deletar todos os produtos
+      tags:
+        - Produtos
+      summary: Deletar produto
+      description: Deletar produto
+      parameters:
+        - name: id
+          in: query
+          description: ID do produto a ser deletado
+          required: true
+          schema:
+            type: string
+        - name: storeId
+          in: query
+          description: ID da loja onde o produto está registrado
+          required: true
+          schema:
+            type: string
       responses:
-        '200':
-          description: Todos os produtos deletados com sucesso
+        '204':
+          description: Produto deletado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteProductOutput'
+        '404':
+          description: Produto não encontrado.
 
-  # Rotas de Vendas
+  #Vendas
   /sale:
     post:
+      tags:
+        - Vendas
       summary: Criar uma nova venda
-      responses:
-        '200':
-          description: Venda criada com sucesso
-    get:
-      summary: Obter venda por ID
-      responses:
-        '200':
-          description: Venda recuperada com sucesso
-
-  /sale-all:
-    get:
-      summary: Obter todas as vendas
-      responses:
-        '200':
-          description: Vendas recuperadas com sucesso
-
-  /sale-userId:
-    get:
-      summary: Obter vendas por ID do usuário
-      responses:
-        '200':
-          description: Vendas recuperadas com sucesso
-
-  # Rotas de Lojas
-  /store:
-    post:
-      summary: Criar uma nova loja
-      responses:
-        '200':
-          description: Loja criada com sucesso
-    put:
-      summary: Atualizar uma loja
-      responses:
-        '200':
-          description: Loja atualizada com sucesso
-
-  /store/{storeId}:
-    get:
-      summary: Obter loja por ID
-      parameters:
-        - name: storeId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: ID da loja para recuperar
-      responses:
-        '200':
-          description: Loja recuperada com sucesso
-    delete:
-      summary: Deletar uma loja por ID
-      parameters:
-        - name: storeId
-          in: path
-          required: true
-          schema:
-            type: string
-          description: ID da loja para deletar
-      responses:
-        '200':
-          description: Loja deletada com sucesso
-
-  /store-all/:
-    get:
-      summary: Obter todas as lojas
-      responses:
-        '200':
-          description: Lojas recuperadas com sucesso
-    delete:
-      summary: Deletar todas as lojas
-      responses:
-        '200':
-          description: Todas as lojas deletadas com sucesso
-
-  # Rotas de Usuários
-  /user:
-    post:
-      summary: Criar um novo usuário
-      responses:
-        '200':
-          description: Usuário criado com sucesso
-    get:
-      summary: Obter usuário por ID
-      responses:
-        '200':
-          description: Usuário recuperado com sucesso
-    put:
-      summary: Atualizar um usuário
+      description: Criar uma nova venda
       requestBody:
+        description: Criar uma nova venda
         content:
           application/json:
             schema:
               type: object
               properties:
-                access:
-                  type: array
-                  items:
-                    type: string
+                id:
+                  type: integer
+                  format: int64
+                  description: Identificador único do objeto.
+      responses:
+        '201':
+          description: Venda criada com sucesso.
+        '400':
+          description: Requisição inválida.
+        '500':
+          description: Erro interno do servidor.
+          
+    get:
+      tags:
+        - Vendas
+      summary: Obter venda por ID
+      description: Obter venda por ID
+      parameters:
+        - in: query
+          name: saleId
+          schema:
+            type: integer
+            format: int64
+          description: ID da venda.
       responses:
         '200':
-          description: Usuário atualizado com sucesso
+          description: Venda encontrada com sucesso.
+        '404':
+          description: Venda não encontrada.
+
+  /sale-all:
+    get:
+      tags:
+        - Vendas
+      summary: Obter todas as vendas
+      description: Obter todas as vendas
+      responses:
+        '200':
+          description: Todas as vendas encontradas com sucesso.
+        '404':
+          description: Nenhuma venda encontrada.
+
+  /sale-userId:
+    get:
+      tags:
+        - Vendas
+      summary: Obter vendas por ID do usuário
+      description: Obter vendas por ID do usuário
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: integer
+            format: int64
+          description: ID do usuário.
+      responses:
+        '200':
+          description: Vendas encontradas com sucesso.
+        '404':
+          description: Nenhuma venda encontrada.
+
+  #Lojas        
+  /store:
+    post:
+      tags:
+        - Lojas
+      summary: Criar uma nova loja
+      description: Criar uma nova loja
+      requestBody:
+        description: Criar uma nova loja
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  description: Identificador único do objeto.
+      responses:
+        '201':
+          description: Loja criada com sucesso.
+        '400':
+          description: Requisição inválida.
+        '500':
+          description: Erro interno do servidor.
+
+  /store/{storeId}:
+    get:
+      tags:
+        - Lojas
+      summary: Obter loja por ID
+      description: Obter loja por ID
+      parameters:
+        - in: path
+          name: storeId
+          schema:
+            type: integer
+            format: int64
+          required: true
+          description: ID da loja.
+      responses:
+        '200':
+          description: Loja encontrada com sucesso.
+        '404':
+          description: Loja não encontrada.
+
     delete:
-      summary: Deletar um usuário
+      tags:
+        - Lojas
+      summary: Deletar loja por ID
+      description: Deletar loja por ID
+      parameters:
+        - in: path
+          name: storeId
+          schema:
+            type: integer
+            format: int64
+          required: true
+          description: ID da loja.
+      responses:
+        '204':
+          description: Loja deletada com sucesso.
+        '404':
+          description: Loja não encontrada.
+
+  /store/:
+    get:
+      tags:
+        - Lojas
+      summary: Obter todas as lojas
+      description: Obter todas as lojas
       responses:
         '200':
-          description: Usuário deletado com sucesso
+          description: Todas as lojas encontradas com sucesso.
+        '404':
+          description: Nenhuma loja encontrada.
+    put:
+      tags:
+        - Lojas
+      summary: Atualizar loja
+      description: Atualizar loja
+      requestBody:
+        description: Atualizar loja
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
+      responses:
+        '200':
+          description: Loja atualizada com sucesso.
+        '400':
+          description: Requisição inválida.
+        '404':
+          description: Loja não encontrada.
+
+  /store-all/:
+    delete:
+      tags:
+        - Lojas
+      summary: Deletar todas as lojas
+      description: Deletar todas as lojas
+      responses:
+        '204':
+          description: Todas as lojas deletadas com sucesso.
+        '404':
+          description: Nenhuma loja encontrada.
+
+  #Usuarios
+  /user:
+    post:
+      tags:
+        - Usuarios
+      summary: Criar um novo usuário
+      description: Criar um novo usuário
+      requestBody:
+        description: Criar um novo usuário
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
+      responses:
+        '201':
+          description: Usuário criado com sucesso.
+        '400':
+          description: Requisição inválida.
+        '500':
+          description: Erro interno do servidor.
 
   /user-all:
     get:
+      tags:
+        - Usuarios
       summary: Obter todos os usuários
+      description: Obter todos os usuários
       responses:
         '200':
-          description: Usuários recuperados com sucesso
+          description: Todos os usuários encontrados com sucesso.
+        '404':
+          description: Nenhum usuário encontrado.
+
+  /user/:
+    get:
+      tags:
+        - Usuarios
+      summary: Obter usuário por ID
+      description: Obter usuário por ID
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: integer
+            format: int64
+          description: ID do usuário.
+      responses:
+        '200':
+          description: Usuário encontrado com sucesso.
+        '404':
+          description: Usuário não encontrado.
+
+    put:
+      tags:
+        - Usuarios
+      summary: Atualizar usuário
+      description: Atualizar usuário
+      requestBody:
+        description: Atualizar usuário
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso.
+        '400':
+          description: Requisição inválida.
+        '404':
+          description: Usuário não encontrado.
+
+    delete:
+      tags:
+        - Usuarios
+      summary: Deletar usuário por ID
+      description: Deletar usuário por ID
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: integer
+            format: int64
+          description: ID do usuário.
+      responses:
+        '204':
+          description: Usuário deletado com sucesso.
+        '404':
+          description: Usuário não encontrado.
 
   /sign-in:
     post:
-      summary: Fazer login de um usuário
+      tags:
+        - Usuarios
+      summary: Autenticar usuário
+      description: Autenticar usuário
+      requestBody:
+        description: Autenticar usuário
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
       responses:
         '200':
-          description: Usuário logado com sucesso
+          description: Usuário autenticado com sucesso.
+        '400':
+          description: Requisição inválida.
+        '401':
+          description: Falha na autenticação.
 
   /user/access/add:
     put:
-      summary: Adicionar acesso a um usuário
+      tags:
+        - Usuarios
+      summary: Adicionar acesso ao usuário
+      description: Adicionar acesso ao usuário
+      requestBody:
+        description: Adicionar acesso ao usuário
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
       responses:
         '200':
-          description: Acesso adicionado com sucesso
+          description: Acesso adicionado ao usuário com sucesso.
+        '400':
+          description: Requisição inválida.
+        '404':
+          description: Usuário não encontrado.
 
   /user/access/remove:
     put:
-      summary: Remover acesso de um usuário
+      tags:
+        - Usuarios
+      summary: Remover acesso do usuário
+      description: Remover acesso do usuário
+      requestBody:
+        description: Remover acesso do usuário
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
       responses:
         '200':
-          description: Acesso removido com sucesso
+          description: Acesso removido do usuário com sucesso.
+        '400':
+          description: Requisição inválida.
+        '404':
+          description: Usuário não encontrado.
 
   /user-delete-all:
     delete:
+      tags:
+        - Usuarios
       summary: Deletar todos os usuários
+      description: Deletar todos os usuários
+      responses:
+        '204':
+          description: Todos os usuários deletados com sucesso.
+        '404':
+          description: Nenhum usuário encontrado.
+
+  #Acessos
+  /access:
+    post:
+      tags:
+        - Acessos
+      summary: Criar um novo acesso
+      description: Criar um novo acesso
+      requestBody:
+        description: Criar um novo acesso
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
+      responses:
+        '201':
+          description: Acesso criado com sucesso.
+        '400':
+          description: Requisição inválida.
+        '500':
+          description: Erro interno do servidor.
+
+    get:
+      tags:
+        - Acessos
+      summary: Obter todos os acessos
+      description: Obter todos os acessos
       responses:
         '200':
-          description: Todos os usuários deletados com sucesso
+          description: Todos os acessos encontrados com sucesso.
+        '404':
+          description: Nenhum acesso encontrado.
+
+  /access/{id}:
+    put:
+      tags:
+        - Acessos
+      summary: Atualizar nome do acesso por ID
+      description: Atualizar nome do acesso por ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int64
+          required: true
+          description: ID do acesso.
+      requestBody:
+        description: Atualizar nome do acesso
+        content:
+          application/json:
+            schema:
+              type: integer
+              format: int64
+              description: ID do usuário.
+      responses:
+        '200':
+          description: Acesso atualizado com sucesso.
+        '400':
+          description: Requisição inválida.
+        '404':
+          description: Acesso não encontrado.
