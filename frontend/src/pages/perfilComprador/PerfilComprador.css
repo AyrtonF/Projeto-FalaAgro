@@ -1,0 +1,12 @@
+.perfil-comprador-container {
+    margin-top: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}

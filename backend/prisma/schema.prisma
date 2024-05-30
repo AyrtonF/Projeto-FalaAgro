@@ -52,7 +52,7 @@ model Product {
   id                String        @id @default(uuid())
   storeId           String?
   name              String
-  images            String[]      @default([])
+  images            Bytes[]       @default([])
   description       String        @default("")
   price             Int
   amount            Int
@@ -72,6 +72,7 @@ model Product {
   averageRating     Float?        @default(0)
   tags              String[]      @default([])
 }
+
 
 model Store {
   id           String    @id @default(uuid())

@@ -14,6 +14,7 @@ import MinhaLoja from '../pages/minhaLoja/MinhaLoja';
 import CompradorOuVendedor from '../pages/compradorOuVendedor/CompradorOuVendedor';
 import PaginaProduto from '../pages/paginaProduto/PaginaProduto';
 
+
 const AppRoutes = () => {
   
   
@@ -33,6 +34,7 @@ const AppRoutes = () => {
             <Route path="/minhaLoja" element={<MinhaLoja />} />
             <Route path="/compradorOuVendedor" element={<CompradorOuVendedor />} />
             <Route path="/PaginaProduto/:productId" element={<PaginaProduto />} />
+            <Route path="/PerfilComprador/:productId" element={<PerfilComprador />} />
             {/* Adicione outras rotas conforme necessário */}
           </Routes>
     </Router>

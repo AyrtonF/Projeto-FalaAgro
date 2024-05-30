@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import multer from 'multer';
 import { CreateProductUseCase } from '../domain/useCases/product/createProduct.useCases';
 import { DeleteProductUseCase } from '../domain/useCases/product/deleteProduct.useCases';
 import { GetAllProductUseCase } from '../domain/useCases/product/getAllProduct.useCases';
@@ -13,6 +14,7 @@ import { ProductController } from '../interface/controllers/product.Controller';
 import { authMiddleware } from '../middlewares/AuthMiddleware';
 const productRouter = Router();
 
+const upload = multer({ storage: multer.memoryStorage() });
 const productRepository = new ProductRepositoryPrisma();
 const storeRepositoryPrisma = new StoreRepositoryPrisma()
 
@@ -35,7 +37,8 @@ const productController = new ProductController({
     getProductShowCaseUseCase,
    });
 
-productRouter.post('/product', (request, response) => productController.createProduct(request, response));
+
+productRouter.post('/product', upload.array('images', 10), (request, response) => productController.createProduct(request, response));
 productRouter.post('/product-cascate', (request, response) => productController.createProductCascate(request, response));
 
 productRouter.get('/product-in-store', (request, response) => productController.getProductByIdOrByNameInStore(request, response));
@@ -47,5 +50,7 @@ productRouter.delete('/product/',authMiddleware(['Vendedor','Comprador',"Admin"]
 productRouter.delete('/product-all/',authMiddleware(['Vendedor','Comprador',"Admin"]), (request, response) => productController.deleteProductAll(request, response)); 
 
 export { productRouter };
+
+
 
 

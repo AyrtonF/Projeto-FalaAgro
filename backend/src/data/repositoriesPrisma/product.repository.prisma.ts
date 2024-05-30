@@ -37,38 +37,39 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
 
 
   async insert(product: Product): Promise<Product> {
+
+    const imageBuffers = product.images.map(image => Buffer.from(image, 'base64'));
+
     try {
       const prismaProduct = await prisma.product.create({
         data: {
-          Store:{
-            connect:{
-              id:product.storeId
-            } 
-              },
-              name: product.name,
-              description: product.description , 
+          storeId: product.storeId,
+          name: product.name,
+          description: product.description,
           price: product.price,
           amount: product.amount,
-          images: product.images , 
-          categories: product.categories , 
-          quantityAvailable: product.quantityAvailable,  
-          discount: product.discount,  
-          attributes: product.attributes ,
-          shippingInfo: product.shippingInfo , 
-          status: product.status, 
-          sku: product.sku ,  
-          brand: product.brand , 
-          averageRating: product.averageRating,  
-          tags: product.tags , 
+          images: imageBuffers, // Imagens como buffers
+          categories: product.categories,
+          quantityAvailable: product.quantityAvailable,
+          discount: product.discount,
+          attributes: product.attributes,
+          shippingInfo: product.shippingInfo,
+          status: product.status,
+          sku: product.sku,
+          brand: product.brand,
+          averageRating: product.averageRating,
+          tags: product.tags,
         },
       });
-      
-      return this.mapPrismaProductToDomain(prismaProduct)
+
+      return this.mapPrismaProductToDomain(prismaProduct);
     } catch (error) {
-      if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
-      throw new InternalServerError
+      if (error instanceof Error) {
+        throw new Error("Erro ao obter funções do usuário: " + error.message);
+      }
+      throw new InternalServerError();
+    }
   }
-}
 async findByName({name,storeId}:{name: string, storeId:string}): Promise<Product | null> {
   try {
     const productsPrisma = await prisma.product.findMany({
@@ -253,6 +254,8 @@ async findAll(): Promise<Product[]> {
   }
 
   private mapPrismaProductToDomain(prismaProduct: any): Product {
+    const images = prismaProduct.images.map((image: Buffer) => image.toString('base64'));
+
     return new Product({
       id: prismaProduct.id,
       storeId: prismaProduct.storeId,
@@ -260,7 +263,7 @@ async findAll(): Promise<Product[]> {
       description: prismaProduct.description , 
       price: prismaProduct.price,
       amount: prismaProduct.amount,
-      images: prismaProduct.images , 
+      images, 
       categories: prismaProduct.categories , 
       quantityAvailable: prismaProduct.quantityAvailable,  
       discount: prismaProduct.discount,  

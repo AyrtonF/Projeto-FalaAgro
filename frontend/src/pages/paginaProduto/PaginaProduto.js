@@ -18,8 +18,10 @@ const PaginaProduto = () => {
         const fetchProduto = async () => {
             try {
                 const response = await axios.get(`http://localhost:3333/product/${productId}`);
-                console.log(response.data);
-                if (response.data.tags && response.data.tags.length === 0) response.data.tags.push("Nenhuma categoria");
+                // Verifica se o produto tem tags, caso contrário, adiciona uma tag padrão
+                if (response.data.tags && response.data.tags.length === 0) {
+                    response.data.tags.push("Nenhuma categoria");
+                }
                 setProduto(response.data);
                 await fetchLoja(response.data.storeId);
             } catch (error) {
@@ -44,7 +46,7 @@ const PaginaProduto = () => {
             setShowNotification(true);
             const timer = setTimeout(() => {
                 setShowNotification(false);
-            }, 9000); // Defina o tempo em milissegundos para a notificação desaparecer (neste caso, 5 segundos)
+            }, 9000); // Defina o tempo em milissegundos para a notificação desaparecer (neste caso, 9 segundos)
             return () => clearTimeout(timer);
         }
     }, [sucesso, error]);
@@ -85,6 +87,7 @@ const PaginaProduto = () => {
             )}
             <div className="row">
                 <div className="col-lg-6 col-md-12">
+                    
                     <div className="produto-carousel">
                         <Carousel>
                             {produto.images && produto.images.length > 0 ? (
@@ -92,7 +95,7 @@ const PaginaProduto = () => {
                                     <Carousel.Item key={index}>
                                         <img
                                             className="d-block w-100"
-                                            src={imagem || lojaImg}
+                                            src={`data:image/jpeg;base64,${imagem}`}
                                             alt={`Imagem ${index + 1}`}
                                         />
                                     </Carousel.Item>
@@ -113,7 +116,7 @@ const PaginaProduto = () => {
                     <div className="produto-info">
                         <h2 className="produto-nome">{produto.name || ""}</h2>
                         <p className="produto-descricao">{produto.description || ""}</p>
-                        <p className="produto-preco">Preço: ${produto.price/10 || ""}</p>
+                        <p className="produto-preco">Preço: ${produto.price / 10 || ""}</p>
                         {produto.dimensoes && <p className="produto-dimensoes"><strong>Dimensões:</strong> {produto.dimensoes}</p>}
                         <p className={`produto-status ${getStatusClass(produto.status)}`}><strong>Status:</strong> {produto.status || "Ativo"}</p>
                         <div className="produto-tags">

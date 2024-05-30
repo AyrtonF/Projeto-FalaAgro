@@ -26,27 +26,38 @@ export class ProductController {
     private input:productControllerInput
    
   ) {}
-
+  
   async createProduct(request: Request, response: Response): Promise<Response> {
     try {
-      const { storeId,price,amount,name,description } = request.body;
-
+      const { storeId, price, amount, name, description, categories } = request.body;
+      console.log(request.body)
+      // Processar imagens
+      const images = (request.files as Express.Multer.File[]).map(file => {
+        return file.buffer.toString('base64'); // ou salvar diretamente como Buffer se preferir
+      });
+      console.log("Dados recebidos:", {
+        storeId, price:parseFloat(price) , amount, name, description, categories
+      });
       const product = await this.input.createProductUseCase.execute({
         storeId,
-        price,
-        amount,
+        price: parseFloat(price), 
+        amount: parseInt(amount), 
         name,
-        description
+        description,
+        categories: Array(categories), // Converter categorias de string para array
+        images,
       });
+     
       return response.status(201).json(product);
     } catch (error: unknown) {
-            if (error instanceof Error) {
-                const errorResponse = handleErrors(error); 
-                return response.status(errorResponse.status).json(errorResponse.message); 
-            } else {
-               throw new InternalServerError
-            }
-        }
+       console.log(error.message)
+      if (error instanceof Error) {
+        const errorResponse = handleErrors(error);
+        return response.status(errorResponse.status).json(errorResponse.message);
+      } else {
+        throw new InternalServerError();
+      }
+    }
   }
   async createProductCascate(request: Request, response: Response): Promise<Response> {
     try {

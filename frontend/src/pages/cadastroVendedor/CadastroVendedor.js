@@ -41,7 +41,7 @@ import './CadastroVendedor.css'
       
       const response = await axios.post('http://localhost:3333/user', formData);
     
-      if (response.status >= 200 && response.status <= 300) {
+      if (response.status >= 200 && response.status < 300) {
         // Sucesso, navegue para a tela de login ou home
         toast.success('Cadastro realizado com sucesso!');
         navigate('/login');
