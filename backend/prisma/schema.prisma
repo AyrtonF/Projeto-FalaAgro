@@ -27,12 +27,12 @@ model User {
   sale_as_buyer  Sale[]       @relation("buyer")
   sale_as_seller Sale[]       @relation("seller")
   UserAccess     UserAccess[]
-  store          Store[]  
+  store          Store[]
 }
 
 model UserAccess {
   id         String   @id @default(uuid())
-  User       User?    @relation(fields: [userId], references: [id])
+  User       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String?
   Access     Access?  @relation(fields: [accessId], references: [id])
   accessId   String?
@@ -50,14 +50,14 @@ model Access {
 
 model Product {
   id                String        @id @default(uuid())
-  storeId           String?
+  storeId           String        
   name              String
   images            Bytes[]       @default([])
   description       String        @default("")
   price             Int
   amount            Int
   categories        String[]      @default([])
-  Store             Store?        @relation(fields: [storeId], references: [id])
+  Store             Store         @relation(fields: [storeId], references: [id])
   SaleProduct       SaleProduct[]
   quantityAvailable Int           @default(0)
   createdAt         DateTime      @default(now())
@@ -73,19 +73,18 @@ model Product {
   tags              String[]      @default([])
 }
 
-
 model Store {
   id           String    @id @default(uuid())
   name         String
-  description  String?
-  images       String[]
-  categories   String[]
+  description  String
+  images       Bytes[]    @default([])
+  categories   String[]   @default([])
   contactInfo  Json?
-  openingHours String[]
+  openingHours String[]   @default([])
   returnPolicy String?
   followers    Int       @default(0)
   Product      Product[]
-  User         User?     @relation(fields: [userId], references: [id])
+  User         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @default(now())

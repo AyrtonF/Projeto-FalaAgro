@@ -24,10 +24,17 @@ export class StoreController {
     async createStore(request: Request, response: Response):Promise<Response> {
         
         try {
-            const {name,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt} = request.body;
+            let {name,Products,description,categories,contactInfo,openingHours,returnPolicy} = request.body;
             const {id} = request.user
             const userId = id
-            const store = await this.input.createStoreUseCase.execute({userId,name,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt})
+            categories = JSON.parse(categories.replace(/'/g, '"'))
+            openingHours = JSON.parse(openingHours.replace(/'/g, '"'))
+            contactInfo = JSON.parse(contactInfo)
+            const images = (request.files as Express.Multer.File[]).map(file => {
+                return file.buffer.toString('base64'); // ou salvar diretamente como Buffer se preferir
+              });
+            
+            const store = await this.input.createStoreUseCase.execute({userId,name,Products,description,images,categories,contactInfo,openingHours,returnPolicy})
             return response.status(200).json(store)
         } catch (error: unknown) {
             

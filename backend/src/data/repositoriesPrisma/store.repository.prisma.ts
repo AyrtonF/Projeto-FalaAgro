@@ -1,5 +1,5 @@
 import { Store } from "../../domain/models/store.model";
-import { InternalServerError } from "../../errors/errors";
+import { InternalServerError, StoreNotFoundError } from "../../errors/errors";
 import { prisma } from "../prisma";
 import { StoreRepositoryInterface } from "../repositories/store.repository.inferface";
 
@@ -8,12 +8,13 @@ import { StoreRepositoryInterface } from "../repositories/store.repository.infer
 export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     
     async insert(store: Store): Promise<Store> {
+        const imageBuffers = store.images.map(image => Buffer.from(image, 'base64'));
         try {
             const storePrisma = await prisma.store.create({
                 data:{
                     name:store.name,
                     description: store.description,
-                    images: store.images,
+                    images: imageBuffers,
                     categories: store.categories,
                     contactInfo: {
                         address: store.contactInfo?.address || 0,
@@ -103,8 +104,11 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     }
     async update(store: Store): Promise<Store> {
         try {
-            let valid = await (prisma.user.findUnique({ where: { id:store.id } })) ? true : false
-            
+            let valid = await (prisma.store.findUnique({ where: { id:store.id } })) ? true : false
+            if(!valid){
+                throw new StoreNotFoundError();
+            }
+            const imageBuffers = store.images.map(image => Buffer.from(image, 'base64'));
             const updatedStoreFromPrisma = await prisma.store.update({
                 where: {
                     id: store.id
@@ -112,7 +116,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
                 data: {
                     name: store.name,
                     description: store.description,
-                    images: store.images,
+                    images: imageBuffers,
                     categories: store.categories,
                     contactInfo: store.contactInfo ? JSON.stringify(store.contactInfo) : undefined, 
                     openingHours: store.openingHours,
@@ -172,14 +176,14 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     }
     
     private mapPrismaStoreToDomain(prismaStore: any): Store {
-        
+        const images = prismaStore.images.map((image: Buffer) => image.toString('base64'));
         return new Store({
             id: prismaStore.id,
             userId: prismaStore.userId || "Loja sem dono",
             name: prismaStore.name,
             description: prismaStore.description,
             Products: prismaStore.Product,
-            images: prismaStore.images,
+            images,
             categories: prismaStore.categories,
             contactInfo: {
                 address: prismaStore.contactInfo?.address,

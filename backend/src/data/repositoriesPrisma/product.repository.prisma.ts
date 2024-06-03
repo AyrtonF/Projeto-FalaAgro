@@ -43,7 +43,11 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
     try {
       const prismaProduct = await prisma.product.create({
         data: {
-          storeId: product.storeId,
+          Store:{
+            connect:{
+              id:product.storeId
+            }
+          },
           name: product.name,
           description: product.description,
           price: product.price,
@@ -60,6 +64,9 @@ export class ProductRepositoryPrisma implements ProductRepositoryInterface {
           averageRating: product.averageRating,
           tags: product.tags,
         },
+        include:{
+          Store:true
+        }
       });
 
       return this.mapPrismaProductToDomain(prismaProduct);

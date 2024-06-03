@@ -16,14 +16,14 @@ const productRouter = Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 const productRepository = new ProductRepositoryPrisma();
-const storeRepositoryPrisma = new StoreRepositoryPrisma()
+const storeRepository = new StoreRepositoryPrisma()
 
-const createProductUseCase = new CreateProductUseCase(productRepository);
+const createProductUseCase = new CreateProductUseCase(productRepository,storeRepository);
 const updateProductUseCase = new UpdateProductUseCase(productRepository)
 const getProductUseCase = new GetProductUseCase(productRepository)
 const getProductByIdUseCase = new GetProductByIdUseCase(productRepository)
 const getAllProductUseCase = new GetAllProductUseCase(productRepository)
-const deleteProductUseCase = new DeleteProductUseCase(productRepository, storeRepositoryPrisma)
+const deleteProductUseCase = new DeleteProductUseCase(productRepository, storeRepository)
 const deleteAllProductUseCase = new DeleteAllProductUseCase(productRepository)
 const getProductShowCaseUseCase =  new GetProductShowCaseUseCase(productRepository)
 const productController = new ProductController({
@@ -45,9 +45,9 @@ productRouter.get('/product-in-store', (request, response) => productController.
 productRouter.get('/product/featered/', (request, response) => productController.getAllProducts(request, response,true));
 productRouter.get('/product/:productId/', (request, response) => productController.getProductById(request, response));
 productRouter.get('/product-all/', (request, response) => productController.getAllProducts(request, response));
-productRouter.put('/product/',authMiddleware(['Vendedor','Comprador',"Admin"]), (request, response) => productController.updateProduct(request, response));
-productRouter.delete('/product/',authMiddleware(['Vendedor','Comprador',"Admin"]), (request, response) => productController.deleteProduct(request, response)); 
-productRouter.delete('/product-all/',authMiddleware(['Vendedor','Comprador',"Admin"]), (request, response) => productController.deleteProductAll(request, response)); 
+productRouter.put('/product/',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => productController.updateProduct(request, response));
+productRouter.delete('/product/',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => productController.deleteProduct(request, response)); 
+productRouter.delete('/product-all/',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => productController.deleteProductAll(request, response)); 
 
 export { productRouter };
 

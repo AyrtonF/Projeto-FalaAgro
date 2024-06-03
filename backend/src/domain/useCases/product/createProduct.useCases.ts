@@ -1,16 +1,24 @@
 import { ProductRepositoryInterface } from "../../../data/repositories/product.repository.interface";
-import { DuplicateProductNameError, MissingRequiredFieldsError } from "../../../errors/errors";
+import { StoreRepositoryInterface } from "../../../data/repositories/store.repository.inferface";
+import { DuplicateProductNameError, MissingRequiredFieldsError, StoreNotFoundError } from "../../../errors/errors";
 import { Product } from "../../models/product.model";
+import { Store } from "../../models/store.model";
 
 export class CreateProductUseCase {
-  constructor(private productRepository: ProductRepositoryInterface) {}
+  constructor(private productRepository: ProductRepositoryInterface,private storeRepository:StoreRepositoryInterface) {}
 
   async execute(input: CreateProductInput): Promise<CreateProductOutput> {
+
+    const store:Store|null = await this.storeRepository.findById(input.storeId);
+        
+        if (!store) {
+            throw new StoreNotFoundError
+        }
     const isDuplicateProductNameInStore = await this.productRepository.isDuplicateProductNameInStore({
       name: input.name,
       storeId: input.storeId
     });
-
+    
     if (isDuplicateProductNameInStore) {
       throw new DuplicateProductNameError();
     }

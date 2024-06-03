@@ -29,12 +29,12 @@ const deleteSaleUseCase = new DeleteSaleUseCase(saleRepository)
 
 const saleController = new SaleController({createSaleUseCase,getAllSaleUseCase,getSaleByIdUseCase,getSaleByUserIdUseCase,confirmBuyerForSaleUseCase,confirmSellerForSaleUseCase,deleteSaleUseCase})
 
-saleRoute.post('/sale',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.createSale(request, response));
-saleRoute.get('/sale-all',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.getAllSales(request, response));
-saleRoute.get('/sale',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.getSaleById(request, response));
-saleRoute.get('/sale-buyerId',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.getSaleByBuyerId(request, response));
-saleRoute.get('/sale-sellerId',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.getSaleBySellerId(request, response));
-saleRoute.put('/sale-buyer-confirm',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.confirmBuyerForSale(request, response));
-saleRoute.put('/sale-seller-confirm',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.confirmSellerForSale(request, response));
-saleRoute.delete('/sale',authMiddleware(['Admin','Vendedor','Comprador']), (request, response) => saleController.deleteSale(request, response));
+saleRoute.post('/sale',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.createSale(request, response));
+saleRoute.get('/sale-all',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.getAllSales(request, response));
+saleRoute.get('/sale',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.getSaleById(request, response));
+saleRoute.get('/sale-buyerId',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.getSaleByBuyerId(request, response));
+saleRoute.get('/sale-sellerId',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.getSaleBySellerId(request, response));
+saleRoute.put('/sale-buyer-confirm',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.confirmBuyerForSale(request, response));
+saleRoute.put('/sale-seller-confirm',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.confirmSellerForSale(request, response));
+saleRoute.delete('/sale',authMiddleware(['VENDEDOR',"COMPRADOR","ADMIN"]), (request, response) => saleController.deleteSale(request, response));
 export {saleRoute}

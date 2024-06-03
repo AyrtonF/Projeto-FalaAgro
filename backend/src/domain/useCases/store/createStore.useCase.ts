@@ -7,10 +7,10 @@ import { Store } from "../../models/store.model";
 export class CreateStoreUseCase  {
     constructor(private storeRepository:StoreRepositoryInterface,private userRepository:UserRepositoryInterface){}
     async execute(input:CreateStoreInput):Promise<CreateStoreOutput>{
-        
+    
         const storeInput = new Store(input)
         const userExists = await this.userRepository.findById(storeInput.userId)
-        
+       
         if(!userExists){
             throw new UserNotFoundError("Usuario não existe")
         }
