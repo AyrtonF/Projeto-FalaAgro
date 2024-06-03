@@ -30,6 +30,7 @@ export class StoreController {
             const store = await this.input.createStoreUseCase.execute({userId,name,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt})
             return response.status(200).json(store)
         } catch (error: unknown) {
+            
             if (error instanceof Error) {
                 const errorResponse = handleErrors(error); 
                 return response.status(errorResponse.status).json(errorResponse.message); 
@@ -78,6 +79,7 @@ export class StoreController {
             const {name,storeId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt} = request.body;
             const {id} = request.user
             const userId = id
+            
             const store = await this.input.updateStoreUseCase.execute({name,storeId,userId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt})
             return response.status(200).json(store)
         } catch (error: unknown) {

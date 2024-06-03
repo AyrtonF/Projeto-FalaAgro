@@ -34,10 +34,10 @@ const AppRoutes = () => {
             <Route path="/cadastroVendedor" element={<CadastroVendedor />} />
             <Route path="/minhaLoja" element={<MinhaLoja />} />
             <Route path="/compradorOuVendedor" element={<CompradorOuVendedor />} />
-            <Route path="/PaginaProduto/:productId" element={<PaginaProduto />} />
-            <Route path="/PerfilComprador/" element={<PerfilComprador />} />
-            <Route path="/PedidosPendentesComprador/" element={<PedidosPendentesComprador />} />
-            <Route path="/PedidosFinalizadosComprador/" element={<PedidosFinalizadosComprador />} />
+            <Route path="/paginaProduto/:productId" element={<PaginaProduto />} />
+            <Route path="/perfilComprador/" element={<PerfilComprador />} />
+            <Route path="/pedidosPendentesComprador/" element={<PedidosPendentesComprador />} />
+            <Route path="/pedidosFinalizadosComprador/" element={<PedidosFinalizadosComprador />} />
             {/* Adicione outras rotas conforme necessário */}
           </Routes>
     </Router>

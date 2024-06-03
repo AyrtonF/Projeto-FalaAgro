@@ -1,0 +1,22 @@
+.minha-loja-container {
+    margin-top: 20px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+}
+
+form .form-control, form .form-group {
+    margin-bottom: 20px;
+}
+
+form .form-group label {
+    font-weight: bold;
+}
+
+@media (max-width: 767px) {
+    .minha-loja-container {
+        padding: 0 15px;
+    }
+}

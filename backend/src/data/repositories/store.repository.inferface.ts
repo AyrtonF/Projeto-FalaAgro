@@ -4,6 +4,8 @@ export interface StoreRepositoryInterface{
     insert(store: Store): Promise<Store>;
    
     findById(id: string): Promise<Store | null>;
+
+    findByUserId(userId: string): Promise<Store | null>;
     
     findAll(): Promise<Store[]>;
     

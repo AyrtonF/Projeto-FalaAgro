@@ -9,7 +9,7 @@ import { Store } from "../../models/store.model";
 export class UpdateStoreUseCase  {
     constructor(private storeRepository:StoreRepositoryInterface){}
     async execute(input:UpdateStoreinput):Promise<UpdateStoreOutput>{
-        const store:Store|null = await this.storeRepository.findById(input.storeId);
+        const store:Store|null = await this.storeRepository.findByUserId(input.userId);
 
         if (!store) {
             throw new StoreNotFoundError

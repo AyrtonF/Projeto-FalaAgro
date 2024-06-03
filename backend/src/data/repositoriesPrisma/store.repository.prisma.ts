@@ -6,6 +6,7 @@ import { StoreRepositoryInterface } from "../repositories/store.repository.infer
 
 
 export class StoreRepositoryPrisma implements StoreRepositoryInterface{
+    
     async insert(store: Store): Promise<Store> {
         try {
             const storePrisma = await prisma.store.create({
@@ -33,10 +34,10 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             })
             
             return this.mapPrismaStoreToDomain(storePrisma);
-        } catch (error) {
-            throw new Error("Method not implemented.");
+        }catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
         }
-        
     }
     async findById(id: string): Promise<Store | null> {
         try {
@@ -51,6 +52,24 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             
             
             return this.mapPrismaStoreToDomain(prismaStore);
+        } catch (error) {
+            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
+            throw new InternalServerError
+        }
+    }
+    async findByUserId(userId: string): Promise<Store | null> {
+        try {
+            const prismaStore = await prisma.store.findMany({
+                where: { userId },
+            });
+            
+            
+            if (prismaStore.length == 0) {
+                return null
+            }
+            
+            
+            return this.mapPrismaStoreToDomain(prismaStore[0]);
         } catch (error) {
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
             throw new InternalServerError
