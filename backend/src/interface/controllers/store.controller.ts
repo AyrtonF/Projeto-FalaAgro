@@ -27,6 +27,7 @@ export class StoreController {
             let {name,Products,description,categories,contactInfo,openingHours,returnPolicy} = request.body;
             const {id} = request.user
             const userId = id
+           
             try {
                 categories = JSON.parse(categories.replace(/'/g, '"'));
                 openingHours = JSON.parse(openingHours.replace(/'/g, '"'));

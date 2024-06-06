@@ -54,7 +54,7 @@ export class SaleRepositoryPrisma implements SaleRepositoryInterface{
                   
                 },
             })
-            console.log(salesPrisma)
+            
             if (!salesPrisma){
                 return salesPrisma
             }

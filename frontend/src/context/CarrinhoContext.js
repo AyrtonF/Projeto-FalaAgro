@@ -25,13 +25,13 @@ export const CarrinhoProvider = ({ children }) => {
 
     const fazerPedido = async (products, storeId) => {
         try {
-            const response = await axios.post('http://localhost:3333/sale', {
+            const response = await axios.post('https://backend-final-ytc2.onrender.com/sale', {
                 products,
                 storeId
             });
 
             if (response.status >= 200 && response.status < 300) {
-                console.log(response.data);
+        
                 setPedido(response.data);
                 setSucesso('Pedido encaminhado com sucesso, veja em "Meu Perfil".');
             }

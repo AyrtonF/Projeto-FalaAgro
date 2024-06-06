@@ -1,0 +1,28 @@
+.pedidos-finalizados-container {
+    padding: 20px;
+}
+
+.pedido-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.pedido-card:hover {
+    transform: translateY(-5px);
+}
+
+.status-aguardando-loja {
+    color: orange;
+}
+
+.status-esperando-confirmacao {
+    color: blue;
+}
+
+.status-finalizado {
+    color: green;
+}
+
+.status-cancelado {
+    color: red;
+}

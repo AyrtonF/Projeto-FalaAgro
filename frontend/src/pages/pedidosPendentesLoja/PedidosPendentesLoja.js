@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './PedidosPendentesComprador.css';
+import './PedidosPendentesLoja.css';
 
-const PedidosPendentesComprador = () => {
+const PedidosPendentesLoja = () => {
     const { userId } = useParams();
     const [pedidos, setPedidos] = useState([]);
     
@@ -24,7 +24,7 @@ const PedidosPendentesComprador = () => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`https://backend-final-ytc2.onrender.com/sale-buyerId/`);
+                const response = await axios.get(`https://backend-final-ytc2.onrender.com/sale-sellerId/`);
                 const pedidosData = response.data.map(pedido => ({
                     id: pedido.id,
                     status: mapStatus(pedido.status),
@@ -56,12 +56,12 @@ const PedidosPendentesComprador = () => {
 
     const handleConfirmarRecebimento = async (id) => {
         try {
-            await axios.put(`https://backend-final-ytc2.onrender.com/sale-buyer-confirm/`, {
+            await axios.put(`https://backend-final-ytc2.onrender.com/sale-seller-confirm/`, {
                 saleId: id
             });
             // Atualize o estado para refletir a confirmação
             setPedidos(pedidos.map(pedido =>
-                pedido.id === id ? { ...pedido, buyerConfirmed: true, status: 'finalizado' } : pedido
+                pedido.id === id ? { ...pedido, sellerConfirmed:true, status: pedido.buyerConfirmed ? 'finalizado':'pending' } : pedido
             ));
         } catch (error) {
             console.error("Erro ao confirmar o recebimento:", error);
@@ -106,7 +106,7 @@ const PedidosPendentesComprador = () => {
                             <Card.Body>
                                 <Card.Title>Pedido ID: {pedido.id}</Card.Title>
                                 <Card.Text className={getStatusColor(pedido.status)}>
-                                    Status: {pedido.status}
+                                    Status: {pedido.sellerConfirmed ? "Aguardando o cliente Confirmar":"Aguardando sua Confirmação"}
                                 </Card.Text>
                                 <Card.Text>
                                     Produtos:
@@ -117,7 +117,7 @@ const PedidosPendentesComprador = () => {
                                     </ul>
                                 </Card.Text>
                                 <Card.Text>Valor Total: R${pedido.valorTotal.toFixed(2)}</Card.Text>
-                                {pedido.sellerConfirmed && (
+                                {!pedido.sellerConfirmed && (
                                     <Button variant="success" onClick={() => handleConfirmarRecebimento(pedido.id)}>
                                         Confirmar Recebimento
                                     </Button>
@@ -131,4 +131,4 @@ const PedidosPendentesComprador = () => {
     );
 };
 
-export default PedidosPendentesComprador;
+export default PedidosPendentesLoja;
