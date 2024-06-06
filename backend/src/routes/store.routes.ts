@@ -36,7 +36,7 @@ const storeController = new StoreController({
 storeRouter.post('/store',upload.array('images', 10),authMiddleware(['VENDEDOR',"ADMIN"]), (request, response) => storeController.createStore(request, response));
 storeRouter.get('/store/:storeId',/* authMiddleware(['Vendedor',"Admin"]), */ (request, response) => storeController.getStoreById(request, response));
 storeRouter.get('/store/',authMiddleware(['VENDEDOR',"ADMIN"]), (request, response) => storeController.getAllStore(request, response));
-storeRouter.put('/store',authMiddleware(['VENDEDOR',"ADMIN"]), (request, response) => storeController.updateStore(request, response));
+storeRouter.put('/store',upload.array('images', 10),authMiddleware(['VENDEDOR',"ADMIN"]), (request, response) => storeController.updateStore(request, response));
 storeRouter.delete('/store/:storeId',authMiddleware(['VENDEDOR',"ADMIN"]), (request, response) => storeController.deleteStore(request, response));
 storeRouter.delete('/store-all/',authMiddleware(['VENDEDOR',"ADMIN"]), (request, response) => storeController.deleteAllStore(request, response));
 
