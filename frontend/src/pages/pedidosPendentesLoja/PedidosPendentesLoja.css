@@ -1,0 +1,29 @@
+.pedidos-pendentes-container {
+    margin-top: 20px;
+}
+
+.pedido-card {
+    width: 100%;
+}
+
+.status-aguardando-loja {
+    color: orange;
+}
+
+.status-esperando-confirmacao {
+    color: blue;
+}
+
+.status-finalizado {
+    color: green;
+}
+li {
+    list-style-type: none
+}
+.status-cancelado {
+    color: red;
+}
+
+.pedido-card {
+    min-height: 150px; /* Ajuste o valor conforme necessário */
+}
