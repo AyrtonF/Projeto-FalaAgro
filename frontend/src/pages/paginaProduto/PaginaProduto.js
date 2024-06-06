@@ -32,6 +32,7 @@ const PaginaProduto = () => {
         const fetchLoja = async (storeId) => {
             try {
                 const response = await axios.get(`http://localhost:3333/store/${storeId}`);
+               
                 setLoja(response.data);
             } catch (error) {
                 console.error("Erro ao buscar a loja:", error);

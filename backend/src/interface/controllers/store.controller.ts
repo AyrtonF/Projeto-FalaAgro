@@ -83,13 +83,23 @@ export class StoreController {
     async updateStore(request: Request, response: Response):Promise<Response> {
         
         try {
-            const {name,storeId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt} = request.body;
+            let {name,storeId,Products,description,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt} = request.body;
             const {id} = request.user
             const userId = id
             
+            if(contactInfo) contactInfo = JSON.parse(contactInfo) 
+               
+            if(categories)  categories = JSON.parse(categories.replace(/'/g, '"'))
+            if(openingHours)  openingHours = JSON.parse(openingHours.replace(/'/g, '"'))
+            
+            const images = (request.files as Express.Multer.File[]).map(file => {
+                return file.buffer.toString('base64'); // ou salvar diretamente como Buffer se preferir
+              });
             const store = await this.input.updateStoreUseCase.execute({name,storeId,userId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt})
             return response.status(200).json(store)
         } catch (error: unknown) {
+            console.log(error.message)
+           
             if (error instanceof Error) {
                 const errorResponse = handleErrors(error); 
                 return response.status(errorResponse.status).json(errorResponse.message); 

@@ -25,6 +25,7 @@ const PedidosPendentesComprador = () => {
         const fetchPedidos = async () => {
             try {
                 const response = await axios.get(`http://localhost:3333/sale-buyerId/`);
+                console.log(response.data)
                 const pedidosData = response.data.map(pedido => ({
                     id: pedido.id,
                     status: mapStatus(pedido.status),
@@ -33,6 +34,7 @@ const PedidosPendentesComprador = () => {
                     sellerConfirmed: pedido.sellerConfirmed,
                     buyerConfirmed: pedido.buyerConfirmed
                 }));
+                console.log(pedidosData)
                 setPedidos(pedidosData);
             } catch (error) {
                 console.error("Erro ao buscar os pedidos:", error);
@@ -53,13 +55,14 @@ const PedidosPendentesComprador = () => {
                 return status;
         }
     };
+    
 
     const handleConfirmarRecebimento = async (id) => {
         try {
             await axios.put(`http://localhost:3333/sale-buyer-confirm/`, {
                 saleId: id
             });
-            // Atualize o estado para refletir a confirmação
+            
             setPedidos(pedidos.map(pedido =>
                 pedido.id === id ? { ...pedido, buyerConfirmed: true, status: 'finalizado' } : pedido
             ));
@@ -117,7 +120,7 @@ const PedidosPendentesComprador = () => {
                                     </ul>
                                 </Card.Text>
                                 <Card.Text>Valor Total: R${pedido.valorTotal.toFixed(2)}</Card.Text>
-                                {pedido.status === "esperando sua confirmação" && (
+                                {pedido.sellerConfirmed && (
                                     <Button variant="success" onClick={() => handleConfirmarRecebimento(pedido.id)}>
                                         Confirmar Recebimento
                                     </Button>
