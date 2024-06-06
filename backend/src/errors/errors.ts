@@ -477,6 +477,34 @@ export class NotBuyerOfOrderError extends Error {
         return { name: this.name, status: this.status, message: this.message };
     }
 }
+export class AccessAlreadyExistsError extends Error {
+    status: number;
+  
+    constructor(message?: string, status?: number) {
+      super(message || 'Usuário já possui esse acesso.');
+      this.name = 'AccessAlreadyExistsError';
+      this.status = status || 400; // Bad Request
+    }
+  
+    toJSON() {
+      return { name: this.name, status: this.status, message: this.message };
+    }
+  }
+
+  export class InvalidTypeError extends Error {
+    status: number;
+
+    constructor(message?: string, status?: number) {
+        super(message || 'JSON mal formado');
+        this.name = 'InvalidTypeError';
+        this.status = status || 400; // Bad Request
+    }
+
+    toJSON() {
+        return { name: this.name, status: this.status, message: this.message };
+    }
+}
+
 
 export const UserErrors = {
     duplicateEmailError: new DuplicateEmailError(),
@@ -518,4 +546,7 @@ export const UserErrors = {
     storeNotFoundError: new StoreNotFoundError(),
     notSellerOfOrderError: new NotSellerOfOrderError(),
     notBuyerOfOrderError: new NotBuyerOfOrderError(),
+    accessAlreadyExistsError: new AccessAlreadyExistsError(),
+    userDoesNotHaveAccess: new UserDoesNotHaveAccess(),
+    invalidTypeError: new InvalidTypeError(),
 };

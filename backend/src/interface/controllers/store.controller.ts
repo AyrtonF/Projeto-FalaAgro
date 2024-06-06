@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { CreateStoreUseCase } from '../../domain/useCases/store/createStore.useCase'
-import { InternalServerError } from '../../errors/errors';
+import { InternalServerError, InvalidTypeError } from '../../errors/errors';
 import { handleErrors } from '../../errors/hadler.errors';
 import { GetStoreByIdUseCase } from '../../domain/useCases/store/getStoreById.useCase';
 import { GetAllStoreUseCase } from '../../domain/useCases/store/getAllStore.useCase';
@@ -27,9 +27,13 @@ export class StoreController {
             let {name,Products,description,categories,contactInfo,openingHours,returnPolicy} = request.body;
             const {id} = request.user
             const userId = id
-            categories = JSON.parse(categories.replace(/'/g, '"'))
-            openingHours = JSON.parse(openingHours.replace(/'/g, '"'))
-            contactInfo = JSON.parse(contactInfo)
+            try {
+                categories = JSON.parse(categories.replace(/'/g, '"'));
+                openingHours = JSON.parse(openingHours.replace(/'/g, '"'));
+                contactInfo = JSON.parse(contactInfo);
+            } catch (parseError) {
+                throw new InvalidTypeError(' JSON mal formado');
+            }
             const images = (request.files as Express.Multer.File[]).map(file => {
                 return file.buffer.toString('base64'); // ou salvar diretamente como Buffer se preferir
               });

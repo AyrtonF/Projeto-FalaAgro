@@ -12,12 +12,19 @@ export class RemoveAccessToUserUseCase{
         if (!user) {
             throw new UserNotFoundError();
         }
-
+        
+        if(user.AccessName.length == 0){
+            
+            throw new UserDoesNotHaveAccess()
+        }
+        input.accessName = input.accessName.toUpperCase()
         const doesAccessExist = await this.accessRepository.doesAccessExist([input.accessName]);
         if (!doesAccessExist) {
             throw new AccessNameDoesNotExist();
         }
-
+        if (!user.AccessName.includes(input.accessName)) {
+            throw new UserDoesNotHaveAccess()
+          }
         if(!(user.AccessName.some(access => access === input.accessName))){
             throw new UserDoesNotHaveAccess()
         }

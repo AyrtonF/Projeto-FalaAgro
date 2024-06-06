@@ -153,10 +153,12 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
     }
    async AddAccessToUserUseCase({id,newAccess}:{id:string,newAccess:string}): Promise<User> {
         try {
-        let valid = await (prisma.user.findUnique({ where: { id } })) ? true : false
+        let valid = await prisma.user.findUnique({ where: { id },include:{UserAccess:{include:{Access:true}}} })
+        
         if(!valid){
             throw new UserNotFoundError
         }
+        
         const updatedUserFromPrisma = await prisma.user.update({
             where: {
                 id
@@ -185,9 +187,11 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
                 }
             }
         });
+      
         return this.mapPrismaUserToDomain(updatedUserFromPrisma);
             
         } catch (error) {
+           
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
             throw new InternalServerError
         }
@@ -219,10 +223,17 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
             }
         }
 
-        const userFromPrisma = await prisma.user.findUnique({ where: { id:userId } })
+        const userFromPrisma = await prisma.user.findUnique({ where: { id:userId }, include: {
+            UserAccess: {
+                include: {
+                    Access: true
+                }
+            }
+        }, })
             return this.mapPrismaUserToDomain(userFromPrisma);
 
         } catch (error) {
+            
             if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
             throw new InternalServerError
         }
@@ -331,13 +342,14 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
         let stores:StoreUser[]  = []
         
             let storesPrisma = prismaUser.store
+            if(storesPrisma){
             for (let index = 0; index < storesPrisma.length; index++) {
                 let name = prismaUser.store[index].name
                 let categories = prismaUser.store[index].categories
                 let description = prismaUser.store[index].description || ""
                 stores.push({name,categories,description})
             }
-        
+            }
         return new User({
             id:prismaUser.id,
             name: prismaUser.name,

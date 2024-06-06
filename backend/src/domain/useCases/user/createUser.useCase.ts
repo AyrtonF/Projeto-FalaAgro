@@ -21,6 +21,10 @@ export class CreateUserUseCase {
             throw new DuplicateEmailError();
         }
 
+        for (let index = 0; index < input.AccessName.length; index++) {
+            input.AccessName[index] = input.AccessName[index].toLocaleUpperCase()
+            
+        }
         // Validar se o acesso existe
         const doesAccessExist = await this.accessRepository.doesAccessExist(input.AccessName);
         if (!doesAccessExist) {

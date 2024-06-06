@@ -36,6 +36,9 @@ const errorMap: Record<string, UserError> = {
     StoreNotFoundError: UserErrors.storeNotFoundError,
     NotBuyerOfOrderError:UserErrors.notBuyerOfOrderError,
     NotSellerOfOrderError:UserErrors.notSellerOfOrderError,
+    AccessAlreadyExistsError:UserErrors.accessAlreadyExistsError,
+    UserDoesNotHaveAccess:UserErrors.userDoesNotHaveAccess,
+    InvalidTypeError:UserErrors.invalidTypeError,
 }
 
 

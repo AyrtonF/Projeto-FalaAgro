@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Jurandir\",\r\n  \"email\": \"jurandir@gmail.com\",\r\n  \"password\": \"12345678\",\r\n  \"cpf\": \"123.456.789-09\",\r\n  \"cnpj\": \"11.222.333/0001-81\",\r\n  \"cep\": \"12345-678\",\r\n  \"numberAddress\": \"123\",\r\n  \"AccessName\": [\"Admin\",\"Vendedor\"]\r\n}",
+							"raw": "{\r\n  \"name\": \"Guilherme\",\r\n  \"email\": \"guilherme@gmail.com\",\r\n  \"password\": \"12345678\",\r\n  \"cpf\": \"123.456.789-09\",\r\n  \"cnpj\": \"11.222.333/0001-81\",\r\n  \"cep\": \"12345-678\",\r\n  \"numberAddress\": \"123\",\r\n  \"AccessName\": [\"ADMIN\",\"VENDEDOR\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -133,8 +133,28 @@
 				{
 					"name": "deleteUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:3333/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"user"
+							]
+						}
 					},
 					"response": []
 				},
@@ -266,7 +286,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Teste\"\r\n}",
+							"raw": "{\r\n    \"name\":\"COMPRADOR\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -370,7 +390,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Tratores e sementes\",\r\n  \"Products\": [\r\n    \r\n  ],\r\n  \"description\": \"Loja Especializada em veiculos rurais e maquinarios leves\",\r\n  \"categories\": [\"Frutas\", \"Maças\"],\r\n  \"contactInfo\": {\r\n    \"address\": \"Rua Exemplo, 123\",\r\n    \"email\": \"contato@example.com\",\r\n    \"phoneNumber\": \"+55 11 98765-4321\"\r\n  },\r\n  \"openingHours\": [\"Segunda a Sexta: 9h às 18h\", \"Sábado: 9h às 12h\"],\r\n  \"returnPolicy\": \"Política de devolução da minha loja\",\r\n  \"followers\": 100,\r\n  \"reviews\": [\r\n    {\r\n      \"rating\": 5,\r\n      \"comment\": \"Ótima loja!\",\r\n      \"userId\": \"123\"\r\n    },\r\n    {\r\n      \"rating\": 4,\r\n      \"comment\": \"Bons produtos\",\r\n      \"userId\": \"456\"\r\n    }\r\n  ]\r\n}",
+							"raw": "{\r\n  \"name\": \"café Loja\",\r\n  \"Products\": [\r\n    \r\n  ],\r\n  \"description\": \"Loja Especializada em veiculos rurais e maquinarios leves\",\r\n  \"categories\": [\"Grãos\", \"Agricultura\"],\r\n  \"contactInfo\": {\r\n    \"address\": \"Rua Exemplo, 123\",\r\n    \"email\": \"contato@example.com\",\r\n    \"phoneNumber\": \"+55 11 98765-4321\"\r\n  },\r\n  \"openingHours\": [\"Segunda a Sexta: 9h às 18h\", \"Sábado: 9h às 12h\"],\r\n  \"returnPolicy\": \"Política de devolução da minha loja\",\r\n  \"followers\": 100,\r\n  \"reviews\": [\r\n    {\r\n      \"rating\": 5,\r\n      \"comment\": \"Ótima loja!\",\r\n      \"userId\": \"123\"\r\n    },\r\n    {\r\n      \"rating\": 4,\r\n      \"comment\": \"Bons produtos\",\r\n      \"userId\": \"456\"\r\n    }\r\n  ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -539,6 +559,75 @@
 							"port": "3333",
 							"path": [
 								"store-all",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createStoreInTable",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "café Loja",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Loja Especializada em veiculos rurais e maquinarios leves",
+									"type": "text"
+								},
+								{
+									"key": "categories",
+									"value": "[\"Grãos\", \"Agricultura\"]",
+									"type": "text"
+								},
+								{
+									"key": "contactInfo",
+									"value": "{\"address\": \"Rua Exemplo, 123\",\"email\": \"contato@example.com\",\"phoneNumber\": \"+55 11 98765-4321\"}",
+									"type": "text"
+								},
+								{
+									"key": "openingHours",
+									"value": "[\"Segunda a Sexta: 9h às 18h\", \"Sábado: 9h às 12h\"]",
+									"type": "text"
+								},
+								{
+									"key": "returnPolicy",
+									"value": "Política de devolução da minha loja",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/C:/Users/deco_/OneDrive/Área de Trabalho/nassau/projeto-3/registros para exemplo/produtos/imagens/café.avif"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3333/store/",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"store",
 								""
 							]
 						}
@@ -828,7 +917,7 @@
 							"formdata": [
 								{
 									"key": "storeId",
-									"value": "47553198-08c4-4cb8-a702-d99add400422",
+									"value": "8e4e416d-9e89-41df-8a61-f9ab3fc540e0",
 									"type": "text"
 								},
 								{
@@ -843,7 +932,7 @@
 								},
 								{
 									"key": "name",
-									"value": "café",
+									"value": "café do Alexandre",
 									"type": "text"
 								},
 								{
@@ -933,7 +1022,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"teste@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"raw": "{\r\n    \"email\":\"guilherme@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -975,7 +1064,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "/* {\r\n    \"products\" : [\r\n        {\r\n            \"id\":\"d81b683f-3fca-4037-934c-fe71f5bd7023\",\r\n            \"quantify\": 1\r\n        }\r\n    ],\r\n    \"userSellerId\":\"92c63ca0-4e29-4378-809b-1644e5efe02a\"\r\n} */\r\n\r\n{\r\n    \"products\":[\r\n        {\r\n        \"id\":\"76ebc4eb-f88a-4f52-a4a5-5aaff9cfd646\",\r\n        \"quantify\":1\r\n        }\r\n    ],\r\n    \"storeId\":\"47553198-08c4-4cb8-a702-d99add400422\"\r\n}",
+							"raw": "\r\n{\r\n    \"products\":[\r\n        {\r\n        \"id\":\"46f9671b-56c4-4d56-83c3-d147bf7f78b4\",\r\n        \"quantify\":1\r\n        }\r\n    ],\r\n    \"storeId\":\"ef9d48ec-d649-48b8-a028-f3c5716a7bf7\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1136,7 +1225,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"saleId\":\"12016c55-f6bf-47fd-9eca-90b837399041\"\r\n}",
+							"raw": "{\r\n    \"saleId\":\"1cdb1a57-b489-49c4-b2f8-c3bafc6937cd\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1173,7 +1262,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"saleId\":\"70eaa1b5-571e-4861-8216-a9dd406436a9\"\r\n}",
+							"raw": "{\r\n    \"saleId\":\"1cdb1a57-b489-49c4-b2f8-c3bafc6937cd\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

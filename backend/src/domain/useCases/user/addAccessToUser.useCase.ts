@@ -1,8 +1,8 @@
 import { AccessRepositoryInterface } from "../../../data/repositories/access.repository.interface";
 import { UserRepositoryInterface } from "../../../data/repositories/user.repository.interface";
-import { AccessNameDoesNotExist, UserNotFoundError } from "../../../errors/errors";
+import { AccessAlreadyExistsError, AccessNameDoesNotExist, UserNotFoundError } from "../../../errors/errors";
 import { User } from "../../models/user.model";
-import { convertStringsToUppercase } from "../../../../functions/toUpperCase";
+
 
 
 export class AddAccessToUserUseCase{
@@ -14,12 +14,18 @@ export class AddAccessToUserUseCase{
         if (!user) {
             throw new UserNotFoundError();
         }
-
+      
+        
+        input.newAccessName = input.newAccessName.toUpperCase()
+        
         const doesAccessExist = await this.accessRepository.doesAccessExist([input.newAccessName]);
         if (!doesAccessExist) {
             throw new AccessNameDoesNotExist();
         }
-
+        if (user.AccessName.includes(input.newAccessName)) {
+            
+            throw new AccessAlreadyExistsError
+          }
         const updatedUser:User = await this.userRepository.AddAccessToUserUseCase({id:input.id,newAccess:input.newAccessName})
 
         return updatedUser.toDTO()
