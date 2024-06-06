@@ -409,28 +409,6 @@ paths:
         '500':
           description: Erro interno do servidor.
 
-  /product-cascate:
-    post:
-      tags:
-        - Produtos
-      summary: Criar um novo produto em cascata
-      description: Criar um novo produto em cascata
-      requestBody:
-        description: Criar um novo produto em cascata
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateProductInput'
-      responses:
-        '201':
-          description: Objetos criados com sucesso.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateProductOutput'
-        '400':
-          description: Requisição inválida.
-
   /product-in-store:
     get:
       tags:
@@ -771,18 +749,6 @@ paths:
         '404':
           description: Loja não encontrada.
 
-  /store-all/:
-    delete:
-      tags:
-        - Lojas
-      summary: Deletar todas as lojas
-      description: Deletar todas as lojas
-      responses:
-        '204':
-          description: Todas as lojas deletadas com sucesso.
-        '404':
-          description: Nenhuma loja encontrada.
-
   #Usuarios
   /user:
     post:
@@ -941,18 +907,6 @@ paths:
           description: Requisição inválida.
         '404':
           description: Usuário não encontrado.
-
-  /user-delete-all:
-    delete:
-      tags:
-        - Usuarios
-      summary: Deletar todos os usuários
-      description: Deletar todos os usuários
-      responses:
-        '204':
-          description: Todos os usuários deletados com sucesso.
-        '404':
-          description: Nenhum usuário encontrado.
 
   #Acessos
   /access:
