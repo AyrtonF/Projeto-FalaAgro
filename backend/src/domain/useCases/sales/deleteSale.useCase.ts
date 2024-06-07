@@ -6,7 +6,7 @@ export class DeleteSaleUseCase {
     async execute(input:DeleteSaleInput):Promise<DeleteSaleOutput>{
         
         const doesSaleExist  = await this.saleRepository.findById(input.saleId)
-        //console.log(doesSaleExist)
+       
         if(!doesSaleExist ){
             throw new SaleNotFoundError()
         }

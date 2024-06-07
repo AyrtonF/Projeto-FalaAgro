@@ -6,7 +6,6 @@ export class CreateAccessUseCase {
     constructor(private accessRepository:AccessRepositoryInterface){}
 
     async execute(input:CreateAccessInput):Promise<CreateAccessOutoput>{
-        input.name = input.name.toUpperCase()
         let accessExists = await this.accessRepository.doesAccessExist([input.name]) 
         if (accessExists){
             
@@ -25,7 +24,7 @@ export class CreateAccessUseCase {
 
 type CreateAccessInput = {
     id?: string; 
-    name: string ;
+    name: string;
     createdAt: Date;
     updatedAt: Date;
 }

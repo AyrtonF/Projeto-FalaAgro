@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { InvalidCNPJError, InvalidFieldTypeError, UserErrors } from '../../errors/errors';
-import { InvalidCpfError } from '../../errors/user.error';
+import { InvalidCNPJError, InvalidFieldTypeError,InvalidCPFError, UserErrors } from '../../errors/errors';
+
 
 export type UserProps = {
     id?: string
@@ -193,14 +193,17 @@ set password(value: string) {
 set cpf(value: string) {
     if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CPF');
     if (!this.isValidCPF(value)) {
-        throw new InvalidCpfError('Email inválido');
+       
+        throw new InvalidCPFError('CPF inválido');
     }
     this.props.cpf = value;
 }
 
 set cnpj(value: string) {
     if (typeof value !== 'string') throw new InvalidFieldTypeError('Tipo inválido para o campo: CNPJ ');
+    
     if (value && !this.isValidCNPJ(value)) {
+       
         throw new InvalidCNPJError('CNPJ inválido');
     }
     this.props.cnpj = value;

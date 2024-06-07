@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './CadastroVendedor.css'
+import React, { useState } from "react";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./CadastroVendedor.css";
 
-
- const CadastroVendedor = ()=>{
-    const navigate = useNavigate();
+const CadastroVendedor = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    cpf: '',
-    cnpj:'',
-    cep: '',
-    numberAddress: '',
-    AccessName: ['Vendedor']
+    name: "",
+    email: "",
+    password: "",
+    cpf: "",
+    cnpj: "",
+    cep: "",
+    numberAddress: "",
+    AccessName: ["Vendedor"],
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -32,32 +31,29 @@ import './CadastroVendedor.css'
     e.preventDefault();
 
     try {
-        let verificadorNumberAddress = isNaN(  parseInt(formData.numberAddress))
-      if(verificadorNumberAddress){
-        setError("numberAddress em formato invalido")
-        throw new Error("numberAddress em formato invalido")
+      let verificadorNumberAddress = isNaN(parseInt(formData.numberAddress));
+      if (verificadorNumberAddress) {
+        setError("numberAddress em formato invalido");
+        throw new Error("numberAddress em formato invalido");
       }
       formData.numberAddress = parseInt(formData.numberAddress);
-      
-      const response = await axios.post('http://localhost:3333/user', formData);
-    
+
+      const response = await axios.post("http://localhost:3333/user", formData);
+
       if (response.status >= 200 && response.status < 300) {
         // Sucesso, navegue para a tela de login ou home
-        toast.success('Cadastro realizado com sucesso!');
-        navigate('/login');
-        
-        
+        toast.success("Cadastro realizado com sucesso!");
+        navigate("/login");
       }
     } catch (err) {
-        
       if (err.response && err.response.data && err.response.data.error) {
         // Exibe uma mensagem de erro específica se houver uma mensagem no objeto de erro
         setError(err.response.data.error);
-      }else if(err.message){
+      } else if (err.message) {
         setError(err.message);
       } else {
         // Se não, exibe uma mensagem genérica de erro
-        setError('Erro ao cadastrar. Verifique os dados e tente novamente.');
+        setError("Erro ao cadastrar. Verifique os dados e tente novamente.");
       }
       toast.error(error);
     }
@@ -68,7 +64,7 @@ import './CadastroVendedor.css'
       <Button
         variant="light"
         className="back-button"
-        onClick={() => navigate('/login')}
+        onClick={() => navigate("/login")}
       >
         Voltar para Login
       </Button>
@@ -124,7 +120,7 @@ import './CadastroVendedor.css'
               />
             </Form.Group>
             <Form.Group controlId="formCNPJ">
-              <Form.Label>CPF</Form.Label>
+              <Form.Label>CNPJ</Form.Label>
               <Form.Control
                 type="text"
                 name="cnpj"
@@ -168,7 +164,7 @@ import './CadastroVendedor.css'
         </Col>
       </Row>
     </Container>
-    )
-}
+  );
+};
 
-export  default CadastroVendedor
+export default CadastroVendedor;

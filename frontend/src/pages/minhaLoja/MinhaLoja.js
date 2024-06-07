@@ -140,8 +140,6 @@ const MinhaLoja = () => {
                     ...prevState,
                     images: [reader.result],
                 }));
-               
-                
             };
             reader.readAsDataURL(file);
         }
@@ -149,7 +147,6 @@ const MinhaLoja = () => {
 
     const handleSave = async() => {
         try {
-            console.log("aqui")
             const response = await axios.put('http://localhost:3333/store', {
                 storeId:storeData.storeId,
                 name: storeData.name,
@@ -164,7 +161,8 @@ const MinhaLoja = () => {
                 openingHours: storeData.openingHours,
                 returnPolicy: storeData.returnPolicy,
             });
-            console.log(response.data);
+            console.log(storeData.images)
+         
             // Exibir mensagem de sucesso para o usuário, ou fazer qualquer outra operação necessária
         } catch (error) {
             console.error('Error saving store data:', error);
@@ -173,13 +171,12 @@ const MinhaLoja = () => {
     };
 
     return (
-        <div className='megazord'>
-        <Container className="minha-loja-container ">
+        <Container className="minha-loja-container mt-5">
             <h1>Minha Loja</h1>
             
             <Form>
                 <Row>
-                    <Col md={6} xs={12}>
+                    <Col md={6}>
                         <Form.Group controlId="formStoreName">
                             <Form.Label>Nome da Loja</Form.Label>
                             <Form.Control
@@ -190,7 +187,7 @@ const MinhaLoja = () => {
                             />
                         </Form.Group>
                     </Col>
-                    <Col md={6} xs={12}>
+                    <Col md={6}>
                         <Form.Group controlId="formStoreDescription">
                             <Form.Label>Descrição</Form.Label>
                             <Form.Control
@@ -204,7 +201,19 @@ const MinhaLoja = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={6} xs={12}>
+                    <Col md={6}>
+                        <Form.Group controlId="formStoreImage">
+                            <Form.Label>Imagem da Loja</Form.Label>
+                            <Form.Control
+                                type="file"
+                                onChange={handleImageUpload}
+                            />
+                            {storeData.images[0] && (
+                                <Card.Img variant="top" src={storeData.images[0]} className="mt-3" />
+                            )}
+                        </Form.Group>
+                    </Col>
+                    <Col md={6}>
                         <Form.Group controlId="formStoreCategories">
                             <Form.Label>Categorias</Form.Label>
                             <Form.Control
@@ -221,7 +230,9 @@ const MinhaLoja = () => {
                             </Form.Control>
                         </Form.Group>
                     </Col>
-                    <Col md={6} xs={12}>
+                </Row>
+                <Row>
+                    <Col md={4}>
                         <Form.Group controlId="formStoreAddress">
                             <Form.Label>Endereço</Form.Label>
                             <Form.Control
@@ -232,9 +243,7 @@ const MinhaLoja = () => {
                             />
                         </Form.Group>
                     </Col>
-                </Row>
-                <Row>
-                    <Col md={6} xs={12}>
+                    <Col md={4}>
                         <Form.Group controlId="formStoreEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
@@ -245,7 +254,7 @@ const MinhaLoja = () => {
                             />
                         </Form.Group>
                     </Col>
-                    <Col md={6} xs={12}>
+                    <Col md={4}>
                         <Form.Group controlId="formStorePhoneNumber">
                             <Form.Label>Telefone</Form.Label>
                             <Form.Control
@@ -258,7 +267,7 @@ const MinhaLoja = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={6} xs={12}>
+                    <Col md={6}>
                         <Form.Group controlId="formStoreOpeningHours">
                             <Form.Label>Horário de Funcionamento</Form.Label>
                             <Form.Control
@@ -273,7 +282,7 @@ const MinhaLoja = () => {
                             />
                         </Form.Group>
                     </Col>
-                    <Col md={6} xs={12}>
+                    <Col md={6}>
                         <Form.Group controlId="formStoreReturnPolicy">
                             <Form.Label>Política de Devolução</Form.Label>
                             <Form.Control
@@ -286,31 +295,12 @@ const MinhaLoja = () => {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row>
-                    <Col md={12} xs={12}>
-                    <Form.Group controlId="formStoreImage">
-                        <Form.Label>Imagem da Loja</Form.Label>
-                        <Form.Control
-                            type="file"
-                            onChange={handleImageUpload}
-                            accept="image/*"
-                        />
-                        {storeData.images[0] && (
-                            <Card.Img
-                                variant="top"
-                                src={storeData.images[0]}
-                                className="mt-3 store-image"
-                            />
-                        )}
-                    </Form.Group>
-                    </Col>
-                </Row>
-                <Button className="btn" variant="success" onClick={handleSave}>
+                <Button variant="primary" onClick={handleSave}>
                     Salvar
                 </Button>
             </Form>
         </Container>
-        </div>
     );
-}    
+};
+
 export default MinhaLoja;

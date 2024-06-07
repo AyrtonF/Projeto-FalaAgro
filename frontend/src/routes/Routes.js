@@ -8,14 +8,17 @@ import PerfilComprador from '../pages/perfilComprador/PerfilComprador';
 import CadastroComprador from '../pages/cadastroComprador/CadastroComprador';
 import Login from '../pages/login/Login';
 import { CarrinhoProvider } from '../context/CarrinhoContext';
-import PerfilVendedor from '../pages/perfilVendedor/PerfilVendedor';
+import PerfilLoja from '../pages/perfilVendedor/PerfilLoja';
 import CadastroVendedor from '../pages/cadastroVendedor/CadastroVendedor';
 import MinhaLoja from '../pages/minhaLoja/MinhaLoja';
 import CompradorOuVendedor from '../pages/compradorOuVendedor/CompradorOuVendedor';
 import PaginaProduto from '../pages/paginaProduto/PaginaProduto';
 import PedidosPendentesComprador from '../pages/pedidosPendentesComprador/PedidosPendentesComprador'
 import PedidosFinalizadosComprador from '../pages/pedidosFinalizadosComprador/PedidosFinalizadosComprador';
+import PedidosFinalizadosLoja from '../pedidosFinalizadosLoja/PedididosFinalizadosLoja';
+import PedidosPendentesLoja from '../pages/pedidosPendentesLoja/PedidosPendentesLoja';
 import UpgradeVendedor from '../pages/upgradeVendedor/UpgradeVendedor';
+import EditarUser from '../pages/editarUser/EditarUser';
 
 const AppRoutes = () => {
   
@@ -31,7 +34,7 @@ const AppRoutes = () => {
             <Route path="/perfilComprador" element={<PerfilComprador />} />
             <Route path="/cadastroComprador" element={<CadastroComprador />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/perfilVendedor" element={<PerfilVendedor />} />
+            <Route path="/perfilLoja" element={<PerfilLoja />} />
             <Route path="/cadastroVendedor" element={<CadastroVendedor />} />
             <Route path="/minhaLoja" element={<MinhaLoja />} />
             <Route path="/compradorOuVendedor" element={<CompradorOuVendedor />} />
@@ -39,7 +42,10 @@ const AppRoutes = () => {
             <Route path="/perfilComprador/" element={<PerfilComprador />} />
             <Route path="/pedidosPendentesComprador/" element={<PedidosPendentesComprador />} />
             <Route path="/pedidosFinalizadosComprador/" element={<PedidosFinalizadosComprador />} />
-            <Route path="/FazerUpgradeVendedor/" element={<UpgradeVendedor />} />
+            <Route path="/pedidosPendentesLoja/" element={<PedidosPendentesLoja />} />
+            <Route path="/pedidosFinalizadosLoja/" element={<PedidosFinalizadosLoja />} />
+            <Route path="/fazerUpgradeVendedor/" element={<UpgradeVendedor />} />
+            <Route path="/editarUser/" element={<EditarUser />} />
             {/* Adicione outras rotas conforme necessário */}
           </Routes>
     </Router>

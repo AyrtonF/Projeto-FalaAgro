@@ -104,7 +104,6 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     }
     async update(store: Store): Promise<Store> {
         try {
-            
             let valid = await (prisma.store.findUnique({ where: { id:store.id } })) ? true : false
             if(!valid){
                 throw new StoreNotFoundError();
@@ -127,9 +126,9 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
                     updatedAt: new Date(), 
                 },
             });
-            
             return this.mapPrismaStoreToDomain(updatedStoreFromPrisma);
         } catch (error) {
+            
             if(error instanceof Error)  throw new Error("Erro ao obter funções da loja: "+ error.message);
             throw new InternalServerError
         }
@@ -179,7 +178,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     
     private mapPrismaStoreToDomain(prismaStore: any): Store {
         const images = prismaStore.images.map((image: Buffer) => image.toString('base64'));
-        if(prismaStore.contactInfo) prismaStore.contactInfo = JSON.parse(prismaStore.contactInfo)
+        if(prismaStore.contactInfo && typeof prismaStore.contactInfo == "string") prismaStore.contactInfo = JSON.parse(prismaStore.contactInfo)
         return new Store({
             id: prismaStore.id,
             userId: prismaStore.userId || "Loja sem dono",
