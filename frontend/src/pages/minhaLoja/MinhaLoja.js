@@ -54,7 +54,7 @@ const MinhaLoja = () => {
     useEffect(() => {
         const fetchStore = async () => {
             try {
-                const response = await axios.get(`https://backend-final-ytc2.onrender.com/store/`);
+                const response = await axios.get(`http://localhost:3333/store/`);
                
                 if (response.data) {
                     setStoreData(response.data[0]);
@@ -147,7 +147,7 @@ const MinhaLoja = () => {
 
     const handleSave = async() => {
         try {
-            const response = await axios.put('https://backend-final-ytc2.onrender.com/store', {
+            const response = await axios.put('http://localhost:3333/store', {
                 storeId:storeData.storeId,
                 name: storeData.name,
                 description: storeData.description,
@@ -161,6 +161,7 @@ const MinhaLoja = () => {
                 openingHours: storeData.openingHours,
                 returnPolicy: storeData.returnPolicy,
             });
+            console.log(storeData.images)
          
             // Exibir mensagem de sucesso para o usuário, ou fazer qualquer outra operação necessária
         } catch (error) {

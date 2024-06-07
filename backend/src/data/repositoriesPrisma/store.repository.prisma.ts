@@ -128,6 +128,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
             });
             return this.mapPrismaStoreToDomain(updatedStoreFromPrisma);
         } catch (error) {
+            
             if(error instanceof Error)  throw new Error("Erro ao obter funções da loja: "+ error.message);
             throw new InternalServerError
         }
@@ -177,6 +178,7 @@ export class StoreRepositoryPrisma implements StoreRepositoryInterface{
     
     private mapPrismaStoreToDomain(prismaStore: any): Store {
         const images = prismaStore.images.map((image: Buffer) => image.toString('base64'));
+        if(prismaStore.contactInfo && typeof prismaStore.contactInfo == "string") prismaStore.contactInfo = JSON.parse(prismaStore.contactInfo)
         return new Store({
             id: prismaStore.id,
             userId: prismaStore.userId || "Loja sem dono",

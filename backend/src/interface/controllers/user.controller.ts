@@ -154,6 +154,7 @@ export class UserController {
             const message = await this.input.deleteUserUseCase.execute(id);
             return response.status(201).json(message);
         } catch (error: unknown) {
+          
             if (error instanceof Error) {
                 const errorResponse = handleErrors(error); 
                 return response.status(errorResponse.status).json(errorResponse.message); 

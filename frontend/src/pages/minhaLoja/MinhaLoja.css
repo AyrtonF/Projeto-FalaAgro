@@ -1,22 +1,49 @@
-.minha-loja-container {
-    margin-top: 20px;
-}
-
-.card-img-top {
-    width: 100%;
-    height: auto;
-}
-
-form .form-control, form .form-group {
-    margin-bottom: 20px;
-}
-
-form .form-group label {
-    font-weight: bold;
-}
-
-@media (max-width: 767px) {
-    .minha-loja-container {
-        padding: 0 15px;
-    }
-}
+.megazord{
+    padding: 2%;
+       background-color: #80e613d1;
+   }
+   
+   .minha-loja-container {
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     flex-direction: column;
+     background-color: #f6f6f6;
+     padding: 10px;
+     width: 45vw;
+     margin-bottom: 3%;
+     border-radius: 18px;
+   }
+   
+   
+   textarea {
+     resize: none;
+   }
+   
+   .btn {
+     margin: 10px;
+   }
+   .card-img-top {
+     width: 100%;
+     height: auto;
+   }
+   
+   .store-image {
+     max-width: 100%;
+     max-height: 200px;
+   }
+   
+   form .form-control,
+   form .form-group {
+     margin-bottom: 20px;
+   }
+   
+   form .form-group label {
+     font-weight: bold;
+   }
+   
+   @media (max-width: 767px) {
+     .minha-loja-container {
+       padding: 0 15px;
+     }
+   }

@@ -84,8 +84,44 @@ export class StoreController {
             }
         }
     }
+ 
 
-    async updateStore(request: Request, response: Response):Promise<Response> {
+async updateStore(request: Request, response: Response):Promise<Response> {
+        
+        try {
+            let {name,storeId,Products,description,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt} = request.body;
+            const {id} = request.user
+            const userId = id
+            
+             
+            if(contactInfo && typeof contactInfo == 'string') contactInfo = JSON.parse(contactInfo)  
+            if(categories && typeof categories == 'string')  categories = JSON.parse(categories.replace(/'/g, '"'))
+            if(openingHours && typeof openingHours == 'string')  openingHours = JSON.parse(openingHours.replace(/'/g, '"'))
+            let images:any = []
+            if(request.files){
+             images = (request.files as Express.Multer.File[]).map(file => {
+                return file.buffer.toString('base64'); // ou salvar diretamente como Buffer se preferir
+              });
+            }
+             
+            
+            const store = await this.input.updateStoreUseCase.execute({name,storeId,userId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt})
+            return response.status(200).json(store)
+        } catch (error: unknown) {
+           
+           
+            if (error instanceof Error) {
+                const errorResponse = handleErrors(error); 
+                return response.status(errorResponse.status).json(errorResponse.message); 
+            } else {
+               throw new InternalServerError
+            }
+        }
+    }
+
+
+
+   /*  async updateStore(request: Request, response: Response):Promise<Response> {
         
         try {
             const {name,storeId,Products,description,images,categories,contactInfo,openingHours,returnPolicy,followers,reviews,createdAt,updatedAt} = request.body;
@@ -102,7 +138,7 @@ export class StoreController {
                throw new InternalServerError
             }
         }
-    }
+    } */
 
     async deleteStore(request: Request, response: Response):Promise<Response> {
         
