@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Card } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import './PedidosPendentesLoja.css';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import "./PedidosPendentesLoja.css";
 
 const PedidosPendentesLoja = () => {
-    const { userId } = useParams();
-    const [pedidos, setPedidos] = useState([]);
-    
-    axios.interceptors.request.use(
-        (config) => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
-            }
-            return config;
-        },
-        (error) => {
-            return Promise.reject(error);
-        }
-    );
+  const { userId } = useParams();
+  const [pedidos, setPedidos] = useState([]);
+
 
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`https://backend-final-ytc2.onrender.com/sale-sellerId/`);
+                const response = await axios.get(`http://localhost:3333/sale-sellerId/`);
                 const pedidosData = response.data.map(pedido => ({
                     id: pedido.id,
                     status: mapStatus(pedido.status),
@@ -56,7 +44,7 @@ const PedidosPendentesLoja = () => {
 
     const handleConfirmarRecebimento = async (id) => {
         try {
-            await axios.put(`https://backend-final-ytc2.onrender.com/sale-seller-confirm/`, {
+            await axios.put(`http://localhost:3333/sale-seller-confirm/`, {
                 saleId: id
             });
             // Atualize o estado para refletir a confirmação
@@ -95,40 +83,62 @@ const PedidosPendentesLoja = () => {
                 </Row>
             </Container>
         );
-    }
+      }
 
-    return (
-        <Container className="pedidos-pendentes-container">
-            <Row className="justify-content-center">
-                {pedidosFiltrados.map((pedido) => (
-                    <Col key={pedido.id} md={8} className="mb-4">
-                        <Card className="pedido-card">
-                            <Card.Body>
-                                <Card.Title>Pedido ID: {pedido.id}</Card.Title>
-                                <Card.Text className={getStatusColor(pedido.status)}>
-                                    Status: {pedido.sellerConfirmed ? "Aguardando o cliente Confirmar":"Aguardando sua Confirmação"}
-                                </Card.Text>
-                                <Card.Text>
-                                    Produtos:
-                                    <ul>
-                                        {pedido.produtos.map((produto, index) => (
-                                            <li key={index}>{produto}</li>
-                                        ))}
-                                    </ul>
-                                </Card.Text>
-                                <Card.Text>Valor Total: R${pedido.valorTotal.toFixed(2)}</Card.Text>
-                                {!pedido.sellerConfirmed && (
-                                    <Button variant="success" onClick={() => handleConfirmarRecebimento(pedido.id)}>
-                                        Confirmar Recebimento
-                                    </Button>
-                                )}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </Container>
-    );
+  axios.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+
+    }
+  );
+
+  return (
+    <Container className="pedidos-pendentes-container">
+      <Row className="justify-content-center">
+        {pedidosFiltrados.map((pedido) => (
+          <Col key={pedido.id} md={8} className="mb-4">
+            <Card className="pedido-card">
+              <Card.Body>
+                <Card.Title>Pedido ID: {pedido.id}</Card.Title>
+                <Card.Text className={getStatusColor(pedido.status)}>
+                  Status:{" "}
+                  {pedido.sellerConfirmed
+                    ? "Aguardando o cliente Confirmar"
+                    : "Aguardando sua Confirmação"}
+                </Card.Text>
+                <Card.Text>
+                  Produtos:
+                  <ul>
+                    {pedido.produtos.map((produto, index) => (
+                      <li key={index}>{produto}</li>
+                    ))}
+                  </ul>
+                </Card.Text>
+                <Card.Text>
+                  Valor Total: R${pedido.valorTotal.toFixed(2)}
+                </Card.Text>
+                {!pedido.sellerConfirmed && (
+                  <Button
+                    variant="success"
+                    onClick={() => handleConfirmarRecebimento(pedido.id)}
+                  >
+                    Confirmar Recebimento
+                  </Button>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  );
 };
 
 export default PedidosPendentesLoja;

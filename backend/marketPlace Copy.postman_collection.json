@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "7f7dd4f4-64d9-4368-a8e8-4ff30d49ff31",
-		"name": "marketPlace",
+		"_postman_id": "1c941007-7027-4086-a77f-8508d1ec8db8",
+		"name": "marketPlace Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34420077"
+		"_exporter_id": "33855738",
+		"_collection_link": "https://falaagro.postman.co/workspace/FalaAgro-Workspace~1003aa18-4167-473d-9615-ea02a7b6ad27/collection/33855738-1c941007-7027-4086-a77f-8508d1ec8db8?action=share&source=collection_link&creator=33855738"
 	},
 	"item": [
 		{
@@ -368,50 +369,6 @@
 			"name": "store",
 			"item": [
 				{
-					"name": "createStore",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "idUser",
-								"value": "",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"café Loja\",\r\n  \"Products\": [\r\n    \r\n  ],\r\n  \"description\": \"Loja Especializada em veiculos rurais e maquinarios leves\",\r\n  \"categories\": [\"Grãos\", \"Agricultura\"],\r\n  \"contactInfo\": {\r\n    \"address\": \"Rua Exemplo, 123\",\r\n    \"email\": \"contato@example.com\",\r\n    \"phoneNumber\": \"+55 11 98765-4321\"\r\n  },\r\n  \"openingHours\": [\"Segunda a Sexta: 9h às 18h\", \"Sábado: 9h às 12h\"],\r\n  \"returnPolicy\": \"Política de devolução da minha loja\",\r\n  \"followers\": 100,\r\n  \"reviews\": [\r\n    {\r\n      \"rating\": 5,\r\n      \"comment\": \"Ótima loja!\",\r\n      \"userId\": \"123\"\r\n    },\r\n    {\r\n      \"rating\": 4,\r\n      \"comment\": \"Bons produtos\",\r\n      \"userId\": \"456\"\r\n    }\r\n  ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3333/store/",
-							"host": [
-								"localhost"
-							],
-							"port": "3333",
-							"path": [
-								"store",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "getStoreById",
 					"request": {
 						"auth": {
@@ -668,44 +625,6 @@
 					"response": []
 				},
 				{
-					"name": "createProduct",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"storeId\":\"47553198-08c4-4cb8-a702-d99add400422\",\r\n    \"name\": \"maçã\",\r\n    \"price\": 70,\r\n    \"amount\": 40,\r\n    \"description\":\"Maça verde\",\r\n    \"categories\":[\"frutas\",\"agriculas\",\"comida\"]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3333/product/",
-							"host": [
-								"localhost"
-							],
-							"port": "3333",
-							"path": [
-								"product",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "deleteAllProduct",
 					"request": {
 						"auth": {
@@ -844,34 +763,6 @@
 							"port": "3333",
 							"path": [
 								"product",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createProductCascate",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"productsRequest\": [\r\n    \r\n        {\r\n            \"storeId\": \"02f7ac06-3e4f-4b8e-986b-fe6f8e591f7d\",\r\n            \"name\": \"abacaxi\",\r\n            \"price\": 80,\r\n            \"amount\": 30,\r\n            \"description\": \"Abacaxi pérola doce e refrescante, excelente para sucos.\",\r\n            \"categories\": [\"frutas\", \"agriculas\", \"comida\"]\r\n        },\r\n        {\r\n            \"storeId\": \"02f7ac06-3e4f-4b8e-986b-fe6f8e591f7d\",\r\n            \"name\": \"melancia\",\r\n            \"price\": 90,\r\n            \"amount\": 20,\r\n            \"description\": \"Melancia grande e suculenta, perfeita para dias quentes.\",\r\n            \"categories\": [\"frutas\", \"agriculas\", \"comida\"]\r\n        },\r\n        {\r\n            \"storeId\": \"02f7ac06-3e4f-4b8e-986b-fe6f8e591f7d\",\r\n            \"name\": \"uva\",\r\n            \"price\": 70,\r\n            \"amount\": 100,\r\n            \"description\": \"Uva Itália doce e crocante, ótima para lanches rápidos.\",\r\n            \"categories\": [\"frutas\", \"agriculas\", \"comida\"]\r\n        }\r\n        \r\n    ]\r\n}\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3333/product-cascate/",
-							"host": [
-								"localhost"
-							],
-							"port": "3333",
-							"path": [
-								"product-cascate",
 								""
 							]
 						}

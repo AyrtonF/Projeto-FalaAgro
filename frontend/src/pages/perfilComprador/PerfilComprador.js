@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link, Navigate } from 'react-router-dom';
@@ -39,7 +40,8 @@ const PerfilComprador = () => {
     );
 
     if (!token) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/login" />
+
     }
 
     return (

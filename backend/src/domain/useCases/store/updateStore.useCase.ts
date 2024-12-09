@@ -20,7 +20,6 @@ export class UpdateStoreUseCase  {
         if (input.images) store.images = input.images;
         if (input.categories) store.categories = input.categories;
         if (input.contactInfo) store.contactInfo = input.contactInfo;
-        
         if (input.openingHours) store.openingHours = input.openingHours;
         if (input.returnPolicy) store.returnPolicy = input.returnPolicy;
         if (input.followers !== undefined) store.followers = input.followers;

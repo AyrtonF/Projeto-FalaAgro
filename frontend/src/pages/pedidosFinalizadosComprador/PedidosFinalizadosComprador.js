@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import './PedidosFinalizadosComprador.css';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import "./PedidosFinalizadosComprador.css";
 
 const PedidosFinalizadosComprador = () => {
-    const { userId } = useParams();
-    const [pedidos, setPedidos] = useState([]);
+  const { userId } = useParams();
+  const [pedidos, setPedidos] = useState([]);
+
 
     axios.interceptors.request.use(
         (config) => {
@@ -24,7 +25,7 @@ const PedidosFinalizadosComprador = () => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`https://backend-final-ytc2.onrender.com/sale-buyerId/`);
+                const response = await axios.get(`http://localhost:3333/sale-buyerId/`);
                 const pedidosData = response.data.map(pedido => ({
                     id: pedido.id,
                     status: mapStatus(pedido.status),
@@ -79,35 +80,37 @@ const PedidosFinalizadosComprador = () => {
                 </Row>
             </Container>
         );
-    }
+      };
 
-    return (
-        <Container className="pedidos-finalizados-container">
-            <Row className="justify-content-center">
-                {pedidosFinalizados.map((pedido) => (
-                    <Col key={pedido.id} md={8} className="mb-4">
-                        <Card className="pedido-card">
-                            <Card.Body>
-                                <Card.Title>Pedido ID: {pedido.id}</Card.Title>
-                                <Card.Text className={getStatusColor(pedido.status)}>
-                                    Status: {pedido.status}
-                                </Card.Text>
-                                <Card.Text>
-                                    Produtos:
-                                    <ul>
-                                        {pedido.produtos.map((produto, index) => (
-                                            <li key={index}>{produto}</li>
-                                        ))}
-                                    </ul>
-                                </Card.Text>
-                                <Card.Text>Valor Total: R${pedido.valorTotal.toFixed(2)}</Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </Container>
-    );
-};
+  return (
+    <Container className="pedidos-finalizados-container">
+      <Row className="justify-content-center">
+        {pedidosFinalizados.map((pedido) => (
+          <Col key={pedido.id} md={8} className="mb-4">
+            <Card className="pedido-card">
+              <Card.Body>
+                <Card.Title>Pedido ID: {pedido.id}</Card.Title>
+                <Card.Text className={getStatusColor(pedido.status)}>
+                  Status: {pedido.status}
+                </Card.Text>
+                <Card.Text>
+                  Produtos:
+                  <ul>
+                    {pedido.produtos.map((produto, index) => (
+                      <li key={index}>{produto}</li>
+                    ))}
+                  </ul>
+                </Card.Text>
+                <Card.Text>
+                  Valor Total: R${pedido.valorTotal.toFixed(2)}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
+  );
 
+}
 export default PedidosFinalizadosComprador;

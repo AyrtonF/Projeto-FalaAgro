@@ -1,39 +1,40 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './Login.css';
-import logo from '../../assets/FalaAgroLogo.png';
-import banner from '../../assets/BannerFalaAgro2.png';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Login.css";
+import logo from "../../assets/FalaAgroLogo.png";
+import banner from "../../assets/BannerFalaAgro2.png";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://backend-final-ytc2.onrender.com/sign-in', {
+
+      const response = await axios.post("http://localhost:3333/sign-in", {
+
         email,
-        password
+        password,
       });
 
       if (response.status === 200) {
-        
-        localStorage.setItem("token",response.data.token)
-        navigate('/home');
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
       }
     } catch (err) {
       // Trate o erro aqui, por exemplo, mostrando uma mensagem ao usuário
-     
-      setError('Falha ao fazer login. Verifique suas credenciais.');
+
+      setError("Falha ao fazer login. Verifique suas credenciais.");
     }
   };
 
   const handleRegister = () => {
-    navigate('/compradorOuVendedor');
+    navigate("/compradorOuVendedor");
   };
 
   return (
@@ -86,7 +87,6 @@ const Login = () => {
                 name="password"
                 placeholder="Sua senha:"
                 title="Minimo 6 caracteres e pelo menos 1 letra do alfabeto e 1 número"
-              
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

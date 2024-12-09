@@ -239,17 +239,29 @@ export class UserRepositoryPrisma implements UserRepositoryInterface {
         }
     }
     async delete(id: string): Promise<boolean> {
+        console.log(id);
         try {
-            await prisma.user.delete({
+            // Excluir todas as referências em outras tabelas aqui
+            await prisma.product.deleteMany({
                 where: {
-                    id: id,
+                    storeId: id, // Ajuste conforme a tabela e o campo correto
                 },
             });
-            const valid = await (prisma.user.findUnique({ where: { id } })) ? true : false
-            return valid
+    
+            // Agora excluir o usuário
+            await prisma.user.delete({
+                where: {
+                    id,
+                },
+            });
+    
+            const valid = await prisma.user.findUnique({ where: { id } }) ? true : false;
+            return valid;
         } catch (error) {
-            if(error instanceof Error)  throw new Error("Erro ao obter funções do usuário: "+ error.message);
-            throw new InternalServerError
+            if (error instanceof Error) {
+                throw new Error("Erro ao obter funções do usuário: " + error.message);
+            }
+            throw new InternalServerError();
         }
     }
     async doesUserExist({ email, id }: { email?: string, id?: string }): Promise<boolean> {

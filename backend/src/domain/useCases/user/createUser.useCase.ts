@@ -12,10 +12,7 @@ export class CreateUserUseCase {
     async execute(input: CreateUserInput): Promise<CreateUserOutput> {
         // Hash da senha antes de salvar
         
-        for (let index = 0; index < input.AccessName.length; index++) {
-            input.AccessName[index] = input.AccessName[index].toUpperCase()
-        }
-        
+
         input.password = await hash(input.password, 8);
 
         // Validar se o e-mail é único
