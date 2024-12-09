@@ -37,7 +37,7 @@ const CadastroComprador = () => {
       }
       formData.numberAddress = parseInt(formData.numberAddress);
       
-      const response = await axios.post('http://localhost:3333/user', formData);
+      const response = await axios.post('https://backend-final-ytc2.onrender.com/user', formData);
     
       if (response.status >= 200 && response.status <= 300) {
         // Sucesso, navegue para a tela de login ou home

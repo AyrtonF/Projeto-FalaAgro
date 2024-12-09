@@ -17,7 +17,7 @@ const PaginaProduto = () => {
     useEffect(() => {
         const fetchProduto = async () => {
             try {
-                const response = await axios.get(`http://localhost:3333/product/${productId}`);
+                const response = await axios.get(`https://backend-final-ytc2.onrender.com/product/${productId}`);
                 // Verifica se o produto tem tags, caso contrário, adiciona uma tag padrão
                 if (response.data.tags && response.data.tags.length === 0) {
                     response.data.tags.push("Nenhuma categoria");
@@ -31,7 +31,7 @@ const PaginaProduto = () => {
 
         const fetchLoja = async (storeId) => {
             try {
-                const response = await axios.get(`http://localhost:3333/store/${storeId}`);
+                const response = await axios.get(`https://backend-final-ytc2.onrender.com/store/${storeId}`);
                
                 setLoja(response.data);
             } catch (error) {

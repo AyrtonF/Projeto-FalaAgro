@@ -24,7 +24,7 @@ const PedidosFinalizadosComprador = () => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`http://localhost:3333/sale-buyerId/`);
+                const response = await axios.get(`https://backend-final-ytc2.onrender.com/sale-buyerId/`);
                 const pedidosData = response.data.map(pedido => ({
                     id: pedido.id,
                     status: mapStatus(pedido.status),

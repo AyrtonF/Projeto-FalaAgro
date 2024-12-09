@@ -7,7 +7,7 @@ externalDocs:
   description: Conheça a FalaAgro
   url: https://falaagro.com/
 servers:
-  - url: http://localhost:3333
+  - url: https://backend-final-ytc2.onrender.com/
 
 components:
   schemas:

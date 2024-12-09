@@ -43,14 +43,14 @@ const UpgradeVendendor = () => {
         const token = localStorage.getItem('token');
 
         try {
-          await axios.put('http://localhost:3333/user/access/add', {
+          await axios.put('https://backend-final-ytc2.onrender.com/user/access/add', {
                 newAccessName: "Vendedor"
             }, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-            await axios.post('http://localhost:3333/store/', {
+            await axios.post('https://backend-final-ytc2.onrender.com/store/', {
                 name: formData.name,
                 description: formData.description,
                 categories: formData.categories,

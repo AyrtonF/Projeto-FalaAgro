@@ -15,7 +15,7 @@ function DestaquesProdutos({ title }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3333/product/featered');
+        const response = await axios.get('https://backend-final-ytc2.onrender.com/product/featered');
         if (response.status >= 200 && response.status <= 300) {
           setProducts(response.data);
         }

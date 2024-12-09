@@ -25,7 +25,7 @@ export const CarrinhoProvider = ({ children }) => {
 
     const fazerPedido = async (products, storeId) => {
         try {
-            const response = await axios.post('http://localhost:3333/sale', {
+            const response = await axios.post('https://backend-final-ytc2.onrender.com/sale', {
                 products,
                 storeId
             });

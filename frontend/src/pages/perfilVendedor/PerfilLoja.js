@@ -12,7 +12,7 @@ const PerfilLoja = ({ nomeUsuario }) => {
     useEffect(() => {
         const fetchStoreData = async () => {
             try {
-                const response = await axios.get('http://localhost:3333/store', {
+                const response = await axios.get('https://backend-final-ytc2.onrender.com/store', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

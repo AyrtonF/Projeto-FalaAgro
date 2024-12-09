@@ -54,7 +54,7 @@ const MinhaLoja = () => {
     useEffect(() => {
         const fetchStore = async () => {
             try {
-                const response = await axios.get(`http://localhost:3333/store/`);
+                const response = await axios.get(`https://backend-final-ytc2.onrender.com/store/`);
                
                 if (response.data) {
                     setStoreData(response.data[0]);
@@ -150,7 +150,7 @@ const MinhaLoja = () => {
     const handleSave = async() => {
         try {
             console.log("aqui")
-            const response = await axios.put('http://localhost:3333/store', {
+            const response = await axios.put('https://backend-final-ytc2.onrender.com/store', {
                 storeId:storeData.storeId,
                 name: storeData.name,
                 description: storeData.description,

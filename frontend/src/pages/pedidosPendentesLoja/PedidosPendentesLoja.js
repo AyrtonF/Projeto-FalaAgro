@@ -24,7 +24,7 @@ const PedidosPendentesLoja = () => {
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
-                const response = await axios.get(`http://localhost:3333/sale-sellerId/`);
+                const response = await axios.get(`https://backend-final-ytc2.onrender.com/sale-sellerId/`);
                 const pedidosData = response.data.map(pedido => ({
                     id: pedido.id,
                     status: mapStatus(pedido.status),
@@ -56,7 +56,7 @@ const PedidosPendentesLoja = () => {
 
     const handleConfirmarRecebimento = async (id) => {
         try {
-            await axios.put(`http://localhost:3333/sale-seller-confirm/`, {
+            await axios.put(`https://backend-final-ytc2.onrender.com/sale-seller-confirm/`, {
                 saleId: id
             });
             // Atualize o estado para refletir a confirmação
