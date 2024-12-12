@@ -1,15 +1,21 @@
-# Introdução
+# Marketplace Falaagro
 
+## introdução
 Bem-vindo ao Readme do aplicativo Marketplace! Este guia detalhado irá te auxiliar na instalação, configuração e execução do aplicativo, que é composto por um backend Node.js e um frontend React. O banco de dados PostgreSQL é utilizado para armazenar dados e o Prisma gerencia as migrações do banco de dados.
 
-## Pré-requisitos
+## Descrição
+A plataforma de marketplace FalaAgro é um sistema inovador que conecta vendedores de produtos agropecuários a compradores interessados. No sistema, o usuário pode criar uma conta como **vendedor**, configurar sua loja virtual para comercializar produtos e gerenciar de forma simples, intuitiva e organizada seus pedidos, vendas e estoque. Já como **comprador**, o usuário tem a possibilidade de navegar pelas lojas virtuais, filtrar as melhores ofertas e realizar pedidos. Com essa startup, buscamos trazer inovação e promover conexões em diversas áreas do setor rural.
 
-**Antes de começar, certifique-se de ter os seguintes softwares instalados em sua máquina:**
+### Pré-requisitos  
+Antes de começar, certifique-se de ter os seguintes softwares instalados em sua máquina:  
 
-**Node.js** (versão 16 ou superior)  
-**npm** (instalado globalmente)  
-**Docker**(Opcional)  
-**Conta PostgreSQL com acesso ao servidor**
+- [Node.js (versão 16 ou superior)](https://nodejs.org/)  
+- npm (instalado automaticamente com o Node.js)  
+- [TypeScript](https://www.typescriptlang.org/download) (instalado globalmente: `npm install -g typescript`)  
+- [Prisma](https://www.prisma.io/docs/getting-started) (instalado globalmente: `npm install -g prisma`)  
+- [Docker (Opcional)](https://www.docker.com/get-started)  
+- Conta PostgreSQL com acesso ao servidor ([Baixe o PostgreSQL aqui](https://www.postgresql.org/download/))  
+
 
 ## Instalação
 
